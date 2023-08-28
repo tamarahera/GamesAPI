@@ -1,0 +1,32 @@
+@use '../../styles/variables.scss';
+
+.footer {    
+    flex-grow: 0;
+    flex-shrink: 0;
+    display: flex;  
+    flex-direction: row;
+    flex-wrap: wrap;    
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 50px;
+    background: linear-gradient(90deg, #232222 0%, rgba(35, 34, 34, 0.00) 100%);
+    &__link {
+        display: block;
+        width: 20px;
+        height: 20px;
+        svg {
+            fill: hsla(0, 0%, 99%, 0.9);
+            display: block;
+            width: 100%;
+            height: 100%;
+            transition: 0.2s all;
+            &:hover {
+                fill: var(--color-blue);
+            }
+        }
+    }
+    p {
+        color: hsla(0, 0%, 99%, 0.9);
+    }
+}
