@@ -1,0 +1,51 @@
+@use '../../styles/variables.scss';
+
+.header {
+    flex-grow: 0;
+    flex-shrink: 0;
+    background: linear-gradient(90deg, #232222 0%, rgba(35, 34, 34, 0.00) 100%);
+    padding: 30px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &__nav {
+        font-weight: 700;
+        font-size: 24px;
+        &-link {
+            color: hsla(0, 0%, 99%, 0.9);
+            transition: .3s all;
+            position: relative;
+            &--active {
+                color: var(--color-blue);
+                text-shadow: 0px 2px 2px #000;
+                &::after {
+                    content: '';
+                    position: absolute;
+                    border-bottom: 1px solid var(--color-blue);
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    box-shadow: 0px 1px 1px #000;
+                }
+            }
+        }
+    }
+    hr {
+        height: 1px;
+        width: 100%;
+        background-color: #fff;
+        margin: 0;
+        display: none;
+    }
+}
+.logo {
+    cursor: pointer;
+    h1 {
+        font-size: 28px;
+        font-weight: 700;
+        text-shadow: 0px 4px 4px #000;
+    }
+    span {
+        color: var(--color-blue);
+    }
+}
