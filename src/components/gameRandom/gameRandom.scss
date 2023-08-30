@@ -1,0 +1,70 @@
+.random {
+    margin-top: 40px;
+    &__wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5px;
+    }
+    &__game {
+        justify-self: end;
+        box-shadow: 5px 5px 20px 0px #00000077;
+        max-width: 550px;
+        min-height: 250px;
+        padding: 30px;
+        background-color: var(--color-white);
+        display: grid;
+        grid-template-columns: 180px auto;
+        column-gap: 30px;
+        &-box {
+            height: 100%;
+            width: 180px;
+            grid-row: 1/4;
+        }
+        &-img {
+            height: inherit;
+            width: inherit;
+            object-fit: cover;
+        }
+        &-btns {
+            align-self: end;
+            display: flex;
+            gap: 30px;
+        }
+    }
+    &__try {
+        box-shadow: 5px 5px 20px 0px #00000077;
+        max-width: 550px;
+        min-height: 250px;
+        padding: 30px;
+        background-color: var(--color-black);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        &::before {
+            content: url('../../resources/controller_blue.png');
+            position: absolute;
+            bottom: 40px;
+            right: 50px;
+            z-index: 20;
+            filter: drop-shadow(5px 5px 5px #000);
+        }
+        &::after {
+            content: url('../../resources/nintendo.png');
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            z-index: 10;
+            filter: drop-shadow(5px 5px 5px #000);
+        }
+        &-text {
+            font-size: 24px;
+            font-weight: 700;
+            &:nth-child(2) {
+                margin-top: 20px;
+            }
+        }
+        .button {
+            margin-top: auto;
+        }
+    }
+}
