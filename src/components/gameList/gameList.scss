@@ -1,0 +1,39 @@
+.games {
+    &__content {
+        &-btn {
+            margin: 50px auto 0;
+            width: 170px!important;
+        }
+    }
+    &__list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 25px;
+        max-width: 650px;
+    }
+    &__item {
+        width: 200px;
+        box-shadow: 5px 5px 20px 0px #00000077;            
+        background-color: var(--color-black);
+        transition: .3s all;
+        &-box {
+            height: 200px;
+            width: 200px;
+        }
+        &-img {
+            height: inherit;
+            width: inherit;
+            object-fit: cover;
+        }
+        &-title {
+            padding: 15px;
+            font-size: 22px;
+            font-weight: 700;
+        }
+        &--active {
+            box-shadow: 10px 10px 10px #1168B9;
+            transform: translateY(-15px);
+        }
+    }
+}
