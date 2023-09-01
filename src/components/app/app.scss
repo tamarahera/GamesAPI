@@ -1,0 +1,16 @@
+.app {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #133069 0%, #222A3A 100%);
+    display: flex;
+    flex-direction: column;
+}
+
+.games {
+    margin: 50px 0 100px;
+    &__wrapper {
+        display: flex;
+        gap: 25px;
+        justify-content: center;
+        align-items: flex-start;
+    }
+}
