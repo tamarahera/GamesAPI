@@ -1,0 +1,135 @@
+@media (max-width: 1200px) {
+    .container {
+        max-width: 960px;
+    }
+    .random {
+        &__game {
+            &-btns {
+                gap: 5px;
+            }
+        }
+    }
+    .games {
+        &__list {
+            max-width: 500px;
+        }
+    }
+    .button {
+        font-size: 14px;
+        width: 90px;
+    }
+}
+
+@media (max-width: 992px) {
+    .container {
+        max-width: 720px;
+    }
+    .random {
+        &__wrapper {
+            grid-template-columns: minmax(300px, 500px);
+            justify-content: center;
+        }
+    }
+    .games {
+        &__wrapper {
+            flex-direction: column-reverse;
+            align-items: center;
+        }
+        &__list {
+            max-width: unset;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 540px;
+    }
+    .header {
+        padding: 20px;
+        &__nav {
+            font-size: 18px;
+        }
+    }
+    .logo {
+        h1 {
+            font-size: 22px;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+    .header {
+        flex-direction: column;
+        gap: 10px;
+        hr {
+            display: block;
+        }
+    }
+    .footer {
+        gap: 15px;
+        p {
+            font-size: 14px;
+            text-align: center;
+            width: 100%;
+            display: inline-block;
+        }
+    }
+    .random {
+        &__game {
+            padding: 20px;
+            min-height: 200px;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            &-box {
+                grid-row: unset;
+                width: 100%;
+                max-height: 200px;
+            }
+            &-img {
+                object-fit: contain;
+            }
+            &-btns {
+                margin-top: 10px;
+            }
+        }
+        &__try {
+            padding: 20px;
+            min-height: 200px;
+            &-text {
+                font-size: 18px;    
+            }
+            &::after {
+                content: none;
+            }
+            &::before {
+                right: 0;
+                bottom: 5px;
+            }
+        }
+    }
+    .games {
+        &__info {
+            width: 100%;
+            &-header {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            &-box {
+                grid-row: unset;
+                width: 100%;
+                max-height: 200px;
+            }
+            &-img {
+                object-fit: contain;
+            }
+            &-btns {
+                flex-direction: row;
+            }
+        }
+    }
+}
