@@ -1,22 +1,32 @@
 import './gameRandom.scss';
+import '../services/RawgService';
+import { useEffect, useState } from 'react';
+import RawgService from '../services/RawgService';
+import Spinner from '../spinner/Spinner';
+import ErrorMessage from '../errorMessage/ErrorMessage';
 
 const GameRandom = () => {
+    const [game, setGame] = useState({});
+
+    useEffect(() => {
+        onUpdateGame();
+    }, []);
+
+    const onUpdateGame = () => {
+        const id = Math.floor(Math.random() * (3000 - 1) + 1);
+
+        const gamesData = new RawgService();
+
+        gamesData.getGameById(id)
+            .then(data => setGame(data))
+    }
+
     return (
         <section className="random">
             <div className="container">
                 <div className="random__wrapper">
                     <div className="random__game">
-                        <div className="random__game-box">
-                            <img src="https://assets-prd.ignimgs.com/2021/08/19/elder-scrolls-skyrim-button-2017-1629409446732.jpg"
-                                alt="skyrim" className="random__game-img" />
-                        </div>
-                        <h3 className="title">The Elder Scrolls V: Skyrim Special Edition</h3>
-                        <p className="text">Developed by Bethesda Game Studios, the 2011 Studio of the Year, that brought you Oblivion
-                            and Fallout 3.</p>
-                        <div className="random__game-btns">
-                            <a href="#" className="button">HOMEPAGE</a>
-                            <a href="#" className="button button--grey">NEWS</a>
-                        </div>
+                        <View game={game} />
                     </div>
 
                     <div className="random__try">
@@ -25,11 +35,38 @@ const GameRandom = () => {
                             Do you want to know more about it?
                         </p>
                         <p className="random__try-text">Or choose another one</p>
-                        <button className="button" type="button">Try it</button>
+                        <button className="button" type="button" onClick={onUpdateGame}>Try it</button>
                     </div>
                 </div>
             </div>
         </section>
+    )
+}
+
+const View = ({ game }) => {
+    const { name, description, img, news, homepage } = game;
+
+    //delete all tags in description
+    const descriptionChanged = description.replace(/<\/?\w*\ ?\/?>|&[\w\d-#]*;|quot;/g, '');
+
+    const text = descriptionChanged.length > 160 ? descriptionChanged.slice(0, 160) + '...' : descriptionChanged;
+
+    return (
+        <>
+            <div className="random__game-box">
+                <img src={img} alt={name} className="random__game-img" />
+            </div>
+            <h3 className="title">{name}</h3>
+            <p className="text">{text}</p>
+            <div className="random__game-btns">
+                <a href={homepage} className="button" target="_blank" disabled={homepage ? false : true}>
+                    HOMEPAGE
+                </a>
+                <a href={news} className="button button--grey" target="_blank" disabled={news ? false : true}>
+                    NEWS
+                </a>
+            </div>
+        </>
     )
 }
 
