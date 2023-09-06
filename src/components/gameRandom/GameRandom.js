@@ -7,26 +7,45 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 
 const GameRandom = () => {
     const [game, setGame] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         onUpdateGame();
     }, []);
 
     const onUpdateGame = () => {
+        onLoading();
         const id = Math.floor(Math.random() * (3000 - 1) + 1);
 
         const gamesData = new RawgService();
 
         gamesData.getGameById(id)
             .then(data => setGame(data))
+            .then(() => setLoading(false))
+            .catch(() => onError())
     }
+
+    const onError = () => {
+        setLoading(false);
+        setError(true);
+    }
+
+    const onLoading = () => {
+        setLoading(true);
+        setError(false);
+    }
+
+    const spinner = loading ? <Spinner /> : null;
+    const errorMessage = error ? <ErrorMessage/> : null;
+    const content = spinner || errorMessage || <View game={game}/>
 
     return (
         <section className="random">
             <div className="container">
                 <div className="random__wrapper">
                     <div className="random__game">
-                        <View game={game} />
+                        {content}
                     </div>
 
                     <div className="random__try">
@@ -47,7 +66,7 @@ const View = ({ game }) => {
     const { name, description, img, news, homepage } = game;
 
     //delete all tags in description
-    const descriptionChanged = description.replace(/<\/?\w*\ ?\/?>|&[\w\d-#]*;|quot;/g, '');
+    const descriptionChanged = description.replace(/<\/?\w*\ ?\/?>|&[\w\d-#]*;|quot;/g, ''); 
 
     const text = descriptionChanged.length > 160 ? descriptionChanged.slice(0, 160) + '...' : descriptionChanged;
 

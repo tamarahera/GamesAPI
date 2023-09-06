@@ -3,19 +3,16 @@ import Footer from '../footer/Footer';
 import GameList from '../gameList/GameList';
 import GameRandom from '../gameRandom/GameRandom';
 import GameInfo from '../gameInfo/GameInfo';
-import RawgService from '../services/RawgService';
+import { useState } from 'react';
+
 import './app.scss';
 
 const App = () => {
+  const [id, setId] = useState('');
 
-
-/*   const newData = new RawgService();
-
-
-  newData.getAllGames()
-    .then((res) => {
-      console.log(res)
-    }) */
+  const updateCurrentId = (id) => {
+    setId(id);
+  }
 
   return (
     <div className="app">
@@ -26,7 +23,7 @@ const App = () => {
         <section className="games">
           <div className="container">
             <div className="games__wrapper">
-              <GameList />
+              <GameList updateCurrentId={updateCurrentId} />
               <GameInfo />
             </div>
           </div>
