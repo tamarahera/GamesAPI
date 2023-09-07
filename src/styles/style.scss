@@ -25,6 +25,7 @@ h1, h2, h3, p {
 
 a {
     text-decoration: none;
+    transition: .3s background-color, .3s color;
 }
 
 main {
@@ -55,8 +56,32 @@ main {
     text-align: center;
     border: none;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    &[disabled] {
+        background-color: #7e1a1a;
+        color: #acacac;
+        transition: .3s background-color, .3s color;
+    }
     &--grey {
         background-color: #6F6F6F;
+        &[disabled] {
+            background-color: #3e3e3e;
+            color: #a2a2a2;
+            transition: .3s background-color, .3s color;
+        }
     }
 }
 
+@keyframes pulse {
+    0% {
+        opacity: 100;
+    }
+    50% {
+        opacity: 40%;
+    }
+    100% {
+        opacity: 100%;
+    }
+}
+.pulse {
+    animation: pulse 2s ease-in-out .5s infinite alternate;
+}
