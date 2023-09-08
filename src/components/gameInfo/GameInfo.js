@@ -1,5 +1,7 @@
 import RawgService from '../services/RawgService';
 import { useEffect, useState } from 'react';
+import parse from 'html-react-parser'; // use to parse string into html
+
 
 import './gameInfo.scss';
 
@@ -40,6 +42,7 @@ const View = ({ data }) => {
             <li className="games__info-platform" key={i}>{item}</li>
         )
     });
+    const descriptionParsed = parse(description);
 
     return (
         <>
@@ -63,7 +66,7 @@ const View = ({ data }) => {
                 <dt>Developer:</dt>
                 <dd>{developer}</dd>
             </dl>
-            <div className="games__info-descr text">{description}</div>
+            <div className="games__info-descr text">{descriptionParsed}</div>
             <ul className="games__info-platforms text">
                 {platformItems}
             </ul>

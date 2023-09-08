@@ -29,7 +29,7 @@ class RawgService {
         return this._transforData(res);
     }
 
-    _transforData = ({name, description, id, background_image, genres, rating, released, reddit_url, platforms, website}) => {
+    _transforData = ({name, description, developers, id, background_image, genres, rating, released, reddit_url, platforms, website}) => {
         let dataPlatforms = platforms.map(item => {
             return item.platform.name;
         });
@@ -37,9 +37,10 @@ class RawgService {
         return {
             name: name,
             description: description ? description : 'No description for this game',
+            developer: developers ? developers[0].name : null,
             id: id,
             img: background_image,
-            genres: genres.map(item => item.name),
+            genres: genres.map(item => item.name).join(', '),
             rating: rating,
             released: released,
             platforms: dataPlatforms,
