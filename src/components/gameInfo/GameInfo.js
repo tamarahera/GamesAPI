@@ -2,12 +2,16 @@ import RawgService from '../services/RawgService';
 import { useEffect, useState } from 'react';
 import parse from 'html-react-parser'; // use to parse string into html
 
+import Spinner from '../spinner/Spinner';
+import ErrorMessage from '../errorMessage/ErrorMessage';
 
 import './gameInfo.scss';
 
 
 const GameInfo = ({ currentId }) => {
     const [game, setGame] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
     
     useEffect(() => {
         console.log('use effect')
@@ -19,17 +23,36 @@ const GameInfo = ({ currentId }) => {
             return;
         }
 
+        onLoading();
+
         const gameData = new RawgService();
 
         gameData.getGameById(currentId)
             .then(data => setGame(data))
+            .then(() => setLoading(false))
             .catch(err => {
                 console.log(err);
+                onError();
             })
     }
+
+    const onError = () => {
+        setLoading(false);
+        setError(true);
+    }
+
+    const onLoading = () => {
+        setLoading(true);
+        setError(false);
+    }
+
+    const spinner = loading ? <Spinner/> : null;
+    const errorMessage = error ? <ErrorMessage/> : null;
+    const content = spinner || errorMessage || <View data={game}/>;
+
     return (
         <div className="games__info">
-            <View data={game}/>
+            {content}
         </div>
     )
 }
