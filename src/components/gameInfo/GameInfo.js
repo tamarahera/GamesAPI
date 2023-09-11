@@ -4,6 +4,7 @@ import parse from 'html-react-parser'; // use to parse string into html
 
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
+import Skeleton from '../skeleton/Skeleton';
 
 import './gameInfo.scss';
 
@@ -48,7 +49,8 @@ const GameInfo = ({ currentId }) => {
 
     const spinner = loading ? <Spinner/> : null;
     const errorMessage = error ? <ErrorMessage/> : null;
-    const content = spinner || errorMessage || <View data={game}/>;
+    const skeleton = (game || loading || error) ? null : <Skeleton />;
+    const content = spinner || errorMessage ||skeleton || <View data={game}/>;
 
     return (
         <div className="games__info">
