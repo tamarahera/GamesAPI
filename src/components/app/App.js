@@ -24,7 +24,7 @@ const App = () => {
           <div className="container">
             <div className="games__wrapper">
               <GameList updateCurrentId={updateCurrentId} />
-              <GameInfo />
+              <GameInfo currentId={id}/>
             </div>
           </div>
         </section>
