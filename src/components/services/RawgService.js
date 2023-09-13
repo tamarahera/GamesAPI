@@ -1,11 +1,9 @@
-import parse from 'html-react-parser'; // use to parse string into html
-
 class RawgService {
 
     _key = process.env.REACT_APP_API_KEY;
+    _path = 'https://api.rawg.io/api/games';
 
     getResource = async (url) => {
-        console.log(process.env.REACT_APP_API_KEY)
         let result = await fetch(url);
 
         if (!result.ok) {
@@ -15,17 +13,19 @@ class RawgService {
         return await result.json();
     }
 
-    getAllGames = async () => {
-        const res = await this.getResource(`https://api.rawg.io/api/games?page_size=9&key=${this._key}`);
+    getAllGames = async (url = `${this._path}?page_size=9&key=${this._key}`) => {
+        const res = await this.getResource(url);
+
         const arr = res.results.map(item => {
             return this._transforData(item);
-        })
-        return arr;
+        });
+        const nextPageUrl = res.next;
+
+        return {arr, nextPageUrl};
     }
 
     getGameById = async (id) => {
-        const res = await this.getResource(`https://api.rawg.io/api/games/${id}?key=${this._key}`);
-
+        const res = await this.getResource(`${this._path}/${id}?key=${this._key}`);
         return this._transforData(res);
     }
 
