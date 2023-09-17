@@ -104,12 +104,14 @@
             &-text {
                 font-size: 18px;    
             }
-            &::after {
-                content: none;
-            }
-            &::before {
-                right: 0;
-                bottom: 5px;
+            &-img {
+                &--controller {
+                    right: 0;
+                    bottom: 5px;
+                }
+                &--nintendo {
+                    display: none;
+                }
             }
         }
     }

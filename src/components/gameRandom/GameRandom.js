@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import RawgService from '../services/RawgService';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
+import controller from '../../resources/controller_blue.png';
+import nintendo from '../../resources/nintendo.png';
 
 const GameRandom = () => {
     const [game, setGame] = useState({});
@@ -55,6 +57,8 @@ const GameRandom = () => {
                         </p>
                         <p className="random__try-text">Or choose another one</p>
                         <button className="button" type="button" onClick={onUpdateGame}>Try it</button>
+                        <img className="random__try-img random__try-img--controller" src={controller} alt="controller" />
+                        <img className="random__try-img random__try-img--nintendo" src={nintendo} alt="nintendo" />
                     </div>
                 </div>
             </div>
