@@ -72,6 +72,7 @@
     }
     .footer {
         gap: 15px;
+        padding: 20px 15px;
         p {
             font-size: 14px;
             text-align: center;
@@ -82,7 +83,7 @@
     .random {
         &__game {
             padding: 20px;
-            min-height: 200px;
+            min-height: 380px;
             grid-template-columns: 1fr;
             gap: 10px;
             &-box {
@@ -131,5 +132,9 @@
                 flex-direction: row;
             }
         }
+    }
+    .spinner {
+        width: 160px;
+        height: 160px;
     }
 }
