@@ -3,6 +3,7 @@ import Footer from '../footer/Footer';
 import GameList from '../gameList/GameList';
 import GameRandom from '../gameRandom/GameRandom';
 import GameInfo from '../gameInfo/GameInfo';
+import ErrorBoundary from '../errorBoundary/ErrorBoundary';
 import { useState } from 'react';
 
 import './app.scss';
@@ -19,12 +20,18 @@ const App = () => {
       <Header />
       <main>
 
-        <GameRandom />
+        <ErrorBoundary>
+          <GameRandom />
+        </ErrorBoundary>
         <section className="games">
           <div className="container">
             <div className="games__wrapper">
-              <GameList updateCurrentId={updateCurrentId} />
-              <GameInfo currentId={id}/>
+              <ErrorBoundary>
+                <GameList updateCurrentId={updateCurrentId} />
+              </ErrorBoundary>
+              <ErrorBoundary>
+                <GameInfo currentId={id} />
+              </ErrorBoundary>
             </div>
           </div>
         </section>
