@@ -82,10 +82,10 @@ const View = ({ game }) => {
             <h3 className="title">{name}</h3>
             <p className="text">{text}</p>
             <div className="random__game-btns">
-                <a href={homepage} className="button" target="_blank" disabled={homepage ? false : true}>
+                <a href={homepage} className="button" target="_blank" rel="noreferrer" disabled={homepage ? false : true}>
                     HOMEPAGE
                 </a>
-                <a href={news} className="button button--grey" target="_blank" disabled={news ? false : true}>
+                <a href={news} className="button button--grey" target="_blank" rel="noreferrer" disabled={news ? false : true}>
                     NEWS
                 </a>
             </div>

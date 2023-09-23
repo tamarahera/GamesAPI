@@ -77,8 +77,8 @@ const View = ({ data }) => {
                 </div>
                 <h3 className="title">{name}</h3>
                 <div className="games__info-btns">
-                    <a href={homepage} className="button" target="_blank" disabled={homepage ? false : true}>HOMEPAGE</a>
-                    <a href={news} className="button button--grey" target="_blank" disabled={news ? false : true}>NEWS</a>
+                    <a href={homepage} className="button" target="_blank" rel="noreferrer" disabled={homepage ? false : true}>HOMEPAGE</a>
+                    <a href={news} className="button button--grey" target="_blank" rel="noreferrer" disabled={news ? false : true}>NEWS</a>
                 </div>
             </div>
             <dl className="games__info-list text">
