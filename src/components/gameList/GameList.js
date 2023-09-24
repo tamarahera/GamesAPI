@@ -1,6 +1,6 @@
 import RawgService from '../services/RawgService';
 import './gameList.scss';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 
@@ -45,12 +45,36 @@ const GameList = ({ updateCurrentId }) => {
         setError(true);
     }
 
+    let refsArr = useRef([]); //створюємо масив для рефів
+
+    const onActiveClass = (e) => {
+        refsArr.current.forEach(item => {
+            item.classList.remove('games__item--active');
+        });
+        e.currentTarget.classList.add('games__item--active');
+        e.currentTarget.focus();
+    }
+
     const createList = (arr) => {
-        const items = arr.map(item => {
+        const items = arr.map((item, index) => {
             const { name, img, id } = item;
 
             return (
-                <li className="games__item" tabIndex="0" key={id} onClick={() => updateCurrentId(id)}>
+                <li className="games__item"
+                    tabIndex="0"
+                    key={id}
+                    ref={el => refsArr.current[index] = el} //кожен el це сам елемент з рефом, запис його в масив рефів (обов'язково current)
+                    onClick={(e) => {
+                        updateCurrentId(id);
+                        onActiveClass(e);
+                    }}
+                    onKeyUp={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            updateCurrentId(id);
+                            onActiveClass(e);
+                        }
+                    }}
+                >
                     <div className="games__item-box">
                         <img src={img} alt={name} className="games__item-img" />
                     </div>
@@ -64,7 +88,6 @@ const GameList = ({ updateCurrentId }) => {
             </ul>
         )
     }
-
     const list = createList(games);
 
     const spinner = loading ? <Spinner /> : null;
@@ -74,7 +97,7 @@ const GameList = ({ updateCurrentId }) => {
     return (
         <div className="games__content">
             {content}
-            <button className="button games__content-btn" type="button" onClick={() => onRequest(nextUrl)} disabled={newGameLoading} style={{'display': gamesEnded ? 'none' : 'block'}}>LOAD MORE</button>
+            <button className="button games__content-btn" type="button" onClick={() => onRequest(nextUrl)} disabled={newGameLoading} style={{ 'display': gamesEnded ? 'none' : 'block' }}>LOAD MORE</button>
         </div>
     )
 }
