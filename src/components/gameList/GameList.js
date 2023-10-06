@@ -16,6 +16,20 @@ const GameList = ({ updateCurrentId }) => {
         onRequest(); // перший раз завантажуємо без аргументу, підставляється знач по дефолту - перші 9 ігор
     }, [])
 
+    useEffect(() => {
+        window.addEventListener('scroll', showScroll);
+
+        return () => {
+            window.removeEventListener('scroll', showScroll);
+        }
+    }, [newGameLoading]);
+
+    const showScroll = () => {
+        if ((window.scrollY + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1) && !newGameLoading) {
+            onRequest(nextUrl);
+        }
+    }
+
     const onRequest = (nextUrl) => { // другий раз і надалі завантаж з Url зі стейту
         setNewGameLoading(true); // load new games, в цей час робимо кнопку неактивною
 
