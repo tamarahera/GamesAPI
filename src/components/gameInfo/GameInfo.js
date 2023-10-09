@@ -15,7 +15,6 @@ const GameInfo = ({ currentId }) => {
     const [error, setError] = useState(false);
     
     useEffect(() => {
-        console.log('use effect')
         onUpdateGame(currentId);
     }, [currentId])
 

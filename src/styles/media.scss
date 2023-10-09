@@ -10,6 +10,10 @@
         }
     }
     .games {
+        &__info {
+            max-height: unset;
+            position: unset;
+        }
         &__list {
             max-width: 500px;
         }
