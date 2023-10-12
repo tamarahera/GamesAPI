@@ -1,35 +1,29 @@
-class RawgService {
+import { useHttp } from "../../hooks/http.hook";
 
-    _key = process.env.REACT_APP_API_KEY;
-    _path = 'https://api.rawg.io/api/games';
+const useRawgService = () => {
+    const {loading, error, request} = useHttp();
 
-    getResource = async (url) => {
-        let result = await fetch(url);
+    const _key = process.env.REACT_APP_API_KEY;
+    const _path = 'https://api.rawg.io/api/games';
 
-        if (!result.ok) {
-            throw new Error('Error')
-        }
-
-        return await result.json();
-    }
-
-    getAllGames = async (url = `${this._path}?page_size=9&key=${this._key}`) => {
-        const res = await this.getResource(url);
-
+    const getAllGames = async (url = `${_path}?page_size=9&key=${_key}`) => {
+        const res = await request(url);
         const arr = res.results.map(item => {
-            return this._transforData(item);
+            return _transforData(item);
         });
         const nextPageUrl = res.next;
 
         return {arr, nextPageUrl};
     }
 
-    getGameById = async (id) => {
-        const res = await this.getResource(`${this._path}/${id}?key=${this._key}`);
-        return this._transforData(res);
+    const getGameById = async (id) => {
+        const res = await request(`${_path}/${id}?key=${_key}`);
+        console.log(res)
+
+        return _transforData(res);
     }
 
-    _transforData = ({name, description, developers, id, background_image, genres, rating, released, reddit_url, platforms, website}) => {
+    const _transforData = ({name, description, developers, id, background_image, genres, rating, released, reddit_url, platforms, website}) => {
         let dataPlatforms = platforms.map(item => {
             return item.platform.name;
         });
@@ -48,6 +42,7 @@ class RawgService {
             homepage: website ? website : null
         }
     }
+    return {loading, error, getAllGames, getGameById};
 }
 
-export default RawgService;
+export default useRawgService;

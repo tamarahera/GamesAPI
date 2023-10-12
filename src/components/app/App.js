@@ -20,10 +20,10 @@ const App = () => {
       <Header />
       <main>
 
-        <ErrorBoundary>
+{/*         <ErrorBoundary>
           <GameRandom />
-        </ErrorBoundary>
-        <section className="games">
+        </ErrorBoundary> */}
+{/*         <section className="games">
           <div className="container">
             <div className="games__wrapper">
               <ErrorBoundary>
@@ -34,7 +34,7 @@ const App = () => {
               </ErrorBoundary>
             </div>
           </div>
-        </section>
+        </section> */}
       </main>
       <Footer />
     </div>
