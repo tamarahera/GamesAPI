@@ -1,7 +1,6 @@
 import './gameRandom.scss';
-import '../services/RawgService';
 import { useEffect, useState } from 'react';
-import RawgService from '../services/RawgService';
+import useRawgService from '../services/RawgService';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import controller from '../../resources/controller_blue.png';
@@ -9,38 +8,24 @@ import nintendo from '../../resources/nintendo.png';
 
 const GameRandom = () => {
     const [game, setGame] = useState({});
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
+
+    const { loading, error, getGameById } = useRawgService();
 
     useEffect(() => {
         onUpdateGame();
     }, []);
 
     const onUpdateGame = () => {
-        onLoading();
+        console.log('render')
         const id = Math.floor(Math.random() * (3000 - 1) + 1);
 
-        const gamesData = new RawgService();
-
-        gamesData.getGameById(id)
-            .then(data => setGame(data))
-            .then(() => setLoading(false))
-            .catch(() => onError())
-    }
-
-    const onError = () => {
-        setLoading(false);
-        setError(true);
-    }
-
-    const onLoading = () => {
-        setLoading(true);
-        setError(false);
+        getGameById(id)
+            .then(data => setGame(data));
     }
 
     const spinner = loading ? <Spinner /> : null;
-    const errorMessage = error ? <ErrorMessage/> : null;
-    const content = spinner || errorMessage || <View game={game}/>
+    const errorMessage = error ? <ErrorMessage /> : null;
+    const content = spinner || errorMessage || <View game={game} />
 
     return (
         <section className="random">
@@ -68,19 +53,28 @@ const GameRandom = () => {
 
 const View = ({ game }) => {
     const { name, description, img, news, homepage } = game;
+    
+    const transformDescription = () => {
+        if (description) {
+            //delete all tags in description
+            const descriptionWithoutTags = description.replace(/<\/?\w*\ ?\/?>|[&#][\w\d-#+]*;|quot;|\*/g, '');
+    
+            const slicedDescription = descriptionWithoutTags.length > 160 ? descriptionWithoutTags.slice(0, 160) + '...' : descriptionWithoutTags;
+    
+            return slicedDescription;
+        }
+        return description;
+    }
 
-    //delete all tags in description
-    const descriptionChanged = description.replace(/<\/?\w*\ ?\/?>|&[\w\d-#]*;|quot;/g, ''); 
-
-    const text = descriptionChanged.length > 160 ? descriptionChanged.slice(0, 160) + '...' : descriptionChanged;
-
+    const transformedDescription = transformDescription();
+    
     return (
         <>
             <div className="random__game-box">
                 <img src={img} alt={name} className="random__game-img" />
             </div>
             <h3 className="title">{name}</h3>
-            <p className="text">{text}</p>
+            <p className="text">{transformedDescription}</p>
             <div className="random__game-btns">
                 <a href={homepage} className="button" target="_blank" rel="noreferrer" disabled={homepage ? false : true}>
                     HOMEPAGE
