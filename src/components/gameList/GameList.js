@@ -1,4 +1,4 @@
-import RawgService from '../services/RawgService';
+import useRawgService from '../services/RawgService';
 import './gameList.scss';
 import { useEffect, useState, useRef } from 'react';
 import Spinner from '../spinner/Spinner';
@@ -6,14 +6,15 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 
 const GameList = ({ updateCurrentId }) => {
     const [games, setGames] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [newGameLoading, setNewGameLoading] = useState(false); // loading для завантаж додаткових персонажів, вик щоб вимкнути кнопку
-    const [error, setError] = useState(false);
     const [nextUrl, setNextUrl] = useState(null); // лінк на наступні 9 персонажі, який є у базі api
     const [gamesEnded, setGamesEnded] = useState(false);
 
+    const { loading, error, getAllGames } = useRawgService();
+
     useEffect(() => {
-        onRequest(); // перший раз завантажуємо без аргументу, підставляється знач по дефолту - перші 9 ігор
+        onRequest(true); // перший раз завантажуємо без аргументу, підставляється знач по дефолту - перші 9 ігор
+        // початкове завантаж true - показуємо спінер і не деактивуємо кнопку
     }, [])
 
     useEffect(() => {
@@ -22,27 +23,20 @@ const GameList = ({ updateCurrentId }) => {
         return () => {
             window.removeEventListener('scroll', showScroll);
         }
-    }, [newGameLoading]);
+    }, [games]);
 
     const showScroll = () => {
         if ((window.scrollY + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1) && !newGameLoading) {
-            onRequest(nextUrl);
+            onRequest(false, nextUrl); // початкове завантаж false - не показуємо спінер і деактивуємо кнопку
         }
     }
 
-    const onRequest = (nextUrl) => { // другий раз і надалі завантаж з Url зі стейту
-        setNewGameLoading(true); // load new games, в цей час робимо кнопку неактивною
-
-        const gamesData = new RawgService();
-
-        gamesData.getAllGames(nextUrl)
+    const onRequest = (initialLoading, nextUrl) => { // другий раз і надалі завантаж з Url зі стейту
+        initialLoading ? setNewGameLoading(false) : setNewGameLoading(true); // load new games, в цей час робимо кнопку неактивною
+        getAllGames(nextUrl)
             .then(data => {
                 onNewGamesLoaded(data.arr, data.nextPageUrl);
-            })
-            .catch(err => {
-                console.log(err);
-                onError();
-            })
+            });
     }
 
     const onNewGamesLoaded = (newGamesList, nextPageUrl) => {
@@ -50,13 +44,7 @@ const GameList = ({ updateCurrentId }) => {
 
         nextPageUrl ? setNextUrl(nextPageUrl) : setGamesEnded(true); // якщо url неправда, персонажі що закінчилися ставимо в true і вик це значення щоб сховати кнопку
 
-        setLoading(false);
         setNewGameLoading(false);
-    }
-
-    const onError = () => {
-        setLoading(false);
-        setError(true);
     }
 
     let refsArr = useRef([]); //створюємо масив для рефів
@@ -104,14 +92,13 @@ const GameList = ({ updateCurrentId }) => {
     }
     const list = createList(games);
 
-    const spinner = loading ? <Spinner /> : null;
+    const spinner = loading && !newGameLoading ? <Spinner /> : null; // є завантаж, але це не завантаж нових персонажів
     const errorMessage = error ? <ErrorMessage /> : null;
     const content = spinner || errorMessage || list;
-
     return (
         <div className="games__content">
             {content}
-            <button className="button games__content-btn" type="button" onClick={() => onRequest(nextUrl)} disabled={newGameLoading} style={{ 'display': gamesEnded ? 'none' : 'block' }}>LOAD MORE</button>
+            <button className="button games__content-btn" type="button" onClick={() => onRequest(false, nextUrl)} disabled={newGameLoading} style={{ 'display': gamesEnded ? 'none' : 'block' }}>LOAD MORE</button>
         </div>
     )
 }

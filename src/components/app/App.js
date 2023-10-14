@@ -23,18 +23,18 @@ const App = () => {
         <ErrorBoundary>
           <GameRandom />
         </ErrorBoundary>
-        {/*         <section className="games">
+        <section className="games">
           <div className="container">
             <div className="games__wrapper">
               <ErrorBoundary>
                 <GameList updateCurrentId={updateCurrentId} />
               </ErrorBoundary>
-              <ErrorBoundary>
+{/*               <ErrorBoundary>
                 <GameInfo currentId={id} />
-              </ErrorBoundary>
+              </ErrorBoundary> */}
             </div>
           </div>
-        </section> */}
+        </section>
       </main>
       <Footer />
     </div>

@@ -1,7 +1,7 @@
 import { useHttp } from "../../hooks/http.hook";
 
 const useRawgService = () => {
-    const {loading, error, request} = useHttp();
+    const { loading, error, request, clearError } = useHttp();
 
     const _key = process.env.REACT_APP_API_KEY;
     const _path = 'https://api.rawg.io/api/games';
@@ -13,17 +13,16 @@ const useRawgService = () => {
         });
         const nextPageUrl = res.next;
 
-        return {arr, nextPageUrl};
+        return { arr, nextPageUrl };
     }
 
     const getGameById = async (id) => {
         const res = await request(`${_path}/${id}?key=${_key}`);
-        console.log(res)
 
         return _transforData(res);
     }
 
-    const _transforData = ({name, description, developers, id, background_image, genres, rating, released, reddit_url, platforms, website}) => {
+    const _transforData = ({ name, description, developers, id, background_image, genres, rating, released, reddit_url, platforms, website }) => {
         let dataPlatforms = platforms.map(item => {
             return item.platform.name;
         });
@@ -42,7 +41,7 @@ const useRawgService = () => {
             homepage: website ? website : null
         }
     }
-    return {loading, error, getAllGames, getGameById};
+    return { loading, error, getAllGames, getGameById, clearError };
 }
 
 export default useRawgService;
