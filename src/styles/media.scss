@@ -10,10 +10,6 @@
         }
     }
     .games {
-        &__info {
-            max-height: unset;
-            position: unset;
-        }
         &__list {
             max-width: 500px;
         }
@@ -35,6 +31,10 @@
         }
     }
     .games {
+        &__info {
+            max-height: unset;
+            position: unset;
+        }
         &__wrapper {
             flex-direction: column-reverse;
             align-items: center;
