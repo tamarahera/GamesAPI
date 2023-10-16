@@ -9,14 +9,14 @@ import nintendo from '../../resources/nintendo.png';
 const GameRandom = () => {
     const [game, setGame] = useState({});
 
-    const { loading, error, getGameById } = useRawgService();
+    const { loading, error, getGameById, clearError } = useRawgService();
 
     useEffect(() => {
         onUpdateGame();
     }, []);
 
     const onUpdateGame = () => {
-        console.log('render')
+        clearError();
         const id = Math.floor(Math.random() * (3000 - 1) + 1);
 
         getGameById(id)
@@ -57,7 +57,7 @@ const View = ({ game }) => {
     const transformDescription = () => {
         if (description) {
             //delete all tags in description
-            const descriptionWithoutTags = description.replace(/<\/?\w*\ ?\/?>|[&#][\w\d-#+]*;|quot;|\*/g, '');
+            const descriptionWithoutTags = description.replace(/<\/?\w* ?\/?>|[&#][\w\d-#+]*;|quot;|\*/g, '');
     
             const slicedDescription = descriptionWithoutTags.length > 160 ? descriptionWithoutTags.slice(0, 160) + '...' : descriptionWithoutTags;
     
