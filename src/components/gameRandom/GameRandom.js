@@ -5,6 +5,7 @@ import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import controller from '../../resources/controller_blue.png';
 import nintendo from '../../resources/nintendo.png';
+import imageNotFound from '../../resources/image_not_found.jpg';
 
 const GameRandom = () => {
     const [game, setGame] = useState({});
@@ -17,7 +18,7 @@ const GameRandom = () => {
 
     const onUpdateGame = () => {
         clearError();
-        const id = Math.floor(Math.random() * (3000 - 1) + 1);
+        const id = 2626;
 
         getGameById(id)
             .then(data => setGame(data));
@@ -71,7 +72,7 @@ const View = ({ game }) => {
     return (
         <>
             <div className="random__game-box">
-                <img src={img} alt={name} className="random__game-img" />
+                <img src={img ? img : imageNotFound} alt={name} className="random__game-img" />
             </div>
             <h3 className="title">{name}</h3>
             <p className="text">{transformedDescription}</p>

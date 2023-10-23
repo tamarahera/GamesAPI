@@ -3,6 +3,7 @@ import './gameList.scss';
 import { useEffect, useState, useRef } from 'react';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
+import imageNotFound from '../../resources/image_not_found.jpg';
 
 const GameList = ({ updateCurrentId }) => {
     const [games, setGames] = useState([]);
@@ -78,7 +79,7 @@ const GameList = ({ updateCurrentId }) => {
                     }}
                 >
                     <div className="games__item-box">
-                        <img src={img} alt={name} className="games__item-img" />
+                        <img src={img ? img : imageNotFound} alt={name} className="games__item-img" />
                     </div>
                     <h2 className="games__item-title">{name}</h2>
                 </li>
