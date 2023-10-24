@@ -15,28 +15,37 @@ const GameList = ({ updateCurrentId }) => {
 
     useEffect(() => {
         onRequest(true); // перший раз завантажуємо без аргументу, підставляється знач по дефолту - перші 9 ігор
-        // початкове завантаж true - показуємо спінер і не деактивуємо кнопку
     }, [])
 
     useEffect(() => {
-        window.addEventListener('scroll', showScroll);
+        window.addEventListener('scroll', onScroll);
 
         return () => {
-            window.removeEventListener('scroll', showScroll);
+            window.removeEventListener('scroll', onScroll);
         }
-    }, [games]);
+    }, []);
 
-    const showScroll = () => {
-        if ((window.scrollY + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1) && !newGameLoading) {
-            onRequest(false, nextUrl); // початкове завантаж false - не показуємо спінер і деактивуємо кнопку
+    useEffect(() => {
+        if (newGameLoading) {
+            onRequest(false, nextUrl);
+        }
+    }, [newGameLoading]);
+
+    const onScroll = () => {
+        if ((window.scrollY + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1) && newGameLoading === false) {
+            setNewGameLoading(true);
         }
     }
 
     const onRequest = (initialLoading, nextUrl) => { // другий раз і надалі завантаж з Url зі стейту
         initialLoading ? setNewGameLoading(false) : setNewGameLoading(true); // load new games, в цей час робимо кнопку неактивною
+
         getAllGames(nextUrl)
             .then(data => {
                 onNewGamesLoaded(data.arr, data.nextPageUrl);
+            })
+            .finally(() => {
+                setNewGameLoading(false);
             });
     }
 
@@ -44,8 +53,6 @@ const GameList = ({ updateCurrentId }) => {
         setGames(games => [...games, ...newGamesList]); // старі ігри + нові
 
         nextPageUrl ? setNextUrl(nextPageUrl) : setGamesEnded(true); // якщо url неправда, персонажі що закінчилися ставимо в true і вик це значення щоб сховати кнопку
-
-        setNewGameLoading(false);
     }
 
     let refsArr = useRef([]); //створюємо масив для рефів
