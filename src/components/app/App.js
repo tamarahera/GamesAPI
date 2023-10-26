@@ -29,9 +29,9 @@ const App = () => {
               <ErrorBoundary>
                 <GameList updateCurrentId={updateCurrentId} />
               </ErrorBoundary>
-{/*               <ErrorBoundary>
+              <ErrorBoundary>
                 <GameInfo currentId={id} />
-              </ErrorBoundary> */}
+              </ErrorBoundary>
             </div>
           </div>
         </section>

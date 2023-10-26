@@ -5,15 +5,13 @@ const useLocalStorage = (key, defaultValue) => {
         let currentValue;
 
         try {
-            console.log(key, localStorage.getItem(key))
             currentValue = JSON.parse(
                 localStorage.getItem(key) || String(defaultValue)
             );
-        } catch(error) {
+        } catch (error) {
             console.log(error)
             currentValue = defaultValue;
         }
-        console.log(key, currentValue)
         return currentValue;
     });
 

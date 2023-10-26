@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import imageNotFound from '../../resources/image_not_found.jpg';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 const GameList = ({ updateCurrentId }) => {
     const [games, setGames] = useState([]);
@@ -11,10 +12,22 @@ const GameList = ({ updateCurrentId }) => {
     const [nextUrl, setNextUrl] = useState(null); // лінк на наступні 9 персонажі, який є у базі api
     const [gamesEnded, setGamesEnded] = useState(false);
 
+    const [storedGames, setstoredGames] = useLocalStorage('dataList', games);
+    // if localStoge empty use as default value games
+    const [storedNextUrl, setStoredNextUrl] = useLocalStorage('nextPageData', nextUrl);
+    // if localStoge empty use as default value nextUrl
+
     const { loading, error, getAllGames } = useRawgService();
 
     useEffect(() => {
-        onRequest(true); // перший раз завантажуємо без аргументу, підставляється знач по дефолту - перші 9 ігор
+        if ((!storedGames || storedGames.length == 0) && !storedNextUrl) {
+            onRequest(true); // перший раз завантажуємо без аргументу, підставляється знач по дефолту - перші 9 ігор
+            // початкове завантаж true - показуємо спінер і не деактивуємо кнопку
+        } else {
+            setGames(storedGames); // якщо localStorage має дані, завантаж їх у стейти
+            setNextUrl(storedNextUrl);
+            onRequest(true, storedNextUrl);
+        }
     }, [])
 
     useEffect(() => {
@@ -25,13 +38,13 @@ const GameList = ({ updateCurrentId }) => {
         }
     }, []);
 
-    useEffect(() => {
+    useEffect(() => { // при скролі змін завантаження і якщо завантаж правда, робимо реквест
         if (newGameLoading) {
             onRequest(false, nextUrl);
         }
     }, [newGameLoading]);
 
-    const onScroll = () => {
+    const onScroll = () => { // скролимо до кінця сторінки і ставимо завантаження в true
         if ((window.scrollY + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1) && newGameLoading === false) {
             setNewGameLoading(true);
         }
@@ -46,6 +59,10 @@ const GameList = ({ updateCurrentId }) => {
             })
             .finally(() => {
                 setNewGameLoading(false);
+                if (Array.isArray(games) && games.length > 0) {
+                    setStoredNextUrl(nextUrl);
+                    setstoredGames(games);
+                }
             });
     }
 
