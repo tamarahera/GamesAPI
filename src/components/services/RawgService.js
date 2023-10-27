@@ -1,4 +1,5 @@
 import { useHttp } from "../../hooks/http.hook";
+import imageNotFound from '../../resources/image_not_found.jpg'
 
 const useRawgService = () => {
     const { loading, error, request, clearError } = useHttp();
@@ -28,15 +29,15 @@ const useRawgService = () => {
         });
 
         return {
-            name: name,
-            description: description ? description : 'No description for this game',
-            developer: developers ? developers[0].name : null,
+            name: name ? name : 'Name not found.',
+            description: description ? description : 'No description for this game.',
+            developer: developers ? developers[0].name: 'No info about developers.',
             id: id,
-            img: background_image,
+            img: background_image ? background_image : imageNotFound,
             genres: genres.map(item => item.name).join(', '),
-            rating: rating,
-            released: released,
-            platforms: dataPlatforms,
+            rating: rating ? rating : 'No info about rating.',
+            released: released ? released : 'No info about release.',
+            platforms: dataPlatforms ? dataPlatforms : 'No info about platforms.',
             news: reddit_url ? reddit_url : null,
             homepage: website ? website : null
         }

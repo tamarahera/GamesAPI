@@ -4,7 +4,6 @@ import parse from 'html-react-parser'; // use to parse string into html
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import Skeleton from '../skeleton/Skeleton';
-import imageNotFound from '../../resources/image_not_found.jpg';
 import './gameInfo.scss';
 
 const GameInfo = ({ currentId }) => {
@@ -52,7 +51,7 @@ const View = ({ data }) => {
         <>
             <div className="games__info-header">
                 <div className="games__info-box">
-                    <img src={img ? img : imageNotFound} alt={name} className="games__info-img" />
+                    <img src={img} alt={name} className="games__info-img" />
                 </div>
                 <h3 className="title">{name}</h3>
                 <div className="games__info-btns">

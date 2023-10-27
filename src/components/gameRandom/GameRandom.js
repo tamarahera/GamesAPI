@@ -5,7 +5,6 @@ import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import controller from '../../resources/controller_blue.png';
 import nintendo from '../../resources/nintendo.png';
-import imageNotFound from '../../resources/image_not_found.jpg';
 
 const GameRandom = () => {
     const [game, setGame] = useState({});
@@ -18,7 +17,7 @@ const GameRandom = () => {
 
     const onUpdateGame = () => {
         clearError();
-        const id = 2626;
+        const id = Math.floor(Math.random() * (3000 - 1) + 1);
 
         getGameById(id)
             .then(data => setGame(data));
@@ -54,25 +53,25 @@ const GameRandom = () => {
 
 const View = ({ game }) => {
     const { name, description, img, news, homepage } = game;
-    
+
     const transformDescription = () => {
-        if (description) {
+        if (description && description != 'No description for this game.') {
             //delete all tags in description
-            const descriptionWithoutTags = description.replace(/<\/?\w* ?\/?>|[&#][\w\d-#+]*;|quot;|\*/g, '');
-    
+            const descriptionWithoutTags = description.replace(/<\/?\w* ?\/?>|[&#][\w\d-#+]*;|quot;|[-★\*]*/g, '');
+
             const slicedDescription = descriptionWithoutTags.length > 160 ? descriptionWithoutTags.slice(0, 160) + '...' : descriptionWithoutTags;
-    
+
             return slicedDescription;
         }
         return description;
     }
 
     const transformedDescription = transformDescription();
-    
+
     return (
         <>
             <div className="random__game-box">
-                <img src={img ? img : imageNotFound} alt={name} className="random__game-img" />
+                <img src={img} alt={name} className="random__game-img" />
             </div>
             <h3 className="title">{name}</h3>
             <p className="text">{transformedDescription}</p>
