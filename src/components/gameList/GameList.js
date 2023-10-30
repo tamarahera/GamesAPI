@@ -12,9 +12,9 @@ const GameList = ({ updateCurrentId }) => {
     const [nextUrl, setNextUrl] = useState(null); // лінк на наступні 9 персонажі, який є у базі api
     const [gamesEnded, setGamesEnded] = useState(false);
 
-    const [storedGames, setstoredGames] = useLocalStorage('dataList', games);
+    const [storedGames, setstoredGames] = useLocalStorage('games_dataList', games);
     // if localStoge empty use as default value games
-    const [storedNextUrl, setStoredNextUrl] = useLocalStorage('nextPageData', nextUrl);
+    const [storedNextUrl, setStoredNextUrl] = useLocalStorage('games_nextPageData', nextUrl);
     // if localStoge empty use as default value nextUrl
 
     const { loading, error, getAllGames } = useRawgService();
