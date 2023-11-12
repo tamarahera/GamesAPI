@@ -9,7 +9,6 @@ const useLocalStorage = (key, defaultValue) => {
                 localStorage.getItem(key) || String(defaultValue)
             );
         } catch (error) {
-            console.log(error)
             currentValue = defaultValue;
         }
         return currentValue;
