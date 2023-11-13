@@ -10,21 +10,12 @@
         font-weight: 700;
         font-size: 24px;
         &-link {
-            color: hsla(0, 0%, 99%, 0.9);
+            color: #1168b9;
             transition: .3s all;
             position: relative;
             &--active {
-                color: var(--color-blue);
-                text-shadow: 0px 2px 2px #000;
-                &::after {
-                    content: '';
-                    position: absolute;
-                    border-bottom: 1px solid var(--color-blue);
-                    bottom: 0;
-                    left: 0;
-                    width: 100%;
-                    box-shadow: 0px 1px 1px #000;
-                }
+                color: hsla(0, 0%, 99%, 0.9);
+                text-shadow: 0px 3px 3px #000;
             }
         }
     }
