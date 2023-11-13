@@ -16,6 +16,7 @@
         display: grid;
         grid-template-columns: 180px auto;
         column-gap: 30px;
+        overflow: hidden;
         &-box { 
             height: 190px;
             width: 180px;

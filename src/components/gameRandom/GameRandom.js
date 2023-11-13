@@ -57,7 +57,7 @@ const View = ({ game }) => {
     const transformDescription = () => {
         if (description && description != 'No description for this game.') {
             //delete all tags in description
-            const descriptionWithoutTags = description.replace(/<\/?\w* ?\/?>|[&#][\w\d-#+]*;|quot;|[-★\*]*/g, '');
+            const descriptionWithoutTags = description.replace(/<\/?\w* ?\/?>|[&#][\w\d-#+]*;|quot;|[-★=\*]*/g, '');
 
             const slicedDescription = descriptionWithoutTags.length > 160 ? descriptionWithoutTags.slice(0, 160) + '...' : descriptionWithoutTags;
 
