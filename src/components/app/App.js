@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
@@ -12,15 +12,10 @@ const App = () => {
       <div className="app">
         <Header />
         <main>
-          <Switch>
-            <Route exact path='/'>
-              <MainPage />
-            </Route>
-
-            <Route exact path='/genres'>
-              <GenresPage />
-            </Route>
-          </Switch>
+          <Routes>
+            <Route path='/' element={<MainPage />} />
+            <Route path='/genres' element={<GenresPage />} />
+          </Routes>
         </main>
         <Footer />
       </div>

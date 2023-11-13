@@ -9,9 +9,13 @@ const Header = () => {
             </Link>
             <hr />
             <nav className="header__nav">
-                <NavLink exact to="/" className="header__nav-link" activeClassName="header__nav-link--active">Games</NavLink>
+                <NavLink end
+                    to="/"
+                    className={({ isActive }) => 'header__nav-link' + (isActive ? ' header__nav-link--active' : '')}>Games</NavLink>
                 {' / '}
-                <NavLink exact to="/genres" className="header__nav-link" activeClassName="header__nav-link--active">More about</NavLink>
+                <NavLink end
+                    to="/genres"
+                    className={({ isActive }) => 'header__nav-link' + (isActive ? ' header__nav-link--active' : '')}>More about</NavLink>
             </nav>
         </header>
     )
