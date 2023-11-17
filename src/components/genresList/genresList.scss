@@ -1,0 +1,34 @@
+.genres {
+    padding: 40px;
+    &__list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 25px;
+    }
+    &__item {
+        width: 200px;
+        box-shadow: 5px 5px 20px 0px #00000077;            
+        background-color: var(--color-black);
+        transition: .3s all;
+        cursor: pointer;
+        &-box {
+            height: 130px;
+            width: 200px;
+        }
+        &-img {
+            height: inherit;
+            width: inherit;
+            object-fit: cover;
+        }
+        &-title {
+            padding: 15px;
+            font-size: 22px;
+            font-weight: 700;
+        }
+        &--active {
+            box-shadow: 10px 10px 10px #1168B9;
+            transform: translateY(-15px);
+        }
+    }
+}
