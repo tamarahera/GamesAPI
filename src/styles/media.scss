@@ -18,6 +18,9 @@
         font-size: 14px;
         width: 90px;
     }
+    .genres {
+        padding: 20px 10px;
+    }
 }
 
 @media (max-width: 992px) {
@@ -43,6 +46,24 @@
             max-width: unset;
         }
     }
+    .genres {
+        &__promo {
+            flex-direction: column;
+            padding: 20px 20px 20px 160px;
+            &-text {
+                font-size: 18px;
+                &:nth-child(2) {
+                    margin-top: 5px;
+                }
+            }
+            &-info {
+                align-self: flex-start;
+            }
+            &-btn {
+                flex-shrink: 0;
+            }
+        }
+    }
 }
 
 @media (max-width: 768px) {
@@ -59,6 +80,18 @@
         h1 {
             font-size: 22px;
         }
+    }
+    .genres {
+        &__list {
+            gap: 15px;
+        }
+        &__item {
+            width: 150px;
+            &-title {
+                font-size: 18px;
+            }
+        }
+    
     }
 }
 
@@ -142,5 +175,32 @@
     .spinner {
         width: 160px;
         height: 160px;
+    }
+
+    .genres {
+        padding: 10px 0px;
+        &__promo {
+            padding: 20px;
+            &-img {
+                display: none;
+            }
+        }
+        &__list {
+            justify-content: center;
+        }
+    }
+}
+
+@media (max-width: 350px) {
+    .genres {
+        &__list {
+            gap: 25px;
+        }
+        &__item {
+            width: 100%;
+            &-box {
+                height: 100px;
+            }
+        }
     }
 }
