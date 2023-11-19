@@ -1,10 +1,46 @@
 .genres {
     padding: 40px;
+    &__promo {
+        padding: 30px 30px 30px 160px;
+        position: relative;
+        background-color: var(--color-black);
+        width: 100%;
+        box-shadow: 5px 5px 20px 0px #00000077;         
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;   
+        gap: 20px;
+        &-img {
+            position: absolute;
+            display: block;
+            top: 0px;
+            height: 100%;
+            object-fit: cover;
+            left: 30px;
+            z-index: 20;
+            width: 100px;
+            filter: brightness(80%);
+        }
+        &-text {
+            font-size: 24px;
+            font-weight: 700;
+            span {
+                color: var(--color-blue);
+            }
+        }
+        &-info {
+
+        }
+        &-btn {
+            flex-shrink: 0;
+        }
+    }
     &__list {
+        margin-top: 30px;
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
-        gap: 25px;
+        justify-content: space-between;
+        row-gap: 25px;
     }
     &__item {
         width: 200px;
@@ -14,7 +50,7 @@
         cursor: pointer;
         &-box {
             height: 130px;
-            width: 200px;
+            width: inherit;
         }
         &-img {
             height: inherit;
