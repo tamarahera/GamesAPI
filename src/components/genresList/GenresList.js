@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import './genresList.scss';
 import useRawgService from "../services/RawgService";
-import './genresList.scss'
+import controller from '../../resources/controller_white.jpg';
+
 
 const GenresList = () => {
     const [genresData, setGenresData] = useState([]);
@@ -36,11 +38,23 @@ const GenresList = () => {
             )
         });
     }
-    /* console.log(genresList(genresData)) */
+
     const genresList = createGenresList(genresData);
-    const content = genresList ? genresList : null
+    const content = genresList ? genresList : null;
     return (
         <>
+            <div className="genres__promo">
+                <img className="genres__promo-img" src={controller} alt="controller" />
+                <div className="genres__promo-info">
+                    <p className="genres__promo-text">
+                        {'Do you ask '}<q><i>{'What game should I play? '}</i></q>
+                    </p>
+                    <p className="genres__promo-text">
+                        {`Choose `} <span>a genre</span> {' and explore the most popular games'}
+                    </p>
+                </div>
+                <button className="button genres__promo-btn" type="button">{'Let`s start'}</button>
+            </div>
             <ul className="genres__list">
                 {genresList}
             </ul>
