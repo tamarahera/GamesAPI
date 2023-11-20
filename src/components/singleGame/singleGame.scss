@@ -1,0 +1,107 @@
+.single {
+    margin: 40px 0;
+
+    &__wrapper {
+        display: grid;
+        grid-template-columns: 200px auto 80px;
+        gap: 20px;
+        background-color: var(--color-white);
+        box-shadow: 5px 5px 20px 0px #00000077;
+        width: 100%;
+    }
+    &__box {
+        height: inherit;
+        width: 100%;
+        &-img {
+            height: 100%;
+            width: inherit;
+            object-fit: cover;
+        }
+    }
+    &__title {
+        color: var(--color-black);  
+        font-weight: bold;
+        grid-column: 1/3;
+    }
+    &__info {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        padding: 20px 0;
+        &-btns {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-end;
+            gap: 5px;
+            .button {
+                font-size: 14px;
+            }
+        }
+
+        &-list {
+            color: var(--color-black);
+            display: grid;
+            grid-template-columns: 80px auto;
+            margin-bottom: 0;
+            dt,
+            dd {
+                color: inherit;
+                display: inline-block;
+                font-size: inherit;
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        &-descr {
+            grid-column: 1/3;
+            p {
+                color: var(--color-black);
+            }
+        }
+
+        &-platforms {
+            grid-column: 1/3;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        &-platform {
+            color: var(--color-black);
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            padding: 5px 10px;
+            font-size: inherit;
+        }
+
+        &-tags {
+            grid-column: 1/3;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        &-tag {
+            color: var(--color-black);
+            font-size: 12px;
+        }
+
+        &-text {
+            color: var(--color-black);
+            font-weight: 700;
+            font-size: 18px;
+            line-height: 24px;
+            text-align: center;
+        }
+    }
+    &__back {
+        &-link {
+            font-weight: bold;
+            text-align: right;
+            padding: 20px 20px 10px 0;
+            height: auto;
+            display: block;
+        }
+    }
+}
