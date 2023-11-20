@@ -15,7 +15,7 @@ const Header = () => {
                 {' / '}
                 <NavLink end
                     to="/genres"
-                    className={({ isActive }) => 'header__nav-link' + (isActive ? ' header__nav-link--active' : '')}>More about</NavLink>
+                    className={({ isActive }) => 'header__nav-link' + (isActive ? ' header__nav-link--active' : '')}>Genres</NavLink>
             </nav>
         </header>
     )
