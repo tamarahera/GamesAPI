@@ -19,6 +19,7 @@ const useRawgService = () => {
 
     const getGameById = async (id) => {
         const res = await request(`${_path}/${id}?key=${_key}`);
+        /* const screenshots = await request(`${_path}/${id}/screenshots?key=${_key}`); */
 
         return _transformData(res);
     }
@@ -33,7 +34,7 @@ const useRawgService = () => {
         return arr;
     }
 
-    const _transformData = ({ name, description, developers, id, background_image, genres, rating, released, reddit_url, platforms, website }) => {
+    const _transformData = ({ name, description, developers, id, background_image, genres, rating, released, reddit_url, platforms, website, tags }) => {
         let dataPlatforms = platforms.map(item => {
             return item.platform.name;
         });
@@ -49,16 +50,17 @@ const useRawgService = () => {
             released: released ? released : 'No info about release.',
             platforms: dataPlatforms ? dataPlatforms : 'No info about platforms.',
             news: reddit_url ? reddit_url : null,
-            homepage: website ? website : null
+            homepage: website ? website : null,
+            tags: tags ? tags : null
         }
     }
 
     const _transformGenres = ({ games, id, image_background, name }) => {
         return {
-            games: games,
+            games: games ? games : null,
             id: id,
-            image_background: image_background,
-            name: name
+            image_background: image_background ? image_background : null,
+            name: name ? name : null
         }
     }
     return { loading, error, getAllGames, getGameById, clearError, getGenres };
