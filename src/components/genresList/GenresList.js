@@ -5,6 +5,7 @@ import controller from '../../resources/controller_white.jpg';
 import imageNotFound from '../../resources/image_not_found.jpg';
 import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../errorMessage/ErrorMessage";
+import { Link } from "react-router-dom";
 
 
 const GenresList = () => {
@@ -79,12 +80,12 @@ const GenresList = () => {
             return (
                 <li className="genres__game"
                     key={id}>
-                    <a className="genres__game-link" href="#">
+                    <Link to={`/genres/${id}`} className="genres__game-link" href="#">
                         <div className="genres__game-box">
                             <img src={img ? img : imageNotFound} alt={name} className="genres__game-img" />
                         </div>
                         <h2 className="genres__game-title">{name}</h2>
-                    </a>
+                    </Link>
                 </li>
             )
         })
