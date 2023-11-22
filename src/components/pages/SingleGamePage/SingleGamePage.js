@@ -3,19 +3,22 @@ import useRawgService from '../../services/RawgService';
 import parse from 'html-react-parser'; // use to parse string into html
 import './singleGamePage.scss';
 
+import { useParams, Link } from 'react-router-dom';
 import ErrorBoundary from '../../errorBoundary/ErrorBoundary';
 
 const SingleGamePage = () => {
     const [gameData, setGameData] = useState(null);
     const { getGameById, clearError } = useRawgService();
 
-    useEffect(() => {
-        onRequest();
-    }, [])
+    const { gameId } = useParams();
 
-    const onRequest = () => {
+    useEffect(() => {
+        onRequest(gameId);
+    }, [gameId])
+
+    const onRequest = (id) => {
         clearError();
-        getGameById(13537)
+        getGameById(id)
             .then(data => {
                 console.log(data)
                 setGameData(data)
@@ -96,7 +99,7 @@ const View = ({ data }) => {
                 </div>
 
                 <div className="single__back">
-                    <a to="/genres" className="single__back-link text">Back to all</a>
+                    <Link to="/genres" className="single__back-link text">Back to all</Link>
                 </div>
             </div>
         </ErrorBoundary>
