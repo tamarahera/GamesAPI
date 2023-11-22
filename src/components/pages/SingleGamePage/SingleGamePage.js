@@ -34,7 +34,8 @@ const SingleGamePage = () => {
 }
 
 const View = ({ data }) => {
-    const { description, name, developer, img, genres, rating, released, platforms, news, homepage, tags } = data;
+    const { name, developer, img, genres, rating, released, platforms, news, homepage, tags } = data;
+    let { description } = data;
 
     const platformItems = platforms.map((item, i) => {
         return (
@@ -50,6 +51,17 @@ const View = ({ data }) => {
             </li>
         );
     });
+
+    const descriptionParse = () => {
+        if (/h[1-4]?>/.test(description)) {
+            description = description.replace(/h[1-4]>/g, 'h5>');
+            return parse(description);
+        } else {
+            return parse(description);
+        }
+    };
+
+    const descriptionParsed = descriptionParse();
 
     return (
         <ErrorBoundary>
@@ -74,7 +86,7 @@ const View = ({ data }) => {
                         <a href={homepage} className="button" target="_blank" rel="noreferrer" disabled={homepage ? false : true}>HOMEPAGE</a>
                         <a href={news} className="button button--grey" target="_blank" rel="noreferrer" disabled={news ? false : true}>NEWS</a>
                     </div>
-                    <div className="single__info-descr text">{description}</div>
+                    <div className="single__info-descr text">{descriptionParsed}</div>
                     <ul className="single__info-platforms text">
                         {platformItems}
                     </ul>
