@@ -39,7 +39,7 @@ const GameInfo = ({ currentId }) => {
 
 const View = ({ data }) => {
     const { name, description, developer, img, genres, rating, released, platforms, news, homepage } = data;
-    
+
     const platformItems = platforms.map((item, i) => {
         return (
             <li className="games__info-platform" key={i}>{item}</li>
@@ -63,7 +63,7 @@ const View = ({ data }) => {
                 <dt>Released:</dt>
                 <dd>{released}</dd>
                 <dt>Rating:</dt>
-                <dd>{rating}/5</dd>
+                <dd>{rating}</dd>
                 <dt>Genres:</dt>
                 <dd>{genres}</dd>
                 <dt>Developer:</dt>

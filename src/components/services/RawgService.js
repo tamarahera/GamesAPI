@@ -40,15 +40,15 @@ const useRawgService = () => {
         });
 
         return {
-            name: name ? name : 'Name not found.',
-            description: description ? description : 'No description for this game.',
-            developer: developers ? developers[0].name : 'No info about developers.',
+            name: name ? name : 'Name not found',
+            description: description ? description : 'No description for this game',
+            developer: developers ? developers[0].name : 'No info about developers',
             id: id,
             img: background_image ? background_image : imageNotFound,
             genres: genres.map(item => item.name).join(', '),
-            rating: rating ? rating : 'No info about rating.',
-            released: released ? released : 'No info about release.',
-            platforms: dataPlatforms ? dataPlatforms : 'No info about platforms.',
+            rating: rating ? `${rating}/5` : 'No info about rating',
+            released: released ? released : 'No info about release',
+            platforms: dataPlatforms ? dataPlatforms : 'No info about platforms',
             news: reddit_url ? reddit_url : null,
             homepage: website ? website : null,
             tags: tags ? tags : null
