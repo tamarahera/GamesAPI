@@ -4,7 +4,7 @@ import Header from '../header/Header';
 import Footer from '../footer/Footer';
 
 import './app.scss';
-import { MainPage, GenresPage } from '../pages';
+import { MainPage, GenresPage, Page404, SingleGamePage } from '../pages';
 
 const App = () => {
   return (
@@ -12,9 +12,13 @@ const App = () => {
       <div className="app">
         <Header />
         <main>
+          {/* <SingleGame /> */}
           <Routes>
             <Route path='/' element={<MainPage />} />
             <Route path='/genres' element={<GenresPage />} />
+            <Route path='/genres/:gameId' element={<SingleGamePage />} />
+
+            <Route path='*' element={<Page404 />} />
           </Routes>
         </main>
         <Footer />
