@@ -13,7 +13,7 @@ const Header = () => {
                     to="/"
                     className={({ isActive }) => 'header__nav-link' + (isActive ? ' header__nav-link--active' : '')}>Games</NavLink>
                 {' / '}
-                <NavLink end
+                <NavLink
                     to="/genres"
                     className={({ isActive }) => 'header__nav-link' + (isActive ? ' header__nav-link--active' : '')}>Genres</NavLink>
             </nav>
