@@ -237,6 +237,12 @@
                 margin-top: 10px;
             }
         }
+        &__back {
+            &-btn {
+                float: unset;
+                margin: 20px auto 0;
+            }
+        }
     }
 }
 
@@ -249,6 +255,13 @@
             width: 100%;
             &-box {
                 height: 100px;
+            }
+        }
+    }
+    .single {
+        &__back {
+            &-btn {
+                width: 100%!important;
             }
         }
     }

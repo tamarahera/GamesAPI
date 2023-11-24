@@ -26,7 +26,6 @@ const GenresList = () => {
         } else {
             getGenres()
                 .then(data => {
-                    console.log(data);
                     setGenresData(data);
                 })
                 .catch(() => {
@@ -36,7 +35,6 @@ const GenresList = () => {
     }
 
     const onRequestGamesById = (games, name) => {
-        console.log(games)
         setGenresGames([]);
         setGenreName(name);
         games.map(item => {

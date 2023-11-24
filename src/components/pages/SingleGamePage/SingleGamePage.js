@@ -37,6 +37,7 @@ const SingleGamePage = () => {
         <section className="single">
             <div className="container">
                 {content}
+                {errorMessage ? <Link to="/genres" className="button single__back-btn">Back to genres</Link> : null}
             </div>
         </section>
     )
