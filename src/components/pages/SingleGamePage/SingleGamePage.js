@@ -5,10 +5,12 @@ import './singleGamePage.scss';
 
 import { useParams, Link } from 'react-router-dom';
 import ErrorBoundary from '../../errorBoundary/ErrorBoundary';
+import Spinner from '../../spinner/Spinner';
+import ErrorMessage from '../../errorMessage/ErrorMessage';
 
 const SingleGamePage = () => {
     const [gameData, setGameData] = useState(null);
-    const { getGameById, clearError } = useRawgService();
+    const { getGameById, clearError, error, loading } = useRawgService();
 
     const { gameId } = useParams();
 
@@ -25,7 +27,11 @@ const SingleGamePage = () => {
             })
     }
 
-    const content = gameData ? <View data={gameData} /> : null;
+    const spinner = loading ? <Spinner /> : null;
+    const errorMessage = error ? <ErrorMessage /> : null;
+
+    const content = spinner || errorMessage || (gameData ? <View data={gameData} /> : null);
+
 
     return (
         <section className="single">
