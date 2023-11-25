@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.3c840d2c.css",
-    "main.js": "/static/js/main.f607c919.js",
-    "static/media/image_not_found.jpg": "/static/media/image_not_found.5804a80e7b0132f7acd1.jpg",
-    "static/media/controller_white.jpg": "/static/media/controller_white.d2c65a91a36ce5557c3c.jpg",
-    "index.html": "/index.html",
-    "main.3c840d2c.css.map": "/static/css/main.3c840d2c.css.map",
-    "main.f607c919.js.map": "/static/js/main.f607c919.js.map"
+    "main.css": "/projects/games-api/static/css/main.3c840d2c.css",
+    "main.js": "/projects/games-api/static/js/main.69e4bfee.js",
+    "static/media/image_not_found.jpg": "/projects/games-api/static/media/image_not_found.5804a80e7b0132f7acd1.jpg",
+    "static/media/controller_white.jpg": "/projects/games-api/static/media/controller_white.d2c65a91a36ce5557c3c.jpg",
+    "index.html": "/projects/games-api/index.html",
+    "main.3c840d2c.css.map": "/projects/games-api/static/css/main.3c840d2c.css.map",
+    "main.69e4bfee.js.map": "/projects/games-api/static/js/main.69e4bfee.js.map"
   },
   "entrypoints": [
     "static/css/main.3c840d2c.css",
-    "static/js/main.f607c919.js"
+    "static/js/main.69e4bfee.js"
   ]
 }
