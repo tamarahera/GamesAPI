@@ -5,6 +5,7 @@ import Footer from '../footer/Footer';
 
 import './app.scss';
 import { MainPage, GenresPage, Page404, SingleGamePage } from '../pages';
+import { useEffect, useState } from 'react';
 
 const App = () => {
   return (
@@ -12,7 +13,6 @@ const App = () => {
       <div className="app">
         <Header />
         <main>
-          {/* <SingleGame /> */}
           <Routes>
             <Route path='/' element={<MainPage />} />
             <Route path='/genres' element={<GenresPage />} />

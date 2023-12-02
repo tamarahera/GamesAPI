@@ -22,7 +22,6 @@ const SingleGamePage = () => {
         clearError();
         getGameById(id)
             .then(data => {
-                console.log(data)
                 setGameData(data)
             })
     }
