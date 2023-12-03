@@ -74,17 +74,21 @@ main {
     position: fixed;
     right: 0;
     bottom: 0;
-    margin-bottom: 10px;
-    margin-right: 10px;
+    margin-bottom: 20px;
+    margin-right: 20px;
     width: 40px;
     height: 40px;
-    background: radial-gradient(circle at center, var(--color-white) 0, var(--color-white) 50%, var(--color-red) 51%, var(--color-red) 100%);    
     border-radius: 100%;
     box-shadow: 1px 1px 10px black;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    border: 1px solid var(--color-red);
+    background-color: var(--color-white);
+    z-index: 100;
     &__img {
+        display: block;
         width: inherit;
         height: inherit;
         border-radius: inherit;
