@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
+import { Link as HashLink } from 'react-scroll';
 
 import GameList from '../gameList/GameList';
 import GameRandom from '../gameRandom/GameRandom';
 import GameInfo from '../gameInfo/GameInfo';
 import ErrorBoundary from '../errorBoundary/ErrorBoundary';
 import UpArrowImg from '../../resources/circle-chevron-up-solid.svg';
-import { Link } from 'react-router-dom';
+
 const MainPage = () => {
     const [id, setId] = useState('');
     const [upArrow, setUpArrow] = useState(null);
@@ -32,9 +33,9 @@ const MainPage = () => {
 
     const ArrowBtn = () => {
         return (
-            <Link className='up' to="#gameRandom">
+            <HashLink className='up' to='header'>
                 <img src={UpArrowImg} alt="up" className='up__img' />
-            </Link>
+            </HashLink>
         )
     }
 
