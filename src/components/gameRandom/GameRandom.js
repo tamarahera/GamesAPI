@@ -28,7 +28,7 @@ const GameRandom = () => {
     const content = spinner || errorMessage || <View game={game} />
 
     return (
-        <section className="random">
+        <div className="random">
             <div className="container">
                 <div className="random__wrapper">
                     <div className="random__game">
@@ -47,7 +47,7 @@ const GameRandom = () => {
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     )
 }
 

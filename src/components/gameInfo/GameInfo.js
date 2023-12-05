@@ -30,8 +30,9 @@ const GameInfo = ({ currentId }) => {
     const skeleton = (game || loading || error) ? null : <Skeleton />;
     const content = spinner || errorMessage || skeleton || <View data={game} />;
 
+    //name="info" for scroll from the games list
     return (
-        <div className="games__info">
+        <div className="games__info" name="info">
             {content}
         </div>
     )

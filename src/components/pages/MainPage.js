@@ -20,7 +20,7 @@ const MainPage = () => {
         return () => {
             window.removeEventListener('scroll', showUpArrow);
         }
-    }, [])
+    }, []);
 
     const showUpArrow = () => {
         if (document.documentElement.clientHeight < window.scrollY) {
@@ -28,7 +28,6 @@ const MainPage = () => {
         } else {
             setUpArrow(false);
         }
-
     }
 
     const ArrowBtn = () => {

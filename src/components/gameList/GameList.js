@@ -1,3 +1,4 @@
+import { scroller } from 'react-scroll';
 import useRawgService from '../services/RawgService';
 import './gameList.scss';
 import { useEffect, useState, useRef } from 'react';
@@ -5,6 +6,7 @@ import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import imageNotFound from '../../resources/image_not_found.jpg';
 import useLocalStorage from '../../hooks/useLocalStorage';
+
 
 const GameList = ({ updateCurrentId }) => {
     const [games, setGames] = useState([]);
@@ -16,6 +18,8 @@ const GameList = ({ updateCurrentId }) => {
     // if localStoge empty use as default value games
     const [storedNextUrl, setStoredNextUrl] = useLocalStorage('games_nextPageData', nextUrl);
     // if localStoge empty use as default value nextUrl
+
+    const [maxWidth992, setMaxWidth992] = useState(false);
 
     const { loading, error, getAllGames } = useRawgService();
 
@@ -31,10 +35,10 @@ const GameList = ({ updateCurrentId }) => {
     }, [])
 
     useEffect(() => {
-        window.addEventListener('scroll', onScroll);
+        window.addEventListener('scroll', onScrollBottom);
 
         return () => {
-            window.removeEventListener('scroll', onScroll);
+            window.removeEventListener('scroll', onScrollBottom);
         }
     }, []);
 
@@ -44,10 +48,27 @@ const GameList = ({ updateCurrentId }) => {
         }
     }, [newGameLoading]);
 
-    const onScroll = () => { // скролимо до кінця сторінки і ставимо завантаження в true
+    useEffect(() => {
+        if (window.matchMedia("(max-width: 992px)").matches) { // get to know if it`s a small screen device
+            setMaxWidth992(true);
+        } else {
+            setMaxWidth992(null);
+        }
+    }, []);
+
+    const onScrollBottom = () => { // скролимо до кінця сторінки і ставимо завантаження в true
         if ((window.scrollY + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1) && newGameLoading === false) {
             setNewGameLoading(true);
         }
+    }
+
+    const onScrollInfo = () => { // scroll to section info by click
+        scroller.scrollTo('info', {
+            delay: 0,
+            smooth: true,
+            offset: 10,
+            spy: false,
+        });
     }
 
     const onRequest = (initialLoading, nextUrl) => { // другий раз і надалі завантаж з Url зі стейту
@@ -56,6 +77,7 @@ const GameList = ({ updateCurrentId }) => {
         getAllGames(nextUrl)
             .then(data => {
                 onNewGamesLoaded(data.arr, data.nextPageUrl);
+                console.log('request')
             })
             .finally(() => {
                 setNewGameLoading(false);
@@ -94,6 +116,9 @@ const GameList = ({ updateCurrentId }) => {
                     onClick={(e) => {
                         updateCurrentId(id);
                         onActiveClass(e);
+                        if (maxWidth992) {
+                            onScrollInfo();
+                        }
                     }}
                     onKeyUp={(e) => {
                         if (e.key === 'Enter' || e.key === ' ') {
@@ -120,10 +145,17 @@ const GameList = ({ updateCurrentId }) => {
     const spinner = loading && !newGameLoading ? <Spinner /> : null; // є завантаж, але це не завантаж нових персонажів
     const errorMessage = error ? <ErrorMessage /> : null;
     const content = spinner || errorMessage || list;
+
+    const loadBtn = errorMessage ? null : <button className="button games__content-btn"
+        type="button"
+        onClick={() => onRequest(false, nextUrl)}
+        disabled={newGameLoading}
+        style={{ 'display': gamesEnded ? 'none' : 'block' }}>LOAD MORE</button>;
+
     return (
         <div className="games__content">
             {content}
-            <button className="button games__content-btn" type="button" onClick={() => onRequest(false, nextUrl)} disabled={newGameLoading} style={{ 'display': gamesEnded ? 'none' : 'block' }}>LOAD MORE</button>
+            {loadBtn}
         </div>
     )
 }
