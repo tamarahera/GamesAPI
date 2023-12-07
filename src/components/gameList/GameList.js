@@ -24,7 +24,7 @@ const GameList = ({ updateCurrentId }) => {
     const { loading, error, getAllGames } = useRawgService();
 
     useEffect(() => {
-        if ((!storedGames || storedGames.length == 0) && !storedNextUrl) {
+        if ((!storedGames || storedGames.length === 0) && !storedNextUrl) {
             onRequest(true); // перший раз завантажуємо без аргументу, підставляється знач по дефолту - перші 9 ігор
             // початкове завантаж true - показуємо спінер і не деактивуємо кнопку
         } else {
@@ -90,7 +90,8 @@ const GameList = ({ updateCurrentId }) => {
 
     const onNewGamesLoaded = (newGamesList, nextPageUrl) => {
         setGames(games => [...games, ...newGamesList]); // старі ігри + нові
-
+        console.log('newGamesList', newGamesList);
+        console.log('nextPageUrl', nextPageUrl)
         nextPageUrl ? setNextUrl(nextPageUrl) : setGamesEnded(true); // якщо url неправда, персонажі що закінчилися ставимо в true і вик це значення щоб сховати кнопку
     }
 
@@ -148,9 +149,11 @@ const GameList = ({ updateCurrentId }) => {
 
     const loadBtn = errorMessage ? null : <button className="button games__content-btn"
         type="button"
-        onClick={() => onRequest(false, nextUrl)}
+        onClick={() => setNewGameLoading(true)}
         disabled={newGameLoading}
         style={{ 'display': gamesEnded ? 'none' : 'block' }}>LOAD MORE</button>;
+
+    console.log('render');
 
     return (
         <div className="games__content">
