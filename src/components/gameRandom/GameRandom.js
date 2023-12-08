@@ -5,6 +5,7 @@ import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import controller from '../../resources/controller_blue.png';
 import nintendo from '../../resources/nintendo.png';
+import { Link } from 'react-router-dom';
 
 const GameRandom = () => {
     const [game, setGame] = useState({});
@@ -52,8 +53,8 @@ const GameRandom = () => {
 }
 
 const View = ({ game }) => {
-    const { name, description, img, news, homepage } = game;
-
+    const { name, description, img, news, homepage, id } = game;
+    console.log(game)
     const transformDescription = () => {
         if (description && description != 'No description for this game.') {
             //delete all tags in description
@@ -70,9 +71,9 @@ const View = ({ game }) => {
 
     return (
         <>
-            <div className="random__game-box">
+            <Link to={`/${id}`} className="random__game-box">
                 <img src={img} alt={name} className="random__game-img" />
-            </div>
+            </Link>
             <h3 className="title">{name}</h3>
             <p className="text">{transformedDescription}</p>
             <div className="random__game-btns">

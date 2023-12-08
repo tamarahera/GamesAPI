@@ -90,8 +90,6 @@ const GameList = ({ updateCurrentId }) => {
 
     const onNewGamesLoaded = (newGamesList, nextPageUrl) => {
         setGames(games => [...games, ...newGamesList]); // старі ігри + нові
-        console.log('newGamesList', newGamesList);
-        console.log('nextPageUrl', nextPageUrl)
         nextPageUrl ? setNextUrl(nextPageUrl) : setGamesEnded(true); // якщо url неправда, персонажі що закінчилися ставимо в true і вик це значення щоб сховати кнопку
     }
 
@@ -152,8 +150,6 @@ const GameList = ({ updateCurrentId }) => {
         onClick={() => setNewGameLoading(true)}
         disabled={newGameLoading}
         style={{ 'display': gamesEnded ? 'none' : 'block' }}>LOAD MORE</button>;
-
-    console.log('render');
 
     return (
         <div className="games__content">

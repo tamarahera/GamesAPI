@@ -15,6 +15,7 @@ const App = () => {
         <main>
           <Routes>
             <Route path='/' element={<MainPage />} />
+            <Route path='/:gameId' element={<SingleGamePage />} />
             <Route path='/genres' element={<GenresPage />} />
             <Route path='/genres/:gameId' element={<SingleGamePage />} />
 

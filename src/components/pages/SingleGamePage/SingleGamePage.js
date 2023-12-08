@@ -3,13 +3,14 @@ import useRawgService from '../../services/RawgService';
 import parse from 'html-react-parser'; // use to parse string into html
 import './singleGamePage.scss';
 
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import ErrorBoundary from '../../errorBoundary/ErrorBoundary';
 import Spinner from '../../spinner/Spinner';
 import ErrorMessage from '../../errorMessage/ErrorMessage';
 
 const SingleGamePage = () => {
     const [gameData, setGameData] = useState(null);
+    const [path, setPath] = useState(null);
     const { getGameById, clearError, error, loading } = useRawgService();
 
     const { gameId } = useParams();
@@ -17,6 +18,16 @@ const SingleGamePage = () => {
     useEffect(() => {
         onRequest(gameId);
     }, [gameId])
+
+    useEffect(() => {
+        if (location.pathname.match(/genres/)) {
+            setPath("/genres")
+        } else {
+            setPath("/")
+        }
+    }, [])
+
+    const location = useLocation();
 
     const onRequest = (id) => {
         clearError();
@@ -29,7 +40,7 @@ const SingleGamePage = () => {
     const spinner = loading ? <Spinner /> : null;
     const errorMessage = error ? <ErrorMessage /> : null;
 
-    const content = spinner || errorMessage || (gameData ? <View data={gameData} /> : null);
+    const content = spinner || errorMessage || (gameData ? <View data={gameData} path={path} /> : null);
 
 
     return (
@@ -42,7 +53,7 @@ const SingleGamePage = () => {
     )
 }
 
-const View = ({ data }) => {
+const View = ({ data, path }) => {
     const { name, developer, img, genres, rating, released, platforms, news, homepage, tags } = data;
     let { description } = data;
 
@@ -62,8 +73,8 @@ const View = ({ data }) => {
     });
 
     const descriptionParse = () => {
-        if (/h[1-4]?>/.test(description)) {
-            description = description.replace(/h[1-4]>/g, 'h5>');
+        if (/h[1-5]?>/.test(description)) {
+            description = description.replace(/h[1-4]>/g, 'h6>');
             return parse(description);
         } else {
             return parse(description);
@@ -105,7 +116,7 @@ const View = ({ data }) => {
                 </div>
 
                 <div className="single__back">
-                    <Link to="/genres" className="single__back-link text">Back to all</Link>
+                    <Link to={path} className="single__back-link text">Back to all</Link>
                 </div>
             </div>
         </ErrorBoundary>
