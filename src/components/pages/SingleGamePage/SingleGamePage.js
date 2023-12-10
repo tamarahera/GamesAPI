@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion'
+
 import useRawgService from '../../services/RawgService';
 import parse from 'html-react-parser'; // use to parse string into html
 import './singleGamePage.scss';
@@ -44,12 +46,16 @@ const SingleGamePage = () => {
 
 
     return (
-        <section className="single">
+        <motion.section
+            className="single"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}>
             <div className="container">
                 {content}
                 {errorMessage ? <Link to="/genres" className="button single__back-btn">Back to genres</Link> : null}
             </div>
-        </section>
+        </motion.section>
     )
 }
 

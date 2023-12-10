@@ -1,4 +1,5 @@
 import { scroller } from 'react-scroll';
+import { motion } from "framer-motion"
 import useRawgService from '../services/RawgService';
 import './gameList.scss';
 import { useEffect, useState, useRef } from 'react';
@@ -77,7 +78,6 @@ const GameList = ({ updateCurrentId }) => {
         getAllGames(nextUrl)
             .then(data => {
                 onNewGamesLoaded(data.arr, data.nextPageUrl);
-                console.log('request')
             })
             .finally(() => {
                 setNewGameLoading(false);
@@ -102,13 +102,33 @@ const GameList = ({ updateCurrentId }) => {
         e.currentTarget.classList.add('games__item--active');
         e.currentTarget.focus();
     }
+    const containerAnimation = { // асинхронна анімація для контейнера і дочірнії елеметів
+        hidden: { opacity: 1, scale: 0 },
+        visible: {
+            opacity: 1,
+            scale: 1,
+            transition: {
+                delayChildren: 0.3,
+                staggerChildren: 0.2
+            }
+        }
+    };
+
+    const itemAnimation = {
+        hidden: { y: 20, opacity: 0 },
+        visible: {
+            y: 0,
+            opacity: 1
+        }
+    };
 
     const createList = (arr) => {
         const items = arr.map((item, index) => {
             const { name, img, id } = item;
 
             return (
-                <li className="games__item"
+                <motion.li
+                    className="games__item"
                     tabIndex="0"
                     key={id}
                     ref={el => refsArr.current[index] = el} //кожен el це сам елемент з рефом, запис його в масив рефів (обов'язково current)
@@ -125,18 +145,23 @@ const GameList = ({ updateCurrentId }) => {
                             onActiveClass(e);
                         }
                     }}
+                    variants={itemAnimation}
                 >
                     <div className="games__item-box">
                         <img src={img ? img : imageNotFound} alt={name} className="games__item-img" />
                     </div>
                     <h2 className="games__item-title">{name}</h2>
-                </li>
+                </motion.li>
             )
         });
         return (
-            <ul className="games__list">
+            <motion.ul
+                className="games__list"
+                variants={containerAnimation}
+                initial="hidden"
+                animate="visible">
                 {items}
-            </ul>
+            </motion.ul>
         )
     }
     const list = createList(games);

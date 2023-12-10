@@ -20,6 +20,10 @@
     }
     .genres {
         padding: 30px 10px;
+        &__list {
+            justify-content: flex-start;
+            column-gap: 50px;
+        }
     }
 }
 
@@ -62,6 +66,10 @@
             &-btn {
                 flex-shrink: 0;
             }
+        }
+        &__list {
+            justify-content: space-between;
+            column-gap: unset;
         }
     }
     .single {

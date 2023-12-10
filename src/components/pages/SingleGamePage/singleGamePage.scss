@@ -1,6 +1,6 @@
 .single {
     margin: 40px 0;
-
+    flex: 1;
     &__wrapper {
         display: grid;
         grid-template-columns: 200px auto 80px;

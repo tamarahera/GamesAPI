@@ -1,9 +1,14 @@
 import GenresList from "../genresList/GenresList";
 import ErrorBoundary from "../errorBoundary/ErrorBoundary";
+import { motion } from 'framer-motion'
 
 const GenresPage = () => {
     return (
-        <section className="genres">
+        <motion.section
+            className="genres"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}>
             <div className="container">
                 <div className="genres__wrapper">
                     <ErrorBoundary>
@@ -11,7 +16,7 @@ const GenresPage = () => {
                     </ErrorBoundary>
                 </div>
             </div>
-        </section>
+        </motion.section>
     )
 }
 

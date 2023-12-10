@@ -54,7 +54,6 @@ const GameRandom = () => {
 
 const View = ({ game }) => {
     const { name, description, img, news, homepage, id } = game;
-    console.log(game)
     const transformDescription = () => {
         if (description && description != 'No description for this game.') {
             //delete all tags in description

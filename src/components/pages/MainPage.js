@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link as HashLink } from 'react-scroll';
+import { motion } from 'framer-motion'
 
 import GameList from '../gameList/GameList';
 import GameRandom from '../gameRandom/GameRandom';
@@ -39,7 +40,10 @@ const MainPage = () => {
     }
 
     return (
-        <>
+        <motion.main
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}>
             <ErrorBoundary>
                 <GameRandom />
             </ErrorBoundary>
@@ -56,7 +60,7 @@ const MainPage = () => {
                 </div>
             </section>
             {upArrow ? <ArrowBtn /> : null}
-        </>
+        </motion.main>
     )
 }
 

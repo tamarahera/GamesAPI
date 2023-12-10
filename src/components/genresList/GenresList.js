@@ -1,11 +1,13 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion"
+
 import './genresList.scss';
 import useRawgService from "../services/RawgService";
 import controller from '../../resources/controller_white.jpg';
 import imageNotFound from '../../resources/image_not_found.jpg';
 import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../errorMessage/ErrorMessage";
-import { Link } from "react-router-dom";
 
 
 const GenresList = () => {
@@ -49,25 +51,49 @@ const GenresList = () => {
         });
     }
 
+    const containerAnimation = {
+        hidden: { opacity: 1, scale: 0 },
+        visible: {
+            opacity: 1,
+            scale: 1,
+            transition: {
+                delayChildren: 0.3,
+                staggerChildren: 0.2
+            }
+        }
+    };
+
+    const itemAnimation = {
+        hidden: { y: 20, opacity: 0 },
+        visible: {
+            y: 0,
+            opacity: 1,
+        }
+    };
+
     const createGenresList = (arr) => {
         const items = arr.map(item => {
             const { id, image_background, name, games } = item;
             return (
-                <li className="genres__item"
+                <motion.li className="genres__item"
                     key={id}
-                    onClick={() => onRequestGamesById(games, name)}>
+                    onClick={() => onRequestGamesById(games, name)}
+                    variants={itemAnimation}>
                     <div className="genres__item-box">
                         <img src={image_background} alt={name} className="genres__item-img" />
                     </div>
                     <h2 className="genres__item-title">{name}</h2>
-                </li>
+                </motion.li>
             )
         });
         return (
             <>
-                <ul className="genres__list">
+                <motion.ul className="genres__list"
+                    variants={containerAnimation}
+                    initial="hidden"
+                    animate="visible">
                     {items}
-                </ul>
+                </motion.ul>
             </>
         )
     }
@@ -76,23 +102,28 @@ const GenresList = () => {
         const items = arr.map(item => {
             const { name, img, id } = item;
             return (
-                <li className="genres__game"
-                    key={id}>
-                    <Link to={`/genres/${id}`} className="genres__game-link" href="#">
+                <motion.li
+                    className="genres__game"
+                    key={id}
+                    variants={itemAnimation}>
+                    <Link to={`/genres/${id}`} className="genres__game-link">
                         <div className="genres__game-box">
                             <img src={img ? img : imageNotFound} alt={name} className="genres__game-img" />
                         </div>
                         <h2 className="genres__game-title">{name}</h2>
                     </Link>
-                </li>
+                </motion.li>
             )
         })
         return (
             <>
                 <h2 className="genres__title">{genreName}</h2>
-                <ul className="genres__list">
+                <motion.ul className="genres__list"
+                    variants={containerAnimation}
+                    initial="hidden"
+                    animate="visible">
                     {items}
-                </ul>
+                </motion.ul>
             </>
         )
     }
