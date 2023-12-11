@@ -60,7 +60,7 @@ const SingleGamePage = () => {
 }
 
 const View = ({ data, path }) => {
-    const { name, developer, img, genres, rating, released, platforms, news, homepage, tags } = data;
+    const { name, developer, img, genres, rating, released, platforms, community, homepage, tags } = data;
     let { description } = data;
 
     const platformItems = platforms.map((item, i) => {
@@ -110,7 +110,7 @@ const View = ({ data, path }) => {
                     </dl>
                     <div className="single__info-btns">
                         <a href={homepage} className="button" target="_blank" rel="noreferrer" disabled={homepage ? false : true}>HOMEPAGE</a>
-                        <a href={news} className="button button--grey" target="_blank" rel="noreferrer" disabled={news ? false : true}>NEWS</a>
+                        <a href={community} className="button button--grey" target="_blank" rel="noreferrer" disabled={community ? false : true}>community</a>
                     </div>
                     <div className="single__info-descr text">{descriptionParsed}</div>
                     <ul className="single__info-platforms text">

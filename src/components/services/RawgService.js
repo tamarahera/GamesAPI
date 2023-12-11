@@ -20,6 +20,8 @@ const useRawgService = () => {
     const getGameById = async (id) => {
         const res = await request(`${_path}/${id}?key=${_key}`);
         /* const screenshots = await request(`${_path}/${id}/screenshots?key=${_key}`); */
+        const search = await request(`https://rawg.io/api/games?search=witcher&key=b61c177e6f9d41ff870cb8c11cc140a2`)
+        console.log(search)
 
         return _transformData(res);
     }
@@ -49,7 +51,7 @@ const useRawgService = () => {
             rating: rating ? `${rating}/5` : 'No info about rating',
             released: released ? released : 'No info about release',
             platforms: dataPlatforms ? dataPlatforms : 'No info about platforms',
-            news: reddit_url ? reddit_url : null,
+            community: reddit_url ? reddit_url : null,
             homepage: website ? website : null,
             tags: tags ? tags : null
         }

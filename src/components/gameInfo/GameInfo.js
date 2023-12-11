@@ -39,7 +39,7 @@ const GameInfo = ({ currentId }) => {
 }
 
 const View = ({ data }) => {
-    const { name, description, developer, img, genres, rating, released, platforms, news, homepage } = data;
+    const { name, description, developer, img, genres, rating, released, platforms, community, homepage } = data;
 
     const platformItems = platforms.map((item, i) => {
         return (
@@ -57,7 +57,7 @@ const View = ({ data }) => {
                 <h3 className="title">{name}</h3>
                 <div className="games__info-btns">
                     <a href={homepage} className="button" target="_blank" rel="noreferrer" disabled={homepage ? false : true}>HOMEPAGE</a>
-                    <a href={news} className="button button--grey" target="_blank" rel="noreferrer" disabled={news ? false : true}>NEWS</a>
+                    <a href={community} className="button button--grey" target="_blank" rel="noreferrer" disabled={community ? false : true}>community</a>
                 </div>
             </div>
             <dl className="games__info-list text">

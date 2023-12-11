@@ -53,7 +53,7 @@ const GameRandom = () => {
 }
 
 const View = ({ game }) => {
-    const { name, description, img, news, homepage, id } = game;
+    const { name, description, img, community, homepage, id } = game;
     const transformDescription = () => {
         if (description && description != 'No description for this game.') {
             //delete all tags in description
@@ -79,8 +79,8 @@ const View = ({ game }) => {
                 <a href={homepage} className="button" target="_blank" rel="noreferrer" disabled={homepage ? false : true}>
                     HOMEPAGE
                 </a>
-                <a href={news} className="button button--grey" target="_blank" rel="noreferrer" disabled={news ? false : true}>
-                    NEWS
+                <a href={community} className="button button--grey" target="_blank" rel="noreferrer" disabled={community ? false : true}>
+                    community
                 </a>
             </div>
         </>
