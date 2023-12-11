@@ -91,7 +91,11 @@ const View = ({ data, path }) => {
 
     return (
         <ErrorBoundary>
-            <div className="single__wrapper">
+            <motion.div
+                className="single__wrapper"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+            >
                 <div className="single__box">
                     <img src={img} alt={name} className="single__box-img" />
                     <img src={img} alt={name} className="single__box-up" />
@@ -124,7 +128,7 @@ const View = ({ data, path }) => {
                 <div className="single__back">
                     <Link to={path} className="single__back-link text">Back to all</Link>
                 </div>
-            </div>
+            </motion.div>
         </ErrorBoundary>
     )
 }

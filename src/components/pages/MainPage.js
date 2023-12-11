@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link as HashLink } from 'react-scroll';
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 
 import GameList from '../gameList/GameList';
 import GameRandom from '../gameRandom/GameRandom';
@@ -31,11 +31,18 @@ const MainPage = () => {
         }
     }
 
-    const ArrowBtn = () => {
+    const ArrowBtn = ({ upArrow }) => {
         return (
-            <HashLink className='up' to='header'>
-                <img src={UpArrowImg} alt="up" className='up__img' />
-            </HashLink>
+            <div className='up' to='header'>
+                <motion.img
+                    src={UpArrowImg}
+                    alt="up"
+                    className='up__img'
+                    key="arrow"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 50 }} />
+            </div>
         )
     }
 
@@ -59,7 +66,10 @@ const MainPage = () => {
                     </div>
                 </div>
             </section>
-            {upArrow ? <ArrowBtn /> : null}
+            <AnimatePresence>
+                {upArrow ? <ArrowBtn upArrow={upArrow} /> : null}
+            </AnimatePresence>
+
         </motion.main>
     )
 }
