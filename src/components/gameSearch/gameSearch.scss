@@ -62,6 +62,9 @@
         align-items: start;
     }
     &__item {
+        width: 100%;
+    }
+    &__link {
         display: grid;
         grid-template-columns: 60px auto 90px;
         width: 100%;

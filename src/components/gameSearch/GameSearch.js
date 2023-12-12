@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import useRawgService from '../services/RawgService';
@@ -59,16 +60,17 @@ const GameSearch = () => {
         const items = foundGames.map(item => {
             const { id, name, background_image, released } = item;
             return (
-                <li className="search__item"
-                    key={id}>
-                    <div className="search__item-box">
-                        <img src={background_image} alt={name} className="search__item-img" />
-                    </div>
-                    <h4 className="search__item-title">{name}</h4>
-                    <p className="search__released">
-                        <i>Released:</i> <br />
-                        {released}
-                    </p>
+                <li key={id} className='search__item'>
+                    <Link to={`/${id}`} className="search__link">
+                        <div className="search__link-box">
+                            <img src={background_image} alt={name} className="search__link-img" />
+                        </div>
+                        <h4 className="search__link-title">{name}</h4>
+                        <p className="search__released">
+                            <i>Released:</i> <br />
+                            {released}
+                        </p>
+                    </Link>
                 </li>
             )
         })
