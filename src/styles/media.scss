@@ -41,6 +41,8 @@
         &__info {
             max-height: unset;
             position: unset;
+            max-width: 500px;
+            width: 100%;
         }
         &__wrapper {
             flex-direction: column-reverse;
@@ -48,6 +50,7 @@
         }
         &__list {
             max-width: unset;
+            justify-content: center;
         }
     }
     .genres {
@@ -75,6 +78,11 @@
     .single {
         &__info {
             grid-template-columns: 2fr 1fr;
+        }
+    }
+    .search {
+        &__wrapper {
+            max-width: 500px;
         }
     }
 }
@@ -256,6 +264,27 @@
                 float: unset;
                 margin: 20px auto 0;
             }
+        }
+    }
+    .search {
+        &__wrapper {
+            padding: 25px 15px;
+        }
+        &__box {
+            flex-direction: column;
+            gap: 15px;
+            button {
+                width: 100%;
+            }
+        }
+        &__item {
+            gap: 15px;
+            &-box {
+                height: 100%;
+            }
+        }
+        &__released {
+            padding: 10px 10px 10px 0;
         }
     }
 }

@@ -17,11 +17,19 @@ const useRawgService = () => {
         return { arr, nextPageUrl };
     }
 
+    const getGamesBySearch = async (str) => {
+        const search = await request(`${_path}?search=${str}&key=${_key}`);
+        console.log(search.results)
+        const res = search.results.slice(0, 5).map(item => {
+            return _transformSearchResults(item);
+        });
+
+        return res;
+    }
+
     const getGameById = async (id) => {
         const res = await request(`${_path}/${id}?key=${_key}`);
         /* const screenshots = await request(`${_path}/${id}/screenshots?key=${_key}`); */
-        const search = await request(`https://rawg.io/api/games?search=witcher&key=b61c177e6f9d41ff870cb8c11cc140a2`)
-        console.log(search)
 
         return _transformData(res);
     }
@@ -65,7 +73,17 @@ const useRawgService = () => {
             name: name ? name : null
         }
     }
-    return { loading, error, getAllGames, getGameById, clearError, getGenres };
+
+    const _transformSearchResults = ({ id, name, background_image, released }) => {
+        return {
+            id: id,
+            name: name ? name : null,
+            background_image: background_image ? background_image : null,
+            released: released ? released : null
+        }
+    }
+
+    return { loading, error, getAllGames, getGameById, clearError, getGenres, getGamesBySearch };
 }
 
 export default useRawgService;

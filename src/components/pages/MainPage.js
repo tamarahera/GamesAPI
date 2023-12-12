@@ -6,6 +6,7 @@ import GameList from '../gameList/GameList';
 import GameRandom from '../gameRandom/GameRandom';
 import GameInfo from '../gameInfo/GameInfo';
 import ErrorBoundary from '../errorBoundary/ErrorBoundary';
+import GameSearch from '../gameSearch/GameSearch';
 import UpArrowImg from '../../resources/circle-chevron-up-solid.svg';
 
 const MainPage = () => {
@@ -54,6 +55,9 @@ const MainPage = () => {
             <ErrorBoundary>
                 <GameRandom />
             </ErrorBoundary>
+            <ErrorBoundary>
+                <GameSearch />
+            </ErrorBoundary>
             <section className="games">
                 <div className="container">
                     <div className="games__wrapper">
@@ -69,7 +73,6 @@ const MainPage = () => {
             <AnimatePresence>
                 {upArrow ? <ArrowBtn upArrow={upArrow} /> : null}
             </AnimatePresence>
-
         </motion.main>
     )
 }
