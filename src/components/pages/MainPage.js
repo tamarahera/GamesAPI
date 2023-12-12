@@ -32,9 +32,9 @@ const MainPage = () => {
         }
     }
 
-    const ArrowBtn = ({ upArrow }) => {
+    const ArrowBtn = () => {
         return (
-            <div className='up' to='header'>
+            <HashLink className='up' to='header'>
                 <motion.img
                     src={UpArrowImg}
                     alt="up"
@@ -43,7 +43,7 @@ const MainPage = () => {
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 50 }} />
-            </div>
+            </HashLink>
         )
     }
 
