@@ -71,7 +71,7 @@ const MainPage = () => {
                 </div>
             </section>
             <AnimatePresence>
-                {upArrow ? <ArrowBtn upArrow={upArrow} /> : null}
+                {upArrow ? <ArrowBtn /> : null}
             </AnimatePresence>
         </motion.main>
     )

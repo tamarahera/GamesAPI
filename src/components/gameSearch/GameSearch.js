@@ -1,53 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
+import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import useRawgService from '../services/RawgService';
 
 import './gameSearch.scss';
 
 const GameSearch = () => {
-    const [foundGames, setFoundGames] = useState([
-        {
-            "id": 14022,
-            "name": "DUNGEONS",
-            "background_image": "https://media.rawg.io/media/screenshots/f7b/f7b1cf81632880407321f8e3385c5ee6.jpg",
-            "released": "2011-02-04"
-        },
-        {
-            "id": 7485,
-            "name": "Elite Dangerous",
-            "background_image": "https://media.rawg.io/media/games/b69/b69a67833630dd96d8eee9d2c8c27574.jpg",
-            "released": "2015-04-02"
-        },
-        {
-            "id": 18454,
-            "name": "Crossfire: Dungeons",
-            "background_image": "https://media.rawg.io/media/screenshots/d64/d6400b91cc1ee03708032a4e0fa73ca2.jpg",
-            "released": "2015-05-21"
-        },
-        {
-            "id": 257195,
-            "name": "Minecraft: Dungeons",
-            "background_image": "https://media.rawg.io/media/games/c14/c146d28ceb14c84ea9fdbd7410701277.jpg",
-            "released": "2020-05-26"
-        },
-        {
-            "id": 20990,
-            "name": "Dungeon-Party",
-            "background_image": "https://media.rawg.io/media/screenshots/c44/c44b5bc1923d26c200c311fd997f4e33.jpg",
-            "released": "2013-03-13"
-        }
-    ]);
+    const [foundGames, setFoundGames] = useState(null);
     const { getGamesBySearch } = useRawgService();
 
     const onRequest = (value) => {
-        console.log(value)
         const searchStr = value.search;
         getGamesBySearch(searchStr)
             .then(arr => {
-                console.log(arr);
                 setFoundGames(arr);
             })
     }
@@ -56,11 +24,34 @@ const GameSearch = () => {
         setFoundGames(null);
     }
 
+    const containerAnimation = {
+        hidden: { opacity: 1, scale: 0 },
+        visible: {
+            opacity: 1,
+            scale: 1,
+            transition: {
+                delayChildren: 0.3,
+                staggerChildren: 0.2
+            }
+        }
+    };
+
+    const itemAnimation = {
+        hidden: { opacity: 0, y: -10 },
+        visible: {
+            opacity: 1, y: 0
+        }
+    };
+
     const createList = (foundGames) => {
         const items = foundGames.map(item => {
             const { id, name, background_image, released } = item;
             return (
-                <li key={id} className='search__item'>
+                <motion.li
+                    key={id}
+                    className='search__item'
+                    variants={itemAnimation}
+                >
                     <Link to={`/${id}`} className="search__link">
                         <div className="search__link-box">
                             <img src={background_image} alt={name} className="search__link-img" />
@@ -71,23 +62,28 @@ const GameSearch = () => {
                             {released}
                         </p>
                     </Link>
-                </li>
+                </motion.li>
             )
         })
         return (
-            <>
-                <ul className="search__list">
-                    {items}
-                </ul>
-
-            </>
+            <motion.ul
+                className="search__list"
+                initial="hidden"
+                animate="visible"
+                variants={containerAnimation}
+            >
+                {items}
+            </motion.ul>
         )
     }
     console.log()
     return (
         <section className='search'>
             <div className="container">
-                <div className="search__wrapper">
+                <motion.div
+                    className="search__wrapper"
+                    initial={{ opacity: 0, x: -150 }}
+                    animate={{ opacity: 1, x: 0 }} >
                     <Formik
                         initialValues={{
                             search: ''
@@ -137,9 +133,9 @@ const GameSearch = () => {
 
                         )}
                     </Formik>
-                </div>
+                </motion.div>
             </div>
-        </section>
+        </section >
     )
 }
 

@@ -19,7 +19,6 @@ const useRawgService = () => {
 
     const getGamesBySearch = async (str) => {
         const search = await request(`${_path}?search=${str}&key=${_key}`);
-        console.log(search.results)
         const res = search.results.slice(0, 5).map(item => {
             return _transformSearchResults(item);
         });
