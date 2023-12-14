@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 import useRawgService from '../services/RawgService';
 
@@ -76,7 +76,7 @@ const GameSearch = () => {
             </motion.ul>
         )
     }
-    console.log()
+
     return (
         <section className='search'>
             <div className="container">

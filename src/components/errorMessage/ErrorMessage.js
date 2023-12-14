@@ -2,7 +2,7 @@ import './errorMessage.scss'
 
 const ErrorMessage = () => {
     return (
-        <section className="error">
+        <div className="error">
             <div className="error__box">
                 <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clipPath="url(#clip0_36844_5)">
@@ -17,7 +17,7 @@ const ErrorMessage = () => {
             </div>
             <h2 className="error__header">Oops!</h2>
             <p className="error__text">Something went wrong.</p>
-        </section>
+        </div>
 
     )
 }

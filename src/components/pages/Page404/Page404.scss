@@ -1,6 +1,8 @@
 .failure {
-    background-color: var(--color-white);
-    flex: 1;
+    flex-grow: 1;
+    &__wrapper {
+        background-color: var(--color-white);
+    }
     &__divider {
         height: 1px;
         width: 80%;
