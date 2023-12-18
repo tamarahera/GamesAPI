@@ -30,7 +30,7 @@ const useRawgService = () => {
     const getGameById = async (id) => {
         const res = await request(`${_path}/${id}?key=${_key}`);
         /* const screenshots = await request(`${_path}/${id}/screenshots?key=${_key}`); */
-
+        console.log(res)
         return _transformData(res);
     }
 
@@ -55,7 +55,7 @@ const useRawgService = () => {
             developer: developers ? developers[0].name : 'No info about developers',
             id: id,
             img: background_image ? background_image : imageNotFound,
-            genres: genres.map(item => item.name).join(', '),
+            genres: genres.length > 0 ? genres.map(item => item.name).join(', ') : 'No info',
             rating: rating ? `${rating}/5` : 'No info about rating',
             released: released ? released : 'No info about release',
             platforms: dataPlatforms ? dataPlatforms : 'No info about platforms',
@@ -69,17 +69,17 @@ const useRawgService = () => {
         return {
             games: games ? games : null,
             id: id,
-            image_background: image_background ? image_background : null,
-            name: name ? name : null
+            image_background: image_background ? image_background : imageNotFound,
+            name: name ? name : 'Name not found'
         }
     }
 
     const _transformSearchResults = ({ id, name, background_image, released }) => {
         return {
             id: id,
-            name: name ? name : null,
-            background_image: background_image ? background_image : null,
-            released: released ? released : null
+            name: name ? name : 'Name not found',
+            background_image: background_image ? background_image : imageNotFound,
+            released: released ? released : 'No info'
         }
     }
 

@@ -53,7 +53,7 @@ const SingleGamePage = () => {
             exit={{ opacity: 0 }}>
             <div className="container">
                 {content}
-                {errorMessage ? <Link to="/genres" className="button single__back-btn">Back to genres</Link> : null}
+                {errorMessage ? <Link to="/" className="button single__back-btn">Back to all</Link> : null}
             </div>
         </motion.section>
     )

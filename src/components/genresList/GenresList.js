@@ -5,7 +5,6 @@ import { motion } from "framer-motion"
 import './genresList.scss';
 import useRawgService from "../services/RawgService";
 import controller from '../../resources/controller_white.jpg';
-import imageNotFound from '../../resources/image_not_found.jpg';
 import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 
@@ -108,7 +107,7 @@ const GenresList = () => {
                     variants={itemAnimation}>
                     <Link to={`/genres/${id}`} className="genres__game-link">
                         <div className="genres__game-box">
-                            <img src={img ? img : imageNotFound} alt={name} className="genres__game-img" />
+                            <img src={img} alt={name} className="genres__game-img" />
                         </div>
                         <h2 className="genres__game-title">{name}</h2>
                     </Link>
