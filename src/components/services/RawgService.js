@@ -22,6 +22,7 @@ const useRawgService = () => {
         const res = search.results.slice(0, 5).map(item => {
             return _transformSearchResults(item);
         });
+        console.log(res)
 
         return res;
     }

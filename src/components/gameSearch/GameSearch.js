@@ -10,13 +10,18 @@ import './gameSearch.scss';
 
 const GameSearch = () => {
     const [foundGames, setFoundGames] = useState(null);
+    const [searchLoading, setSearchLoading] = useState(false);
     const { getGamesBySearch } = useRawgService();
 
     const onRequest = (value) => {
+        setSearchLoading(true);
         const searchStr = value.search;
         getGamesBySearch(searchStr)
             .then(arr => {
                 setFoundGames(arr);
+            })
+            .finally(() => {
+                setSearchLoading(false);
             })
     }
 
@@ -112,7 +117,8 @@ const GameSearch = () => {
                                             type="text"
                                         />
                                         <button type="submit"
-                                            className='search__submit button'>
+                                            className='search__submit button'
+                                            disabled={searchLoading}>
                                             Find
                                         </button>
                                     </div>
