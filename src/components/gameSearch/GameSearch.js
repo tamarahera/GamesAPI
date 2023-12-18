@@ -1,17 +1,20 @@
 import React, { useState } from 'react'
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage as ErrorMessageForm } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-import useRawgService from '../services/RawgService';
+import useRawgService from "../services/RawgService";
+import Spinner from "../spinner/Spinner";
+import ErrorMessage from "../errorMessage/ErrorMessage";
+
 
 import './gameSearch.scss';
 
 const GameSearch = () => {
     const [foundGames, setFoundGames] = useState(null);
     const [searchLoading, setSearchLoading] = useState(false);
-    const { getGamesBySearch } = useRawgService();
+    const { getGamesBySearch, loading, error } = useRawgService();
 
     const onRequest = (value) => {
         setSearchLoading(true);
@@ -82,6 +85,12 @@ const GameSearch = () => {
         )
     }
 
+    const spinner = loading ? <Spinner /> : null;
+    const errorMessage = error ? <ErrorMessage /> : null;
+    const gamesList = foundGames ? createList(foundGames) : null;
+
+    const content = spinner || errorMessage || gamesList;
+
     return (
         <section className='search'>
             <div className="container">
@@ -122,10 +131,10 @@ const GameSearch = () => {
                                             Find
                                         </button>
                                     </div>
-                                    <ErrorMessage className="search__error" name="search" component="div" />
+                                    <ErrorMessageForm className="search__error" name="search" component="div" />
 
                                 </Form>
-                                {foundGames ? createList(foundGames) : null}
+                                {content}
                                 {foundGames ? <button
                                     className="search__reset"
                                     type="reset"
