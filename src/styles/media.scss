@@ -287,6 +287,18 @@
             padding: 10px 10px 10px 0;
         }
     }
+    .swiper {
+        &-main, &-thumbs {
+            grid-column: unset;
+        }
+        &-button-next, &-button-prev {
+            height: 40px;
+            width: 30px;
+            &::after {
+                font-size: 25px; 
+            }
+        }
+    }
 }
 
 @media (max-width: 350px) {

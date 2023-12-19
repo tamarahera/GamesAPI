@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion'
+import { useParams, Link, useLocation } from 'react-router-dom';
+import parse from 'html-react-parser'; // use to parse string into html
 
 import useRawgService from '../../services/RawgService';
-import parse from 'html-react-parser'; // use to parse string into html
-import './singleGamePage.scss';
-
-import { useParams, Link, useLocation } from 'react-router-dom';
 import ErrorBoundary from '../../errorBoundary/ErrorBoundary';
 import Spinner from '../../spinner/Spinner';
 import ErrorMessage from '../../errorMessage/ErrorMessage';
+import Screenschots from '../../Screenshots/Screenshots';
+
+import './singleGamePage.scss';
 
 const SingleGamePage = () => {
     const [gameData, setGameData] = useState(null);
     const [path, setPath] = useState(null);
+
     const { getGameById, clearError, error, loading } = useRawgService();
 
     const { gameId } = useParams();
@@ -60,7 +62,7 @@ const SingleGamePage = () => {
 }
 
 const View = ({ data, path }) => {
-    const { name, developer, img, genres, rating, released, platforms, community, homepage, tags } = data;
+    const { name, developer, img, genres, rating, released, platforms, community, homepage, tags, screenshots, slag } = data;
     let { description } = data;
 
     const platformItems = platforms.map((item, i) => {
@@ -88,6 +90,8 @@ const View = ({ data, path }) => {
     };
 
     const descriptionParsed = descriptionParse();
+
+    const screenshotsContent = !screenshots || screenshots.length === 0 ? null : <Screenschots data={screenshots} name={slag} />
 
     return (
         <ErrorBoundary>
@@ -123,6 +127,7 @@ const View = ({ data, path }) => {
                     <ul className="single__info-tags">
                         {tagItems}
                     </ul>
+                    {screenshotsContent}
                 </div>
 
                 <div className="single__back">

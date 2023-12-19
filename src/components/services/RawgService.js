@@ -22,16 +22,22 @@ const useRawgService = () => {
         const res = search.results.slice(0, 5).map(item => {
             return _transformSearchResults(item);
         });
-        console.log(res)
 
         return res;
     }
 
     const getGameById = async (id) => {
         const res = await request(`${_path}/${id}?key=${_key}`);
-        /* const screenshots = await request(`${_path}/${id}/screenshots?key=${_key}`); */
-        console.log(res)
-        return _transformData(res);
+        const screenshotsData = await request(`${_path}/${id}/screenshots?key=${_key}`);
+
+        const screenshotsArr = screenshotsData.results.map(item => {
+            return _transformScreenshots(item);
+        });
+
+        return {
+            ..._transformData(res),
+            screenshots: screenshotsArr
+        };
     }
 
     const getGenres = async () => {
@@ -44,7 +50,7 @@ const useRawgService = () => {
         return arr;
     }
 
-    const _transformData = ({ name, description, developers, id, background_image, genres, rating, released, reddit_url, platforms, website, tags }) => {
+    const _transformData = ({ name, description, developers, id, background_image, genres, rating, released, reddit_url, platforms, website, tags, slag }) => {
         let dataPlatforms = platforms.map(item => {
             return item.platform.name;
         });
@@ -61,7 +67,8 @@ const useRawgService = () => {
             platforms: dataPlatforms ? dataPlatforms : 'No info about platforms',
             community: reddit_url ? reddit_url : null,
             homepage: website ? website : null,
-            tags: tags ? tags : null
+            tags: tags ? tags : null,
+            slag: slag ? slag : name
         }
     }
 
@@ -80,6 +87,13 @@ const useRawgService = () => {
             name: name ? name : 'Name not found',
             background_image: background_image ? background_image : imageNotFound,
             released: released ? released : 'No info'
+        }
+    }
+
+    const _transformScreenshots = ({ id, image }) => {
+        return {
+            id: id ? id : null,
+            image: image && id ? image : null
         }
     }
 
