@@ -1,5 +1,6 @@
 import useRawgService from '../services/RawgService';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import parse from 'html-react-parser'; // use to parse string into html
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
@@ -28,7 +29,7 @@ const GameInfo = ({ currentId }) => {
     const spinner = loading ? <Spinner /> : null;
     const errorMessage = error ? <ErrorMessage /> : null;
     const skeleton = (game || loading || error) ? null : <Skeleton />;
-    const content = spinner || errorMessage || skeleton || <View data={game} />;
+    const content = spinner || errorMessage || skeleton || <View data={game} id={currentId} />;
 
     //name="info" for scroll from the games list
     return (
@@ -38,7 +39,7 @@ const GameInfo = ({ currentId }) => {
     )
 }
 
-const View = ({ data }) => {
+const View = ({ data, id }) => {
     const { name, description, developer, img, genres, rating, released, platforms, community, homepage } = data;
 
     const platformItems = platforms.map((item, i) => {
@@ -51,9 +52,9 @@ const View = ({ data }) => {
     return (
         <>
             <div className="games__info-header">
-                <div className="games__info-box">
+                <Link to={`/${id}`} className="games__info-box">
                     <img src={img} alt={name} className="games__info-img" />
-                </div>
+                </Link>
                 <h3 className="title">{name}</h3>
                 <div className="games__info-btns">
                     <a href={homepage} className="button" target="_blank" rel="noreferrer" disabled={homepage ? false : true}>HOMEPAGE</a>
