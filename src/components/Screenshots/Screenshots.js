@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import { motion } from 'framer-motion'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 

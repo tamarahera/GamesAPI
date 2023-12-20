@@ -14,6 +14,7 @@ import './singleGamePage.scss';
 const SingleGamePage = () => {
     const [gameData, setGameData] = useState(null);
     const [path, setPath] = useState(null);
+    const [screenschotsAppearance, setScreenschotsAppearance] = useState(false);
 
     const { getGameById, clearError, error, loading } = useRawgService();
 
@@ -22,7 +23,6 @@ const SingleGamePage = () => {
     useEffect(() => {
         onRequest(gameId);
     }, [gameId])
-
     useEffect(() => {
         if (location.pathname.match(/genres/)) {
             setPath("/genres")
@@ -44,15 +44,15 @@ const SingleGamePage = () => {
     const spinner = loading ? <Spinner /> : null;
     const errorMessage = error ? <ErrorMessage /> : null;
 
-    const content = spinner || errorMessage || (gameData ? <View data={gameData} path={path} /> : null);
-
+    const content = spinner || errorMessage || (gameData ? <View data={gameData} path={path} screenschotsAppearance={screenschotsAppearance} setScreenschotsAppearance={setScreenschotsAppearance} /> : null);
 
     return (
         <motion.section
             className="single"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}>
+            exit={{ opacity: 0 }}
+        >
             <div className="container">
                 {content}
                 {errorMessage ? <Link to="/" className="button single__back-btn">Back to all</Link> : null}
@@ -61,7 +61,7 @@ const SingleGamePage = () => {
     )
 }
 
-const View = ({ data, path }) => {
+const View = ({ data, path, screenschotsAppearance, setScreenschotsAppearance }) => {
     const { name, developer, img, genres, rating, released, platforms, community, homepage, tags, screenshots, slag } = data;
     let { description } = data;
 
@@ -81,6 +81,8 @@ const View = ({ data, path }) => {
     });
 
     const descriptionParse = () => {
+        description = description.replace(/[&#][\w\d-#+]*;|quot;|[-★=\*]*/g, '');
+
         if (/h[1-5]?>/.test(description)) {
             description = description.replace(/h[1-4]>/g, 'h6>');
             return parse(description);
@@ -91,7 +93,7 @@ const View = ({ data, path }) => {
 
     const descriptionParsed = descriptionParse();
 
-    const screenshotsContent = !screenshots || screenshots.length === 0 ? null : <Screenschots data={screenshots} name={slag} />
+    const screenshotsContent = !screenshots || screenshots.length === 0 || !screenschotsAppearance ? null : <Screenschots data={screenshots} name={slag} />
 
     return (
         <ErrorBoundary>
@@ -99,6 +101,7 @@ const View = ({ data, path }) => {
                 className="single__wrapper"
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
+                onAnimationComplete={() => setScreenschotsAppearance(true)}
             >
                 <div className="single__box">
                     <img src={img} alt={name} className="single__box-img" />
