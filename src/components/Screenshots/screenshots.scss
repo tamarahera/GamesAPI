@@ -4,6 +4,19 @@
     &-main, &-thumbs {
         grid-column: 1/3;
     }
+    &-thumbs {
+        cursor: pointer;
+        max-height: 100px;
+    }
+    &-main {
+        max-height: 300px;
+        .swiper-slide {
+            background-color: var(--color-black);
+        }
+        .swiper-slide img {
+            object-fit: contain;
+        }
+    }
     &-slide {
         text-align: center;
         font-size: 18px;

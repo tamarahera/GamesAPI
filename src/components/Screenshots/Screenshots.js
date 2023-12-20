@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { motion } from 'framer-motion'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 
@@ -33,6 +34,7 @@ const Screenschots = ({ data, name }) => {
     return (
         <ErrorBoundary>
             <Swiper
+                className="swiper-main"
                 loop={true}
                 style={{
                     '--swiper-navigation-color': '#fff',
@@ -42,11 +44,11 @@ const Screenschots = ({ data, name }) => {
                 navigation={true}
                 thumbs={{ swiper: thumbsSwiper }}
                 modules={[FreeMode, Navigation, Thumbs]}
-                className="swiper-thumbs"
             >
                 {images}
             </Swiper>
             <Swiper
+                className="swiper-thumbs"
                 loop={true}
                 onSwiper={setThumbsSwiper}
                 spaceBetween={10}
@@ -54,7 +56,6 @@ const Screenschots = ({ data, name }) => {
                 freeMode={true}
                 watchSlidesProgress={true}
                 modules={[FreeMode, Navigation, Thumbs]}
-                className="swiper-main"
             >
                 {images}
             </Swiper>
