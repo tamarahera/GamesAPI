@@ -43,6 +43,7 @@ const Screenschots = ({ data, name }) => {
                 navigation={true}
                 thumbs={{ swiper: thumbsSwiper }}
                 modules={[FreeMode, Navigation, Thumbs]}
+                lazy="true"
             >
                 {images}
             </Swiper>

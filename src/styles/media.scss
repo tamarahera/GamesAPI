@@ -265,6 +265,9 @@
                 margin: 20px auto 0;
             }
         }
+        &__slider {
+            grid-column: unset;
+        }
     }
     .search {
         &__wrapper {
@@ -288,9 +291,6 @@
         }
     }
     .swiper {
-        &-main, &-thumbs {
-            grid-column: unset;
-        }
         &-button-next, &-button-prev {
             height: 40px;
             width: 30px;

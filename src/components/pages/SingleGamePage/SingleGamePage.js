@@ -14,7 +14,6 @@ import './singleGamePage.scss';
 const SingleGamePage = () => {
     const [gameData, setGameData] = useState(null);
     const [path, setPath] = useState(null);
-    const [screenschotsAppearance, setScreenschotsAppearance] = useState(false);
 
     const { getGameById, clearError, error, loading } = useRawgService();
 
@@ -23,6 +22,7 @@ const SingleGamePage = () => {
     useEffect(() => {
         onRequest(gameId);
     }, [gameId])
+
     useEffect(() => {
         if (location.pathname.match(/genres/)) {
             setPath("/genres")
@@ -44,7 +44,9 @@ const SingleGamePage = () => {
     const spinner = loading ? <Spinner /> : null;
     const errorMessage = error ? <ErrorMessage /> : null;
 
-    const content = spinner || errorMessage || (gameData ? <View data={gameData} path={path} screenschotsAppearance={screenschotsAppearance} setScreenschotsAppearance={setScreenschotsAppearance} /> : null);
+    const content = spinner ||
+        errorMessage ||
+        (gameData ? <View data={gameData} path={path} /> : null);
 
     return (
         <motion.section
@@ -61,7 +63,7 @@ const SingleGamePage = () => {
     )
 }
 
-const View = ({ data, path, screenschotsAppearance, setScreenschotsAppearance }) => {
+const View = ({ data, path }) => {
     const { name, developer, img, genres, rating, released, platforms, community, homepage, tags, screenshots, slag } = data;
     let { description } = data;
 
@@ -93,7 +95,7 @@ const View = ({ data, path, screenschotsAppearance, setScreenschotsAppearance })
 
     const descriptionParsed = descriptionParse();
 
-    const screenshotsContent = !screenshots || screenshots.length === 0 || !screenschotsAppearance ? null : <Screenschots data={screenshots} name={slag} />
+    const screenshotsContent = !screenshots || screenshots.length === 0 ? null : <Screenschots data={screenshots} name={slag} />
 
     return (
         <ErrorBoundary>
@@ -101,7 +103,6 @@ const View = ({ data, path, screenschotsAppearance, setScreenschotsAppearance })
                 className="single__wrapper"
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
-                onAnimationComplete={() => setScreenschotsAppearance(true)}
             >
                 <div className="single__box">
                     <img src={img} alt={name} className="single__box-img" />
@@ -130,7 +131,13 @@ const View = ({ data, path, screenschotsAppearance, setScreenschotsAppearance })
                     <ul className="single__info-tags">
                         {tagItems}
                     </ul>
-                    {screenshotsContent}
+                    <motion.div
+                        className="single__slider"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1.3 }}>
+                        {screenshotsContent}
+                    </motion.div>
                 </div>
 
                 <div className="single__back">
