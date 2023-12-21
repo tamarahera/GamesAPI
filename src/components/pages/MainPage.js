@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Link as HashLink } from 'react-scroll';
 import { motion, AnimatePresence } from 'framer-motion'
 
 import GameList from '../gameList/GameList';
@@ -7,7 +6,7 @@ import GameRandom from '../gameRandom/GameRandom';
 import GameInfo from '../gameInfo/GameInfo';
 import ErrorBoundary from '../errorBoundary/ErrorBoundary';
 import GameSearch from '../gameSearch/GameSearch';
-import UpArrowImg from '../../resources/circle-chevron-up-solid.svg';
+import ArrowBtn from '../arrowUp/ArrowUp';
 
 const MainPage = () => {
     const [id, setId] = useState('');
@@ -30,21 +29,6 @@ const MainPage = () => {
         } else {
             setUpArrow(false);
         }
-    }
-
-    const ArrowBtn = () => {
-        return (
-            <HashLink className='up' to='header'>
-                <motion.img
-                    src={UpArrowImg}
-                    alt="up"
-                    className='up__img'
-                    key="arrow"
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 50 }} />
-            </HashLink>
-        )
     }
 
     return (
