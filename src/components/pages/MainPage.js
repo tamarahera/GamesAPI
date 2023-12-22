@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'framer-motion'
 
 import GameList from '../gameList/GameList';
@@ -32,32 +33,39 @@ const MainPage = () => {
     }
 
     return (
-        <motion.main
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}>
-            <ErrorBoundary>
-                <GameRandom />
-            </ErrorBoundary>
-            <ErrorBoundary>
-                <GameSearch />
-            </ErrorBoundary>
-            <section className="games">
-                <div className="container">
-                    <div className="games__wrapper">
-                        <ErrorBoundary>
-                            <GameList updateCurrentId={updateCurrentId} />
-                        </ErrorBoundary>
-                        <ErrorBoundary>
-                            <GameInfo currentId={id} />
-                        </ErrorBoundary>
+        <HelmetProvider>
+            <Helmet>
+                <title>Games information portal</title>
+                <meta name="description" content="Games information portal" />
+            </Helmet>
+            <motion.main
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}>
+                <ErrorBoundary>
+                    <GameRandom />
+                </ErrorBoundary>
+                <ErrorBoundary>
+                    <GameSearch />
+                </ErrorBoundary>
+                <section className="games">
+                    <div className="container">
+                        <div className="games__wrapper">
+                            <ErrorBoundary>
+                                <GameList updateCurrentId={updateCurrentId} />
+                            </ErrorBoundary>
+                            <ErrorBoundary>
+                                <GameInfo currentId={id} />
+                            </ErrorBoundary>
+                        </div>
                     </div>
-                </div>
-            </section>
-            <AnimatePresence>
-                {upArrow ? <ArrowBtn /> : null}
-            </AnimatePresence>
-        </motion.main>
+                </section>
+                <AnimatePresence>
+                    {upArrow ? <ArrowBtn /> : null}
+                </AnimatePresence>
+            </motion.main>
+        </HelmetProvider>
+
     )
 }
 

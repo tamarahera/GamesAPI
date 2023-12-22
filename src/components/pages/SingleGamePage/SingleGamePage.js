@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { motion } from 'framer-motion'
 import { useParams, Link, useLocation } from 'react-router-dom';
 import parse from 'html-react-parser'; // use to parse string into html
@@ -49,17 +50,26 @@ const SingleGamePage = () => {
         (gameData ? <View data={gameData} path={path} /> : null);
 
     return (
-        <motion.section
-            className="single"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-        >
-            <div className="container">
-                {content}
-                {errorMessage ? <Link to="/" className="button single__back-btn">Back to all</Link> : null}
-            </div>
-        </motion.section>
+        <HelmetProvider>
+            <Helmet>
+                <title>
+                    {gameData ? `${gameData.name} – info` : `Info about the game`}
+                </title>
+                <meta name="description" content={gameData ? `Information about ${gameData.name} game` : `Info about the single game`} />
+            </Helmet>
+
+            <motion.section
+                className="single"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+            >
+                <div className="container">
+                    {content}
+                    {errorMessage ? <Link to="/" className="button single__back-btn">Back to all</Link> : null}
+                </div>
+            </motion.section>
+        </HelmetProvider>
     )
 }
 
