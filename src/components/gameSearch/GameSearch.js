@@ -53,7 +53,7 @@ const GameSearch = () => {
 
     const createList = (foundGames) => {
         const items = foundGames.map(item => {
-            const { id, name, background_image, released } = item;
+            const { id, name, img, released } = item;
             return (
                 <motion.li
                     key={id}
@@ -62,7 +62,7 @@ const GameSearch = () => {
                 >
                     <Link to={`/${id}`} className="search__link">
                         <div className="search__link-box">
-                            <img src={background_image} alt={name} className="search__link-img" />
+                            <img src={img} alt={name} className="search__link-img" />
                         </div>
                         <h4 className="search__link-title">{name}</h4>
                         <p className="search__released">

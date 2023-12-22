@@ -38,7 +38,7 @@ const GenresList = () => {
     const onRequestGamesById = (games, name) => {
         setGenresGames([]);
         setGenreName(name);
-        games.map(item => {
+        games.forEach(item => {
             getGameById(item.id)
                 .then(data => {
                     setGenresGames(genresGames => [...genresGames, data]);
@@ -72,14 +72,14 @@ const GenresList = () => {
 
     const createGenresList = (arr) => {
         const items = arr.map(item => {
-            const { id, image_background, name, games } = item;
+            const { id, img, name, games } = item;
             return (
                 <motion.li className="genres__item"
                     key={id}
                     onClick={() => onRequestGamesById(games, name)}
                     variants={itemAnimation}>
                     <div className="genres__item-box">
-                        <img src={image_background} alt={name} className="genres__item-img" />
+                        <img src={img} alt={name} className="genres__item-img" />
                     </div>
                     <h2 className="genres__item-title">{name}</h2>
                 </motion.li>

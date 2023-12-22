@@ -5,31 +5,29 @@ const useRawgService = () => {
     const { loading, error, request, clearError } = useHttp();
 
     const _key = process.env.REACT_APP_API_KEY;
-    const _path = 'https://api.rawg.io/api/games';
+    const _path = 'https://api.rawg.io/api';
 
-    const getAllGames = async (url = `${_path}?page_size=9&key=${_key}`) => {
+    const getAllGames = async (url = `${_path}/games?page_size=9&key=${_key}`) => {
         const res = await request(url);
         const arr = res.results.map(item => {
-            return _transformData(item);
+            return _transformShortData(item);
         });
         const nextPageUrl = res.next;
-
         return { arr, nextPageUrl };
     }
 
     const getGamesBySearch = async (str) => {
-        const search = await request(`${_path}?search=${str}&key=${_key}`);
+        const search = await request(`${_path}/games?search=${str}&key=${_key}`);
         const res = search.results.slice(0, 5).map(item => {
-            return _transformSearchResults(item);
+            return _transformShortData(item);
         });
 
         return res;
     }
 
     const getGameById = async (id) => {
-        const res = await request(`${_path}/${id}?key=${_key}`);
-        const screenshotsData = await request(`${_path}/${id}/screenshots?key=${_key}`);
-
+        const res = await request(`${_path}/games/${id}?key=${_key}`);
+        const screenshotsData = await request(`${_path}/games/${id}/screenshots?key=${_key}`);
         const screenshotsArr = screenshotsData.results.map(item => {
             return _transformScreenshots(item);
         });
@@ -41,13 +39,16 @@ const useRawgService = () => {
     }
 
     const getGenres = async () => {
-        const res = await request(`https://api.rawg.io/api/genres?key=${_key}`);
-
+        const res = await request(`${_path}/genres?key=${_key}`);
         const arr = res.results.map(item => {
-            return _transformGenres(item);
+            return _transformShortData(item);
         })
 
         return arr;
+    }
+
+    const getGamesByGenres = async () => {
+        const res = await request(`${_path}/games?genres=card&key=${_key}&page=1&page_size=9`);
     }
 
     const _transformData = ({ name, description, developers, id, background_image, genres, rating, released, reddit_url, platforms, website, tags, slag }) => {
@@ -72,28 +73,30 @@ const useRawgService = () => {
         }
     }
 
-    const _transformGenres = ({ games, id, image_background, name }) => {
-        return {
-            games: games ? games : null,
-            id: id,
-            image_background: image_background ? image_background : imageNotFound,
-            name: name ? name : 'Name not found'
-        }
-    }
-
-    const _transformSearchResults = ({ id, name, background_image, released }) => {
-        return {
-            id: id,
-            name: name ? name : 'Name not found',
-            background_image: background_image ? background_image : imageNotFound,
-            released: released ? released : 'No info'
-        }
-    }
-
     const _transformScreenshots = ({ id, image }) => {
         return {
             id: id ? id : null,
             image: image && id ? image : null
+        }
+    }
+
+    const _transformShortData = ({ id, name, games, released, image_background, image, background_image }) => {
+        const setImgUrl = () => {
+            if ((image || image_background || background_image) && id) {
+                return image || image_background || background_image;
+            } else {
+                return null;
+            }
+        }
+
+        const images = setImgUrl();
+
+        return {
+            id: id ? id : null,
+            name: name ? name : 'Name not found',
+            games: games ? games : null,
+            released: released ? released : 'No info',
+            img: images ? images : imageNotFound
         }
     }
 

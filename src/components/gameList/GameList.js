@@ -5,7 +5,6 @@ import './gameList.scss';
 import { useEffect, useState, useRef } from 'react';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
-import imageNotFound from '../../resources/image_not_found.jpg';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
 
@@ -149,7 +148,7 @@ const GameList = ({ updateCurrentId }) => {
                     variants={itemAnimation}
                 >
                     <div className="games__item-box">
-                        <img src={img ? img : imageNotFound} alt={name} className="games__item-img" />
+                        <img src={img} alt={name} className="games__item-img" />
                     </div>
                     <h2 className="games__item-title">{name}</h2>
                 </motion.li>
