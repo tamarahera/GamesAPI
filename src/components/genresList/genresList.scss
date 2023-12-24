@@ -72,6 +72,9 @@
             font-size: 22px;
             font-weight: 700;
         }
+        &:hover {
+            transform: translateY(-6px)!important;
+        }
     }
     &__game {
         width: 200px;
@@ -92,6 +95,9 @@
             padding: 15px;
             font-size: 22px;
             font-weight: 700;
+        }
+        &:hover {
+            transform: translateY(-6px)!important;
         }
     }
 }

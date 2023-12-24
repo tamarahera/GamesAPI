@@ -166,13 +166,13 @@
     .random {
         &__game {
             padding: 20px;
-            min-height: 380px;
             grid-template-columns: 1fr;
             gap: 10px;
             &-box {
                 grid-row: unset;
                 width: 100%;
                 max-height: 200px;
+                background-color: var(--color-black);
             }
             &-img {
                 object-fit: contain;
