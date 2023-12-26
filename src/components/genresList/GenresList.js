@@ -13,14 +13,16 @@ const GenresList = () => {
     const [genresData, setGenresData] = useState([]);
     const [genresGames, setGenresGames] = useState([]);
     const [genreName, setGenreName] = useState('');
+    const [pageNum, setPagePum] = useState(null);
 
     const [genresDataLoading, setGenresDataLoading] = useState(false);
     const [openGames, setOpenGames] = useState(false);
 
-    const { getGenres, getGameById, loading, error } = useRawgService();
+    const { getGenres, loading, error, getGamesByGenres } = useRawgService();
 
     const onRequestGenres = () => {
         setOpenGames(false);
+        setPagePum(1);
         setGenresDataLoading(true);
         if (genresData.length > 0) {
             return;
@@ -35,19 +37,21 @@ const GenresList = () => {
         }
     }
 
-    const onRequestGamesById = (games, name) => {
-        setGenresGames([]);
+    const onRequestGamesByGenre = (slug, name) => {
         setGenreName(name);
-        games.forEach(item => {
-            getGameById(item.id)
-                .then(data => {
-                    setGenresGames(genresGames => [...genresGames, data]);
-                })
-                .finally(() => {
-                    setOpenGames(true);
-                    setGenresDataLoading(false);
-                })
-        });
+        setGenresGames([]);
+
+        getGamesByGenres(slug, pageNum)
+            .then((res) => {
+                console.log(res.data)
+                setGenresGames(genresGames => [...genresGames, ...res.data])
+            })
+            .finally(() => {
+                setPagePum(pageNum + 1);
+                setOpenGames(true);
+                setGenresDataLoading(false);
+                console.log(genresGames)
+            })
     }
 
     const containerAnimation = {
@@ -72,11 +76,11 @@ const GenresList = () => {
 
     const createGenresList = (arr) => {
         const items = arr.map(item => {
-            const { id, img, name, games } = item;
+            const { id, img, name, slug } = item;
             return (
                 <motion.li className="genres__item"
                     key={id}
-                    onClick={() => onRequestGamesById(games, name)}
+                    onClick={() => onRequestGamesByGenre(slug, name)}
                     variants={itemAnimation}>
                     <div className="genres__item-box">
                         <img src={img} alt={name} className="genres__item-img" />

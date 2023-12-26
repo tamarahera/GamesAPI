@@ -40,6 +40,7 @@ const useRawgService = () => {
 
     const getGenres = async () => {
         const res = await request(`${_path}/genres?key=${_key}`);
+        console.log(res)
         const arr = res.results.map(item => {
             return _transformShortData(item);
         })
@@ -47,8 +48,16 @@ const useRawgService = () => {
         return arr;
     }
 
-    const getGamesByGenres = async () => {
-        const res = await request(`${_path}/games?genres=card&key=${_key}&page=1&page_size=9`);
+    const getGamesByGenres = async (genreName, pageNum) => {
+        const res = await request(`${_path}/games?genres=${genreName}&key=${_key}&page=${pageNum}&page_size=9`);
+
+        const data = res.results.map(item => {
+            return _transformShortData(item);
+        });
+
+        const nextPageUrl = res.next;
+
+        return { data, nextPageUrl };
     }
 
     const _transformData = ({ name, description, developers, id, background_image, genres, rating, released, reddit_url, platforms, website, tags, slag }) => {
@@ -80,7 +89,7 @@ const useRawgService = () => {
         }
     }
 
-    const _transformShortData = ({ id, name, games, released, image_background, image, background_image }) => {
+    const _transformShortData = ({ id, name, games, released, image_background, image, background_image, slug }) => {
         const setImgUrl = () => {
             if ((image || image_background || background_image) && id) {
                 return image || image_background || background_image;
@@ -94,13 +103,13 @@ const useRawgService = () => {
         return {
             id: id ? id : null,
             name: name ? name : 'Name not found',
-            games: games ? games : null,
             released: released ? released : 'No info',
-            img: images ? images : imageNotFound
+            img: images ? images : imageNotFound,
+            slug: slug ? slug : null
         }
     }
 
-    return { loading, error, getAllGames, getGameById, clearError, getGenres, getGamesBySearch };
+    return { loading, error, getAllGames, getGameById, clearError, getGenres, getGamesBySearch, getGamesByGenres };
 }
 
 export default useRawgService;
