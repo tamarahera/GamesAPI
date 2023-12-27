@@ -61,7 +61,7 @@ const GenresList = () => {
             scale: 1,
             transition: {
                 delayChildren: 0.3,
-                staggerChildren: 0.2
+                staggerChildren: 0.1,
             }
         }
     };
@@ -70,7 +70,7 @@ const GenresList = () => {
         hidden: { y: 20, opacity: 0 },
         visible: {
             y: 0,
-            opacity: 1,
+            opacity: 1
         }
     };
 

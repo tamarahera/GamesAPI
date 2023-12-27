@@ -21,8 +21,7 @@
     .genres {
         padding: 30px 10px;
         &__list {
-            justify-content: flex-start;
-            column-gap: 50px;
+            column-gap: 52px;
         }
     }
 }
@@ -105,12 +104,6 @@
     .genres {
         &__list {
             gap: 15px;
-        }
-        &__item {
-            width: 150px;
-            &-title {
-                font-size: 18px;
-            }
         }
     }
     .single {
@@ -223,6 +216,21 @@
                 flex-direction: row;
             }
         }
+        &__item {
+            width: 140px;
+            &-box {
+                height: 80px;
+                width: 100%;
+            }
+            &-title {
+                font-size: 18px;
+                padding: 10px 15px;
+            }
+            &-img {
+                object-position: top;
+            }
+        }
+        
     }
     .spinner {
         width: 160px;
@@ -238,7 +246,32 @@
             }
         }
         &__list {
-            justify-content: center;
+            justify-content: center;    
+        }
+        &__item {
+            width: 140px;
+            &-box {
+                height: 100%;
+                width: 35px;
+            }
+        }
+        &__game {
+            width: 140px;
+            &-box {
+                height: 80px;
+                width: 100%;
+            }
+            &-title {
+                font-size: 18px;
+                padding: 10px 15px;
+            }
+            &-img {
+                object-position: top;
+            }
+        }
+        &__title {
+            margin-bottom: 20px;
+            font-size: 20px;
         }
     }
     .single {
@@ -247,13 +280,14 @@
         }
         &__info {
             grid-template-columns: 1fr;
-            gap: 30px;
+            gap: 15px;
             &-tags, &-platforms, &-descr {
                 grid-column: unset;
             }
             &-btns {
                 flex-direction: row;
                 justify-content: flex-end;
+                margin-bottom: 10px;
             }
             &-tags {
                 margin-top: 10px;
@@ -263,6 +297,9 @@
             &-btn {
                 float: unset;
                 margin: 20px auto 0;
+            }
+            &-link {
+                padding-bottom: 10px;
             }
         }
         &__slider {
@@ -302,17 +339,6 @@
 }
 
 @media (max-width: 350px) {
-    .genres {
-        &__list {
-            gap: 25px;
-        }
-        &__item {
-            width: 100%;
-            &-box {
-                height: 100px;
-            }
-        }
-    }
     .single {
         &__back {
             &-btn {
