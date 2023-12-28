@@ -18,10 +18,20 @@ const GameRandom = () => {
         onUpdateGame();
     }, []);
 
+    useEffect(() => {
+        const showGameWithTime = setInterval(() => {
+            onUpdateGame();
+        }, 7000);
+
+        return () => {
+            clearInterval(showGameWithTime);
+        }
+    }, []);
+
     const onUpdateGame = () => {
         clearError();
         const id = Math.floor(Math.random() * (3000 - 1) + 1);
-
+        console.log(id)
         getGameById(id)
             .then(data => setGame(data));
     }
