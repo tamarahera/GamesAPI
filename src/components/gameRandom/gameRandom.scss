@@ -31,6 +31,9 @@
             display: flex;
             gap: 30px;
         }
+        &-text {
+            word-break: break-all;
+        }
         .error {
             grid-column: 1/3;
         }

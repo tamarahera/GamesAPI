@@ -18,7 +18,7 @@ const GameRandom = () => {
         onUpdateGame();
     }, []);
 
-    useEffect(() => {
+    /* useEffect(() => {
         const showGameWithTime = setInterval(() => {
             onUpdateGame();
         }, 7000);
@@ -26,12 +26,12 @@ const GameRandom = () => {
         return () => {
             clearInterval(showGameWithTime);
         }
-    }, []);
+    }, []); */
 
     const onUpdateGame = () => {
         clearError();
         const id = Math.floor(Math.random() * (3000 - 1) + 1);
-        console.log(id)
+
         getGameById(id)
             .then(data => setGame(data));
     }
@@ -46,16 +46,16 @@ const GameRandom = () => {
                 <div className="random__wrapper">
                     <motion.div
                         className="random__game"
-                        initial={{ opacity: 0, x: -150 }}
-                        animate={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
                     >
                         {content}
                     </motion.div>
 
                     <motion.div
                         className="random__try"
-                        initial={{ opacity: 0, x: 150 }}
-                        animate={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
                     >
                         <p className="random__try-text">
                             Random game for today!<br />
@@ -75,9 +75,9 @@ const GameRandom = () => {
 const View = ({ game }) => {
     const { name, description, img, community, homepage, id } = game;
     const transformDescription = () => {
-        if (description && description != 'No description for this game.') {
+        if (description && description !== 'No description') {
             //delete all tags in description
-            const descriptionWithoutTags = description.replace(/<\/?\w* ?\/?>|[&#][\w\d-#+]*;|quot;|[-★=\*]*/g, '');
+            const descriptionWithoutTags = description.replace(/<\/?\w* ?\/?>|[&#][\w\d-#+]*;|quot;|[-★=*∞•■#]*/g, '');
 
             const slicedDescription = descriptionWithoutTags.length > 160 ? descriptionWithoutTags.slice(0, 160) + '...' : descriptionWithoutTags;
 
@@ -94,7 +94,7 @@ const View = ({ game }) => {
                 <img src={img} alt={name} className="random__game-img" />
             </Link>
             <h3 className="title">{name}</h3>
-            <p className="text">{transformedDescription}</p>
+            <p className="text text-descr random__game-text">{transformedDescription}</p>
             <div className="random__game-btns">
                 <a href={homepage} className="button" target="_blank" rel="noreferrer" disabled={homepage ? false : true}>
                     HOMEPAGE

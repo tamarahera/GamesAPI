@@ -106,5 +106,9 @@
         &:hover {
             transform: translateY(-6px)!important;
         }
+        &-btn {
+            margin: 50px auto 0;
+            width: 170px !important;
+        }
     }
 }

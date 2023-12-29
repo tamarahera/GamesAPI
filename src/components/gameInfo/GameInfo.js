@@ -71,7 +71,7 @@ const View = ({ data, id }) => {
                 <dt>Developer:</dt>
                 <dd>{developer}</dd>
             </dl>
-            <div className="games__info-descr text">{descriptionParsed}</div>
+            <div className="games__info-descr text text-descr">{descriptionParsed}</div>
             <ul className="games__info-platforms text">
                 {platformItems}
             </ul>
