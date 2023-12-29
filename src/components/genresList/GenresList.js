@@ -12,8 +12,11 @@ import ErrorMessage from "../errorMessage/ErrorMessage";
 const GenresList = () => {
     const [genresData, setGenresData] = useState([]);
     const [genresGames, setGenresGames] = useState([]);
+
     const [genreName, setGenreName] = useState('');
+    const [slugName, setSlugName] = useState('');
     const [pageNum, setPagePum] = useState(null);
+    const [newGameLoading, setNewGameLoading] = useState(false);
 
     const [genresDataLoading, setGenresDataLoading] = useState(false);
     const [openGames, setOpenGames] = useState(false);
@@ -24,6 +27,7 @@ const GenresList = () => {
         setOpenGames(false);
         setPagePum(1);
         setGenresDataLoading(true);
+        setGenresGames([]);
         if (genresData.length > 0) {
             return;
         } else {
@@ -37,20 +41,20 @@ const GenresList = () => {
         }
     }
 
-    const onRequestGamesByGenre = (slug, name) => {
-        setGenreName(name);
-        setGenresGames([]);
+    const onRequestGamesByGenre = (initialLoading, slug, name) => {
+        initialLoading ? setNewGameLoading(false) : setNewGameLoading(true);
 
+        setGenreName(name);
+        setSlugName(slug);
         getGamesByGenres(slug, pageNum)
             .then((res) => {
-                console.log(res.data)
                 setGenresGames(genresGames => [...genresGames, ...res.data])
             })
             .finally(() => {
                 setPagePum(pageNum + 1);
                 setOpenGames(true);
                 setGenresDataLoading(false);
-                console.log(genresGames)
+                setNewGameLoading(false);
             })
     }
 
@@ -80,7 +84,7 @@ const GenresList = () => {
             return (
                 <motion.li className="genres__item"
                     key={id}
-                    onClick={() => onRequestGamesByGenre(slug, name)}
+                    onClick={() => onRequestGamesByGenre(true, slug, name)}
                     variants={itemAnimation}>
                     <div className="genres__item-box">
                         <img src={img} alt={name} className="genres__item-img" />
@@ -127,6 +131,11 @@ const GenresList = () => {
                     animate="visible">
                     {items}
                 </motion.ul>
+                <button className="button genres__game-btn"
+                    onClick={() => onRequestGamesByGenre(false, slugName, genreName)}
+                    disabled={newGameLoading}>
+                    Load more
+                </button >
             </>
         )
     }
@@ -134,7 +143,7 @@ const GenresList = () => {
     const genresList = genresData.length && !openGames > 0 ? createGenresList(genresData) : null;
     const gamesList = genresGames.length && openGames > 0 ? createGamesList(genresGames) : null;
 
-    const spinner = loading ? <Spinner /> : null;
+    const spinner = loading && !newGameLoading ? <Spinner /> : null;
     const errorMessage = error ? <ErrorMessage /> : null;
     const content = spinner || errorMessage || genresList || gamesList;
     return (

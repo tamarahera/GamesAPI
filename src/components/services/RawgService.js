@@ -27,6 +27,7 @@ const useRawgService = () => {
 
     const getGameById = async (id) => {
         const res = await request(`${_path}/games/${id}?key=${_key}`);
+        console.log(res)
         const screenshotsData = await request(`${_path}/games/${id}/screenshots?key=${_key}`);
         const screenshotsArr = screenshotsData.results.map(item => {
             return _transformScreenshots(item);
@@ -40,7 +41,7 @@ const useRawgService = () => {
 
     const getGenres = async () => {
         const res = await request(`${_path}/genres?key=${_key}`);
-        console.log(res)
+
         const arr = res.results.map(item => {
             return _transformShortData(item);
         })
@@ -68,7 +69,7 @@ const useRawgService = () => {
         return {
             name: name ? name : 'Name not found',
             description: description ? description : 'No description',
-            developer: developers ? developers[0].name : 'No info',
+            developer: developers && developers.length > 0 ? developers[0].name : 'No info',
             id: id,
             img: background_image ? background_image : imageNotFound,
             genres: genres.length > 0 ? genres.map(item => item.name).join(', ') : 'No info',
@@ -89,7 +90,7 @@ const useRawgService = () => {
         }
     }
 
-    const _transformShortData = ({ id, name, games, released, image_background, image, background_image, slug }) => {
+    const _transformShortData = ({ id, name, released, image_background, image, background_image, slug }) => {
         const setImgUrl = () => {
             if ((image || image_background || background_image) && id) {
                 return image || image_background || background_image;
