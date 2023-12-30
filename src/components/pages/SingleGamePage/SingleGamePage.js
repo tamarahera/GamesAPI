@@ -134,7 +134,7 @@ const View = ({ data, path }) => {
                         <a href={homepage} className="button" target="_blank" rel="noreferrer" disabled={homepage ? false : true}>HOMEPAGE</a>
                         <a href={community} className="button button--grey" target="_blank" rel="noreferrer" disabled={community ? false : true}>community</a>
                     </div>
-                    <div className="single__info-descr text">{descriptionParsed}</div>
+                    <div className="single__info-descr text text-descr">{descriptionParsed}</div>
                     <ul className="single__info-platforms text">
                         {platformItems}
                     </ul>
