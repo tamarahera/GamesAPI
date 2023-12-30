@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage as ErrorMessageForm } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
@@ -8,27 +8,38 @@ import useRawgService from "../services/RawgService";
 import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 
-
 import './gameSearch.scss';
 
 const GameSearch = () => {
     const [foundGames, setFoundGames] = useState(null);
     const [searchLoading, setSearchLoading] = useState(false);
+    const [searchValue, setSearchValue] = useState('');
+
     const { getGamesBySearch, loading, error } = useRawgService();
 
+    useEffect(() => {
+        let timer;
+
+        if (searchValue.length > 1 && searchValue) {
+            timer = setTimeout(() => onRequest(searchValue), 2000); // debounce
+        }
+
+        return () => {
+            clearTimeout(timer);
+        }
+    }, [searchValue])
+
     const onRequest = (value) => {
+        setFoundGames(null);
         setSearchLoading(true);
-        const searchStr = value.search;
-        getGamesBySearch(searchStr)
-            .then(arr => {
-                setFoundGames(arr);
-            })
+        getGamesBySearch(value)
+            .then(arr => arr.length > 0 ? setFoundGames(arr) : setFoundGames(undefined))
             .finally(() => {
                 setSearchLoading(false);
             })
     }
 
-    const onResetSearch = () => {
+    const onResetGames = () => {
         setFoundGames(null);
     }
 
@@ -87,9 +98,10 @@ const GameSearch = () => {
 
     const spinner = loading ? <Spinner /> : null;
     const errorMessage = error ? <ErrorMessage /> : null;
+    const noMatches = foundGames === undefined ? noMatchesMessage : null;
     const gamesList = foundGames ? createList(foundGames) : null;
 
-    const content = spinner || errorMessage || gamesList;
+    const content = spinner || errorMessage || noMatches || gamesList;
 
     return (
         <section className='search'>
@@ -107,9 +119,10 @@ const GameSearch = () => {
                                 .min(2, 'Must be at least two characters')
                                 .required(`This field is required`)
                         })}
-                        onSubmit={value => onRequest(value)}
+
+                        onSubmit={() => onRequest(searchValue)}
                     >
-                        {props => (
+                        {({ handleChange, handleReset }) => (
                             <>
                                 <Form className="search__form">
                                     <label
@@ -118,13 +131,19 @@ const GameSearch = () => {
                                         Find a game by name:
                                     </label>
                                     <div className="search__box">
-                                        <Field
+                                        <Field as='input'
                                             className="text"
                                             placeholder="Enter a game..."
                                             id="search"
                                             name="search"
                                             type="text"
+                                            onChange={(e) => {
+                                                onResetGames();
+                                                handleChange(e); //set value by each changing
+                                                setSearchValue(e.target.value)
+                                            }}
                                         />
+
                                         <button type="submit"
                                             className='search__submit button'
                                             disabled={searchLoading}>
@@ -132,15 +151,14 @@ const GameSearch = () => {
                                         </button>
                                     </div>
                                     <ErrorMessageForm className="search__error" name="search" component="div" />
-
                                 </Form>
                                 {content}
-                                {foundGames ? <button
+                                {foundGames && !loading ? <button
                                     className="search__reset"
                                     type="reset"
                                     onClick={() => {
-                                        onResetSearch();
-                                        props.handleReset();
+                                        onResetGames();
+                                        handleReset();
                                     }}>
                                     <i>Reset all</i>
                                 </button> : null}
@@ -153,5 +171,8 @@ const GameSearch = () => {
         </section >
     )
 }
+
+const noMatchesMessage = <p className="search__error">There are no matches</p>;
+
 
 export default GameSearch;
