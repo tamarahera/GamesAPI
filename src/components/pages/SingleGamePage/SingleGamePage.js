@@ -22,7 +22,8 @@ const SingleGamePage = () => {
 
     useEffect(() => {
         onRequest(gameId);
-    }, [gameId])
+        // eslint-disable-next-line
+    }, [gameId]);
 
     useEffect(() => {
         if (location.pathname.match(/genres/)) {
@@ -30,7 +31,8 @@ const SingleGamePage = () => {
         } else {
             setPath("/")
         }
-    }, [])
+        // eslint-disable-next-line
+    }, []);
 
     const location = useLocation();
 
@@ -93,7 +95,7 @@ const View = ({ data, path }) => {
     });
 
     const descriptionParse = () => {
-        description = description.replace(/[&#][\w\d-#+]*;|quot;|[-★=\*]*/g, '');
+        description = description.replace(/[&#][\w\d-#+]*;|quot;|[-★=*]*/g, '');
 
         if (/h[1-5]?>/.test(description)) {
             description = description.replace(/h[1-4]>/g, 'h6>');

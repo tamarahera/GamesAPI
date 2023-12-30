@@ -32,9 +32,7 @@ const GenresList = () => {
             return;
         } else {
             getGenres()
-                .then(data => {
-                    setGenresData(data);
-                })
+                .then(data => setGenresData(data))
                 .catch(() => {
                     setGenresDataLoading(false);
                 })
@@ -57,26 +55,6 @@ const GenresList = () => {
                 setNewGameLoading(false);
             })
     }
-
-    const containerAnimation = {
-        hidden: { opacity: 1, scale: 0 },
-        visible: {
-            opacity: 1,
-            scale: 1,
-            transition: {
-                delayChildren: 0.3,
-                staggerChildren: 0.1,
-            }
-        }
-    };
-
-    const itemAnimation = {
-        hidden: { y: 20, opacity: 0 },
-        visible: {
-            y: 0,
-            opacity: 1
-        }
-    };
 
     const createGenresList = (arr) => {
         const items = arr.map(item => {
@@ -170,5 +148,26 @@ const GenresList = () => {
         </>
     )
 }
+
+
+const containerAnimation = {
+    hidden: { opacity: 1, scale: 0 },
+    visible: {
+        opacity: 1,
+        scale: 1,
+        transition: {
+            delayChildren: 0.3,
+            staggerChildren: 0.1,
+        }
+    }
+};
+
+const itemAnimation = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+        y: 0,
+        opacity: 1
+    }
+};
 
 export default GenresList;

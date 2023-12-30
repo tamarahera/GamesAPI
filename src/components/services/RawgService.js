@@ -61,7 +61,7 @@ const useRawgService = () => {
         return { data, nextPageUrl };
     }
 
-    const _transformData = ({ name, description, developers, id, background_image, genres, rating, released, reddit_url, platforms, website, tags, slag }) => {
+    const _transformData = ({ name, description, description_raw, developers, id, background_image, genres, rating, released, reddit_url, platforms, website, tags, slag }) => {
         let dataPlatforms = platforms.map(item => {
             return item.platform.name;
         });
@@ -69,6 +69,7 @@ const useRawgService = () => {
         return {
             name: name ? name : 'Name not found',
             description: description ? description : 'No description',
+            descriptionStr: description_raw ? description_raw : 'No description',
             developer: developers && developers.length > 0 ? developers[0].name : 'No info',
             id: id,
             img: background_image ? background_image : imageNotFound,

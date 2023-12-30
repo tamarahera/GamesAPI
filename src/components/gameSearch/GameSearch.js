@@ -27,6 +27,7 @@ const GameSearch = () => {
         return () => {
             clearTimeout(timer);
         }
+        // eslint-disable-next-line
     }, [searchValue])
 
     const onRequest = (value) => {
@@ -42,25 +43,6 @@ const GameSearch = () => {
     const onResetGames = () => {
         setFoundGames(null);
     }
-
-    const containerAnimation = {
-        hidden: { opacity: 1, scale: 0 },
-        visible: {
-            opacity: 1,
-            scale: 1,
-            transition: {
-                delayChildren: 0.3,
-                staggerChildren: 0.2
-            }
-        }
-    };
-
-    const itemAnimation = {
-        hidden: { opacity: 0, y: -10 },
-        visible: {
-            opacity: 1, y: 0
-        }
-    };
 
     const createList = (foundGames) => {
         const items = foundGames.map(item => {
@@ -174,5 +156,23 @@ const GameSearch = () => {
 
 const noMatchesMessage = <p className="search__error">There are no matches</p>;
 
+const containerAnimation = {
+    hidden: { opacity: 1, scale: 0 },
+    visible: {
+        opacity: 1,
+        scale: 1,
+        transition: {
+            delayChildren: 0.3,
+            staggerChildren: 0.2
+        }
+    }
+};
+
+const itemAnimation = {
+    hidden: { opacity: 0, y: -10 },
+    visible: {
+        opacity: 1, y: 0
+    }
+};
 
 export default GameSearch;

@@ -16,6 +16,7 @@ const GameRandom = () => {
 
     useEffect(() => {
         onUpdateGame();
+        // eslint-disable-next-line
     }, []);
 
     /* useEffect(() => {
@@ -26,6 +27,7 @@ const GameRandom = () => {
         return () => {
             clearInterval(showGameWithTime);
         }
+        // eslint-disable-next-line
     }, []); */
 
     const onUpdateGame = () => {
@@ -73,20 +75,9 @@ const GameRandom = () => {
 }
 
 const View = ({ game }) => {
-    const { name, description, img, community, homepage, id } = game;
-    const transformDescription = () => {
-        if (description && description !== 'No description') {
-            //delete all tags in description
-            const descriptionWithoutTags = description.replace(/<\/?\w* ?\/?>|[&#][\w\d-#+]*;|quot;|[-★=*∞•■#]*/g, '');
+    const { name, descriptionStr, img, community, homepage, id } = game;
 
-            const slicedDescription = descriptionWithoutTags.length > 160 ? descriptionWithoutTags.slice(0, 160) + '...' : descriptionWithoutTags;
-
-            return slicedDescription;
-        }
-        return description;
-    }
-
-    const transformedDescription = transformDescription();
+    const description = (descriptionStr && descriptionStr.length > 160) ? descriptionStr.slice(0, 160) + '...' : descriptionStr;
 
     return (
         <>
@@ -94,7 +85,7 @@ const View = ({ game }) => {
                 <img src={img} alt={name} className="random__game-img" />
             </Link>
             <h3 className="title">{name}</h3>
-            <p className="text text-descr random__game-text">{transformedDescription}</p>
+            <p className="text text-descr random__game-text">{description}</p>
             <div className="random__game-btns">
                 <a href={homepage} className="button" target="_blank" rel="noreferrer" disabled={homepage ? false : true}>
                     HOMEPAGE

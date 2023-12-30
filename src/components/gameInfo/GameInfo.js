@@ -14,6 +14,7 @@ const GameInfo = ({ currentId }) => {
 
     useEffect(() => {
         onUpdateGame(currentId);
+        // eslint-disable-next-line
     }, [currentId])
 
     const onUpdateGame = (currentId) => {

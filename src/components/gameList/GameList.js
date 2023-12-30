@@ -32,7 +32,8 @@ const GameList = ({ updateCurrentId }) => {
             setNextUrl(storedNextUrl);
             onRequest(true, storedNextUrl);
         }
-    }, [])
+        // eslint-disable-next-line
+    }, []);
 
     useEffect(() => {
         window.addEventListener('scroll', onScrollBottom);
@@ -40,12 +41,14 @@ const GameList = ({ updateCurrentId }) => {
         return () => {
             window.removeEventListener('scroll', onScrollBottom);
         }
+        // eslint-disable-next-line
     }, []);
 
     useEffect(() => { // при скролі змін завантаження і якщо завантаж правда, робимо реквест
         if (newGameLoading) {
             onRequest(false, nextUrl);
         }
+        // eslint-disable-next-line
     }, [newGameLoading]);
 
     useEffect(() => {
@@ -54,6 +57,7 @@ const GameList = ({ updateCurrentId }) => {
         } else {
             setMaxWidth992(null);
         }
+        // eslint-disable-next-line
     }, []);
 
     const onScrollBottom = () => { // скролимо до кінця сторінки і ставимо завантаження в true
@@ -101,26 +105,6 @@ const GameList = ({ updateCurrentId }) => {
         e.currentTarget.classList.add('games__item--active');
         e.currentTarget.focus();
     }
-    const containerAnimation = { // асинхронна анімація для контейнера і дочірнії елеметів
-        hidden: { opacity: 1, scale: 0 },
-        visible: {
-            opacity: 1,
-            scale: 1,
-            transition: {
-                delayChildren: 0.3,
-                staggerChildren: 0.2
-            }
-        }
-    };
-
-    const itemAnimation = {
-        hidden: { y: 20, x: 20, opacity: 0 },
-        visible: {
-            y: 0,
-            opacity: 1,
-            x: 0
-        }
-    };
 
     const createList = (arr) => {
         const items = arr.map((item, index) => {
@@ -183,5 +167,26 @@ const GameList = ({ updateCurrentId }) => {
         </div>
     )
 }
+
+const containerAnimation = { // асинхронна анімація для контейнера і дочірнії елеметів
+    hidden: { opacity: 1, scale: 0 },
+    visible: {
+        opacity: 1,
+        scale: 1,
+        transition: {
+            delayChildren: 0.3,
+            staggerChildren: 0.2
+        }
+    }
+};
+
+const itemAnimation = {
+    hidden: { y: 20, x: 20, opacity: 0 },
+    visible: {
+        y: 0,
+        opacity: 1,
+        x: 0
+    }
+};
 
 export default GameList;
