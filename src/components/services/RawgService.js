@@ -2,7 +2,7 @@ import { useHttp } from "../../hooks/http.hook";
 import imageNotFound from '../../resources/image_not_found.jpg'
 
 const useRawgService = () => {
-    const { loading, error, request, clearError } = useHttp();
+    const { action, setAction, loading, error, request, clearError } = useHttp();
 
     const _key = process.env.REACT_APP_API_KEY;
     const _path = 'https://api.rawg.io/api';
@@ -111,7 +111,7 @@ const useRawgService = () => {
         }
     }
 
-    return { loading, error, getAllGames, getGameById, clearError, getGenres, getGamesBySearch, getGamesByGenres };
+    return { loading, error, action, setAction, getAllGames, getGameById, clearError, getGenres, getGamesBySearch, getGamesByGenres };
 }
 
 export default useRawgService;

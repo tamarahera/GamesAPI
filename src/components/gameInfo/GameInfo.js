@@ -1,16 +1,39 @@
-import useRawgService from '../services/RawgService';
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import parse from 'html-react-parser'; // use to parse string into html
+
+import useRawgService from '../services/RawgService';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import Skeleton from '../skeleton/Skeleton';
+
+import { useEffect, useState } from 'react';
+
 import './gameInfo.scss';
+
+const setContent = (action, Component, data, id) => {
+    switch (action) {
+        case 'waiting': {
+            return <Skeleton />;
+        }
+        case 'loading': {
+            return <Spinner />;
+        }
+        case 'confirmed': {
+            return <Component data={data} id={id} />;
+        }
+        case 'error': {
+            return <ErrorMessage />;
+        }
+        default: {
+            throw new Error('Unexpected process state');
+        }
+    }
+}
 
 const GameInfo = ({ currentId }) => {
     const [game, setGame] = useState(null);
 
-    const { loading, error, getGameById, clearError } = useRawgService();
+    const { action, setAction, getGameById, clearError } = useRawgService();
 
     useEffect(() => {
         onUpdateGame(currentId);
@@ -18,19 +41,18 @@ const GameInfo = ({ currentId }) => {
     }, [currentId])
 
     const onUpdateGame = (currentId) => {
-        clearError();
         if (!currentId) {
             return;
         }
 
+        clearError();
+
         getGameById(currentId)
-            .then(data => setGame(data));
+            .then(data => setGame(data))
+            .then(() => setAction('confirmed'))
     }
 
-    const spinner = loading ? <Spinner /> : null;
-    const errorMessage = error ? <ErrorMessage /> : null;
-    const skeleton = (game || loading || error) ? null : <Skeleton />;
-    const content = spinner || errorMessage || skeleton || <View data={game} id={currentId} />;
+    const content = setContent(action, View, game, currentId);
 
     //name="info" for scroll from the games list
     return (

@@ -1,18 +1,40 @@
-import './gameRandom.scss';
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from "framer-motion"
 
 import useRawgService from '../services/RawgService';
-import Spinner from '../spinner/Spinner';
-import ErrorMessage from '../errorMessage/ErrorMessage';
 import controller from '../../resources/controller_blue.png';
 import nintendo from '../../resources/nintendo.png';
+import Spinner from '../spinner/Spinner';
+import ErrorMessage from '../errorMessage/ErrorMessage';
+
+import { useEffect, useState } from 'react';
+
+import './gameRandom.scss';
+
+const setContent = (action, Component, data) => {
+    switch (action) {
+        case 'waiting': {
+            return <Spinner />;
+        }
+        case 'loading': {
+            return <Spinner />;
+        }
+        case 'confirmed': {
+            return <Component data={data} />;
+        }
+        case 'error': {
+            return <ErrorMessage />;
+        }
+        default: {
+            throw new Error('Unexpected process state');
+        }
+    }
+}
 
 const GameRandom = () => {
     const [game, setGame] = useState({});
 
-    const { loading, error, getGameById, clearError } = useRawgService();
+    const { action, setAction, getGameById, clearError } = useRawgService();
 
     useEffect(() => {
         onUpdateGame();
@@ -35,12 +57,11 @@ const GameRandom = () => {
         const id = Math.floor(Math.random() * (3000 - 1) + 1);
 
         getGameById(id)
-            .then(data => setGame(data));
+            .then(data => setGame(data))
+            .then(() => setAction('confirmed'))
     }
 
-    const spinner = loading ? <Spinner /> : null;
-    const errorMessage = error ? <ErrorMessage /> : null;
-    const content = spinner || errorMessage || <View game={game} />
+    const content = setContent(action, View, game);
 
     return (
         <div className="random">
@@ -74,8 +95,8 @@ const GameRandom = () => {
     )
 }
 
-const View = ({ game }) => {
-    const { name, descriptionStr, img, community, homepage, id } = game;
+const View = ({ data }) => {
+    const { name, descriptionStr, img, community, homepage, id } = data;
 
     const description = (descriptionStr && descriptionStr.length > 160) ? descriptionStr.slice(0, 160) + '...' : descriptionStr;
 

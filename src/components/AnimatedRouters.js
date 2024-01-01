@@ -1,7 +1,8 @@
 import React from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom';
-import { MainPage, GenresPage, Page404, SingleGamePage } from './pages';
 import { AnimatePresence } from 'framer-motion'
+
+import { MainPage, GenresPage, Page404, SingleGamePage } from './pages';
 
 function AnimatedRouters() {
     const location = useLocation(); //локація має бути всередині роутера для правильного відображення анімації

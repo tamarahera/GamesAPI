@@ -1,12 +1,13 @@
 .games {
     &__content {
+        overflow-anchor: none;
+        width: 100%;
         &-btn {
             margin: 50px auto 0;
             width: 170px!important;
         }
         .error {
-            width: 425px;
-            align-self: start;
+            width: 100%;
         }
     }
     &__list {

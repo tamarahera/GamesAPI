@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion'
 import { Link as HashLink } from 'react-scroll';
+
 import UpArrowImg from '../../resources/circle-chevron-up-solid.svg';
+
 import './arrowUp.scss';
 
 const ArrowBtn = () => {

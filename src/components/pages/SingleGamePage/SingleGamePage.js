@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { motion } from 'framer-motion'
 import { useParams, Link, useLocation } from 'react-router-dom';
@@ -10,13 +9,39 @@ import Spinner from '../../spinner/Spinner';
 import ErrorMessage from '../../errorMessage/ErrorMessage';
 import Screenschots from '../../Screenshots/Screenshots';
 
+import { useEffect, useState } from 'react';
+
 import './singleGamePage.scss';
+
+const setContent = (action, Component, data, path) => {
+    switch (action) {
+        case 'waiting': {
+            return <Spinner />
+        }
+        case 'loading': {
+            console.log('loading')
+            return <Spinner />;
+        }
+        case 'confirmed': {
+            console.log('confirmed')
+            return <Component data={data} path={path} />;
+        }
+        case 'error': {
+            console.log('error')
+            return <ErrorMessage />;
+        }
+        default: {
+            console.log('default')
+            /* throw new Error('Unexpected process state'); */
+        }
+    }
+}
 
 const SingleGamePage = () => {
     const [gameData, setGameData] = useState(null);
     const [path, setPath] = useState(null);
 
-    const { getGameById, clearError, error, loading } = useRawgService();
+    const { action, setAction, getGameById, clearError } = useRawgService();
 
     const { gameId } = useParams();
 
@@ -39,17 +64,11 @@ const SingleGamePage = () => {
     const onRequest = (id) => {
         clearError();
         getGameById(id)
-            .then(data => {
-                setGameData(data)
-            })
+            .then(data => setGameData(data))
+            .then(() => setAction('confirmed'))
     }
 
-    const spinner = loading ? <Spinner /> : null;
-    const errorMessage = error ? <ErrorMessage /> : null;
-
-    const content = spinner ||
-        errorMessage ||
-        (gameData ? <View data={gameData} path={path} /> : null);
+    const content = setContent(action, View, gameData, path);
 
     return (
         <HelmetProvider>
@@ -68,7 +87,7 @@ const SingleGamePage = () => {
             >
                 <div className="container">
                     {content}
-                    {errorMessage ? <Link to="/" className="button single__back-btn">Back to all</Link> : null}
+                    {action === 'error' ? <Link to="/" className="button single__back-btn">Back to all</Link> : null}
                 </div>
             </motion.section>
         </HelmetProvider>

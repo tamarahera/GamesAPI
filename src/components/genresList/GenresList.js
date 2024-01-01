@@ -1,13 +1,14 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion"
 
-import './genresList.scss';
 import useRawgService from "../services/RawgService";
 import controller from '../../resources/controller_white.jpg';
 import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 
+import { useState } from "react";
+
+import './genresList.scss';
 
 const GenresList = () => {
     const [genresData, setGenresData] = useState([]);

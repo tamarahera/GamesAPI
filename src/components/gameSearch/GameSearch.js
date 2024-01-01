@@ -10,12 +10,32 @@ import ErrorMessage from "../errorMessage/ErrorMessage";
 
 import './gameSearch.scss';
 
+const setContent = (action, Component, data) => {
+    switch (action) {
+        case 'waiting': {
+            break;
+        }
+        case 'loading': {
+            return data === undefined ? noMatchesMessage : <Spinner />;
+        }
+        case 'confirmed': {
+            return <Component />;
+        }
+        case 'error': {
+            return <ErrorMessage />;
+        }
+        default: {
+            throw new Error('Unexpected process state');
+        }
+    }
+}
+
 const GameSearch = () => {
     const [foundGames, setFoundGames] = useState(null);
     const [searchLoading, setSearchLoading] = useState(false);
     const [searchValue, setSearchValue] = useState('');
 
-    const { getGamesBySearch, loading, error } = useRawgService();
+    const { action, setAction, getGamesBySearch } = useRawgService();
 
     useEffect(() => {
         let timer;
@@ -35,6 +55,7 @@ const GameSearch = () => {
         setSearchLoading(true);
         getGamesBySearch(value)
             .then(arr => arr.length > 0 ? setFoundGames(arr) : setFoundGames(undefined))
+            .then(() => { setAction('confirmed') })
             .finally(() => {
                 setSearchLoading(false);
             })
@@ -78,12 +99,7 @@ const GameSearch = () => {
         )
     }
 
-    const spinner = loading ? <Spinner /> : null;
-    const errorMessage = error ? <ErrorMessage /> : null;
-    const noMatches = foundGames === undefined ? noMatchesMessage : null;
-    const gamesList = foundGames ? createList(foundGames) : null;
-
-    const content = spinner || errorMessage || noMatches || gamesList;
+    const content = setContent(action, () => createList(foundGames), foundGames);
 
     return (
         <section className='search'>
@@ -121,6 +137,7 @@ const GameSearch = () => {
                                             type="text"
                                             onChange={(e) => {
                                                 onResetGames();
+                                                setAction('loading')
                                                 handleChange(e); //set value by each changing
                                                 setSearchValue(e.target.value)
                                             }}
@@ -135,10 +152,11 @@ const GameSearch = () => {
                                     <ErrorMessageForm className="search__error" name="search" component="div" />
                                 </Form>
                                 {content}
-                                {foundGames && !loading ? <button
+                                {foundGames && action === 'confirmed' ? <button
                                     className="search__reset"
                                     type="reset"
                                     onClick={() => {
+                                        setAction('waiting');
                                         onResetGames();
                                         handleReset();
                                     }}>

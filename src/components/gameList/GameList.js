@@ -1,12 +1,34 @@
 import { scroller } from 'react-scroll';
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
+
 import useRawgService from '../services/RawgService';
-import './gameList.scss';
-import { useEffect, useState, useRef } from 'react';
+import useLocalStorage from '../../hooks/useLocalStorage';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
-import useLocalStorage from '../../hooks/useLocalStorage';
 
+import { useEffect, useState, useRef, useMemo } from 'react';
+
+import './gameList.scss';
+
+const setContent = (action, Component, newGameLoading) => {
+    switch (action) {
+        case 'waiting': {
+            return <Spinner />;
+        }
+        case 'loading': {
+            return newGameLoading ? <Component /> : <Spinner />;
+        }
+        case 'confirmed': {
+            return <Component />;
+        }
+        case 'error': {
+            return <ErrorMessage />;
+        }
+        default: {
+            throw new Error('Unexpected process state');
+        }
+    }
+}
 
 const GameList = ({ updateCurrentId }) => {
     const [games, setGames] = useState([]);
@@ -21,7 +43,7 @@ const GameList = ({ updateCurrentId }) => {
 
     const [maxWidth992, setMaxWidth992] = useState(false);
 
-    const { loading, error, getAllGames } = useRawgService();
+    const { action, setAction, getAllGames } = useRawgService();
 
     useEffect(() => {
         if ((!storedGames || storedGames.length === 0) && !storedNextUrl) {
@@ -32,6 +54,7 @@ const GameList = ({ updateCurrentId }) => {
             setNextUrl(storedNextUrl);
             onRequest(true, storedNextUrl);
         }
+
         // eslint-disable-next-line
     }, []);
 
@@ -82,6 +105,7 @@ const GameList = ({ updateCurrentId }) => {
             .then(data => {
                 onNewGamesLoaded(data.arr, data.nextPageUrl);
             })
+            .then(() => setAction('confirmed'))
             .finally(() => {
                 setNewGameLoading(false);
                 if (Array.isArray(games) && games.length > 0) {
@@ -129,7 +153,7 @@ const GameList = ({ updateCurrentId }) => {
                             onActiveClass(e);
                         }
                     }}
-                    variants={itemAnimation}
+                /* variants={itemAnimation} */
                 >
                     <div className="games__item-box">
                         <img src={img} alt={name} className="games__item-img" />
@@ -141,20 +165,20 @@ const GameList = ({ updateCurrentId }) => {
         return (
             <motion.ul
                 className="games__list"
-                variants={containerAnimation}
+                /* variants={containerAnimation}
                 initial="hidden"
-                animate="visible">
+                animate="visible" */>
                 {items}
             </motion.ul>
         )
     }
-    const list = createList(games);
 
-    const spinner = loading && !newGameLoading ? <Spinner /> : null; // є завантаж, але це не завантаж нових персонажів
-    const errorMessage = error ? <ErrorMessage /> : null;
-    const content = spinner || errorMessage || list;
+    const content = useMemo(() => {
+        return setContent(action, () => createList(games), newGameLoading);
+        // eslint-disable-next-line
+    }, [action]);
 
-    const loadBtn = errorMessage ? null : <button className="button games__content-btn"
+    const loadBtn = <button className="button games__content-btn"
         type="button"
         onClick={() => setNewGameLoading(true)}
         disabled={newGameLoading}
@@ -163,7 +187,7 @@ const GameList = ({ updateCurrentId }) => {
     return (
         <div className="games__content">
             {content}
-            {loadBtn}
+            {action === 'error' || content.type.name === 'Spinner' ? null : loadBtn}
         </div>
     )
 }

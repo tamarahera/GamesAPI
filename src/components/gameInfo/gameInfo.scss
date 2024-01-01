@@ -9,6 +9,7 @@
         overflow: auto;
         position: sticky;
         top: 10px;
+        flex-shrink: 0;
         &-header {
             display: grid;
             grid-template-columns: 150px auto;
