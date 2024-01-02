@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 
 import './gameInfo.scss';
 
-const setContent = (action, Component, data, id) => {
+const setContent = (action, Component, data) => {
     switch (action) {
         case 'waiting': {
             return <Skeleton />;
@@ -19,7 +19,7 @@ const setContent = (action, Component, data, id) => {
             return <Spinner />;
         }
         case 'confirmed': {
-            return <Component data={data} id={id} />;
+            return <Component data={data} />;
         }
         case 'error': {
             return <ErrorMessage />;
@@ -62,8 +62,8 @@ const GameInfo = ({ currentId }) => {
     )
 }
 
-const View = ({ data, id }) => {
-    const { name, description, developer, img, genres, rating, released, platforms, community, homepage } = data;
+const View = ({ data }) => {
+    const { name, description, developer, img, genres, rating, released, platforms, community, homepage, id } = data;
 
     const platformItems = platforms.map((item, i) => {
         return (

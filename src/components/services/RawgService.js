@@ -27,7 +27,7 @@ const useRawgService = () => {
 
     const getGameById = async (id) => {
         const res = await request(`${_path}/games/${id}?key=${_key}`);
-        console.log(res)
+
         const screenshotsData = await request(`${_path}/games/${id}/screenshots?key=${_key}`);
         const screenshotsArr = screenshotsData.results.map(item => {
             return _transformScreenshots(item);

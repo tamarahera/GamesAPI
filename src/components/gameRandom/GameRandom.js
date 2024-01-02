@@ -2,34 +2,13 @@ import { Link } from 'react-router-dom';
 import { motion } from "framer-motion"
 
 import useRawgService from '../services/RawgService';
+import setContent from '../../utils/setContent';
 import controller from '../../resources/controller_blue.png';
 import nintendo from '../../resources/nintendo.png';
-import Spinner from '../spinner/Spinner';
-import ErrorMessage from '../errorMessage/ErrorMessage';
 
 import { useEffect, useState } from 'react';
 
 import './gameRandom.scss';
-
-const setContent = (action, Component, data) => {
-    switch (action) {
-        case 'waiting': {
-            return <Spinner />;
-        }
-        case 'loading': {
-            return <Spinner />;
-        }
-        case 'confirmed': {
-            return <Component data={data} />;
-        }
-        case 'error': {
-            return <ErrorMessage />;
-        }
-        default: {
-            throw new Error('Unexpected process state');
-        }
-    }
-}
 
 const GameRandom = () => {
     const [game, setGame] = useState({});
@@ -41,7 +20,7 @@ const GameRandom = () => {
         // eslint-disable-next-line
     }, []);
 
-    /* useEffect(() => {
+    useEffect(() => {
         const showGameWithTime = setInterval(() => {
             onUpdateGame();
         }, 7000);
@@ -50,7 +29,7 @@ const GameRandom = () => {
             clearInterval(showGameWithTime);
         }
         // eslint-disable-next-line
-    }, []); */
+    }, []);
 
     const onUpdateGame = () => {
         clearError();

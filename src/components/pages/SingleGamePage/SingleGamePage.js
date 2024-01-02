@@ -4,38 +4,13 @@ import { useParams, Link, useLocation } from 'react-router-dom';
 import parse from 'html-react-parser'; // use to parse string into html
 
 import useRawgService from '../../services/RawgService';
+import setContent from '../../../utils/setContent';
 import ErrorBoundary from '../../errorBoundary/ErrorBoundary';
-import Spinner from '../../spinner/Spinner';
-import ErrorMessage from '../../errorMessage/ErrorMessage';
 import Screenschots from '../../Screenshots/Screenshots';
 
 import { useEffect, useState } from 'react';
 
 import './singleGamePage.scss';
-
-const setContent = (action, Component, data, path) => {
-    switch (action) {
-        case 'waiting': {
-            return <Spinner />
-        }
-        case 'loading': {
-            console.log('loading')
-            return <Spinner />;
-        }
-        case 'confirmed': {
-            console.log('confirmed')
-            return <Component data={data} path={path} />;
-        }
-        case 'error': {
-            console.log('error')
-            return <ErrorMessage />;
-        }
-        default: {
-            console.log('default')
-            /* throw new Error('Unexpected process state'); */
-        }
-    }
-}
 
 const SingleGamePage = () => {
     const [gameData, setGameData] = useState(null);
@@ -68,7 +43,7 @@ const SingleGamePage = () => {
             .then(() => setAction('confirmed'))
     }
 
-    const content = setContent(action, View, gameData, path);
+    const content = setContent(action, View, { ...gameData, 'path': path });
 
     return (
         <HelmetProvider>
@@ -94,8 +69,8 @@ const SingleGamePage = () => {
     )
 }
 
-const View = ({ data, path }) => {
-    const { name, developer, img, genres, rating, released, platforms, community, homepage, tags, screenshots, slag } = data;
+const View = ({ data }) => {
+    const { name, developer, img, genres, rating, released, platforms, community, homepage, tags, screenshots, slag, path } = data;
     let { description } = data;
 
     const platformItems = platforms.map((item, i) => {
