@@ -12,6 +12,7 @@ import './gameRandom.scss';
 
 const GameRandom = () => {
     const [game, setGame] = useState({});
+    const [gameLoading, setGameLoading] = useState(true);
 
     const { action, setAction, getGameById, clearError } = useRawgService();
 
@@ -32,12 +33,14 @@ const GameRandom = () => {
     }, []);
 
     const onUpdateGame = () => {
+        setGameLoading(true);
         clearError();
         const id = Math.floor(Math.random() * (3000 - 1) + 1);
 
         getGameById(id)
             .then(data => setGame(data))
             .then(() => setAction('confirmed'))
+            .finally(() => setGameLoading(false))
     }
 
     const content = setContent(action, View, game);
@@ -64,7 +67,13 @@ const GameRandom = () => {
                             Do you want to know more about it?
                         </p>
                         <p className="random__try-text">Or choose another one</p>
-                        <button className="button" type="button" onClick={onUpdateGame}>Try it</button>
+                        <button
+                            className="button"
+                            type="button"
+                            onClick={onUpdateGame}
+                            disabled={gameLoading}>
+                            Try it
+                        </button>
                         <img className="random__try-img random__try-img--controller" src={controller} alt="controller" />
                         <img className="random__try-img random__try-img--nintendo" src={nintendo} alt="nintendo" />
                     </motion.div>
