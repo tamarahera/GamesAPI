@@ -58,7 +58,11 @@ const GenresList = () => {
     }
 
     const createGenresList = (arr) => {
-        const items = arr.map(item => {
+        const sortByName = (a, b) => {
+            return a.name.localeCompare(b.name);
+        }
+
+        const items = arr.toSorted(sortByName).map(item => {
             const { id, img, name, slug } = item;
             return (
                 <motion.li className="genres__item"
@@ -125,6 +129,7 @@ const GenresList = () => {
     const spinner = loading && !newGameLoading ? <Spinner /> : null;
     const errorMessage = error ? <ErrorMessage /> : null;
     const content = spinner || errorMessage || genresList || gamesList;
+
     return (
         <>
             <div className="genres__promo">

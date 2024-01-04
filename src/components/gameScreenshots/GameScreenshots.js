@@ -10,7 +10,7 @@ import 'swiper/css/thumbs';
 import './screenshots.scss'
 import ErrorBoundary from '../errorBoundary/ErrorBoundary';
 
-const Screenschots = ({ data, name }) => {
+const GameScreenschots = ({ data, name }) => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
     const { slag } = name;
@@ -62,4 +62,4 @@ const Screenschots = ({ data, name }) => {
         </ErrorBoundary>
     )
 }
-export default Screenschots;
+export default GameScreenschots;

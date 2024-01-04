@@ -6,7 +6,7 @@ import parse from 'html-react-parser'; // use to parse string into html
 import useRawgService from '../../services/RawgService';
 import setContent from '../../../utils/setContent';
 import ErrorBoundary from '../../errorBoundary/ErrorBoundary';
-import Screenschots from '../../Screenshots/Screenshots';
+import GameScreenschots from '../../gameScreenshots/GameScreenshots';
 
 import { useEffect, useState } from 'react';
 
@@ -101,7 +101,7 @@ const View = ({ data }) => {
 
     const descriptionParsed = descriptionParse();
 
-    const screenshotsContent = !screenshots || screenshots.length === 0 ? null : <Screenschots data={screenshots} name={slag} />
+    const screenshotsContent = !screenshots || screenshots.length === 0 ? null : <GameScreenschots data={screenshots} name={slag} />
 
     return (
         <ErrorBoundary>
