@@ -21,16 +21,16 @@ const GameRandom = () => {
         // eslint-disable-next-line
     }, []);
 
-    useEffect(() => {
-        const showGameWithTime = setInterval(() => {
-            onUpdateGame();
-        }, 7000);
-
-        return () => {
-            clearInterval(showGameWithTime);
-        }
-        // eslint-disable-next-line
-    }, []);
+    /*     useEffect(() => {
+            const showGameWithTime = setInterval(() => {
+                onUpdateGame();
+            }, 7000);
+    
+            return () => {
+                clearInterval(showGameWithTime);
+            }
+            // eslint-disable-next-line
+        }, []); */
 
     const onUpdateGame = () => {
         setGameLoading(true);

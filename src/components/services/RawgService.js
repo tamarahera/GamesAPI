@@ -17,12 +17,12 @@ const useRawgService = () => {
     }
 
     const getGamesBySearch = async (str) => {
-        const search = await request(`${_path}/games?search=${str}&key=${_key}`);
-        const res = search.results.slice(0, 5).map(item => {
+        const res = await request(`${_path}/games?search=${str}&key=${_key}`);
+        const arr = res.results.slice(0, 5).map(item => {
             return _transformShortData(item);
         });
 
-        return res;
+        return arr;
     }
 
     const getGameById = async (id) => {
@@ -49,16 +49,15 @@ const useRawgService = () => {
         return arr;
     }
 
-    const getGamesByGenres = async (genreName, pageNum) => {
-        const res = await request(`${_path}/games?genres=${genreName}&key=${_key}&page=${pageNum}&page_size=9`);
-
-        const data = res.results.map(item => {
+    const getGamesByGenre = async (genreName, url = `${_path}/games?genres=${genreName}&page_size=9&key=${_key}`) => {
+        const res = await request(url);
+        const arr = res.results.map(item => {
             return _transformShortData(item);
         });
 
         const nextPageUrl = res.next;
 
-        return { data, nextPageUrl };
+        return { arr, nextPageUrl };
     }
 
     const _transformData = ({ name, description, description_raw, developers, id, background_image, genres, rating, released, reddit_url, platforms, website, tags, slag }) => {
@@ -111,7 +110,7 @@ const useRawgService = () => {
         }
     }
 
-    return { loading, error, action, setAction, getAllGames, getGameById, clearError, getGenres, getGamesBySearch, getGamesByGenres };
+    return { loading, error, action, setAction, getAllGames, getGameById, clearError, getGenres, getGamesBySearch, getGamesByGenre };
 }
 
 export default useRawgService;

@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion"
 
 import useRawgService from "../services/RawgService";
@@ -9,26 +8,21 @@ import ErrorMessage from "../errorMessage/ErrorMessage";
 import { useState } from "react";
 
 import './genresList.scss';
+import GenreGames from "../genreGames/GenreGames";
 
 const GenresList = () => {
     const [genresData, setGenresData] = useState([]);
-    const [genresGames, setGenresGames] = useState([]);
+    const [showGames, setShowGames] = useState(false);
 
-    const [genreName, setGenreName] = useState('');
-    const [slugName, setSlugName] = useState('');
-    const [pageNum, setPagePum] = useState(null);
-    const [newGameLoading, setNewGameLoading] = useState(false);
+    const [genreNames, setGenreNames] = useState('');
 
     const [genresDataLoading, setGenresDataLoading] = useState(false);
-    const [openGames, setOpenGames] = useState(false);
 
-    const { getGenres, loading, error, getGamesByGenres } = useRawgService();
+    const { getGenres, loading, error } = useRawgService();
 
     const onRequestGenres = () => {
-        setOpenGames(false);
-        setPagePum(1);
+        setShowGames(false)
         setGenresDataLoading(true);
-        setGenresGames([]);
         if (genresData.length > 0) {
             return;
         } else {
@@ -38,23 +32,6 @@ const GenresList = () => {
                     setGenresDataLoading(false);
                 })
         }
-    }
-
-    const onRequestGamesByGenre = (initialLoading, slug, name) => {
-        initialLoading ? setNewGameLoading(false) : setNewGameLoading(true);
-
-        setGenreName(name);
-        setSlugName(slug);
-        getGamesByGenres(slug, pageNum)
-            .then((res) => {
-                setGenresGames(genresGames => [...genresGames, ...res.data])
-            })
-            .finally(() => {
-                setPagePum(pageNum + 1);
-                setOpenGames(true);
-                setGenresDataLoading(false);
-                setNewGameLoading(false);
-            })
     }
 
     const createGenresList = (arr) => {
@@ -67,7 +44,11 @@ const GenresList = () => {
             return (
                 <motion.li className="genres__item"
                     key={id}
-                    onClick={() => onRequestGamesByGenre(true, slug, name)}
+                    onClick={() => {
+                        setShowGames(true);
+                        setGenreNames({ name, slug });
+                        setGenresDataLoading(false);
+                    }}
                     variants={itemAnimation}>
                     <div className="genres__item-box">
                         <img src={img} alt={name} className="genres__item-img" />
@@ -88,48 +69,13 @@ const GenresList = () => {
         )
     }
 
-    const createGamesList = (arr) => {
-        const items = arr.map(item => {
-            const { name, img, id } = item;
-            return (
-                <motion.li
-                    className="genres__game"
-                    key={id}
-                    variants={itemAnimation}>
-                    <Link to={`/genres/${id}`} className="genres__game-link">
-                        <div className="genres__game-box">
-                            <img src={img} alt={name} className="genres__game-img" />
-                        </div>
-                        <h2 className="genres__game-title">{name}</h2>
-                    </Link>
-                </motion.li>
-            )
-        })
-        return (
-            <>
-                <h2 className="genres__title">{genreName}</h2>
-                <motion.ul className="genres__list"
-                    variants={containerAnimation}
-                    initial="hidden"
-                    animate="visible">
-                    {items}
-                </motion.ul>
-                <button className="button genres__game-btn"
-                    onClick={() => onRequestGamesByGenre(false, slugName, genreName)}
-                    disabled={newGameLoading}>
-                    Load more
-                </button >
-            </>
-        )
-    }
+    const genresList = genresData.length > 0 && genresDataLoading ? createGenresList(genresData) : null;
+    const genresGames = showGames ? <GenreGames genreData={genreNames} /> : null;
 
-    const genresList = genresData.length && !openGames > 0 ? createGenresList(genresData) : null;
-    const gamesList = genresGames.length && openGames > 0 ? createGamesList(genresGames) : null;
-
-    const spinner = loading && !newGameLoading ? <Spinner /> : null;
+    const spinner = loading ? <Spinner /> : null;
     const errorMessage = error ? <ErrorMessage /> : null;
-    const content = spinner || errorMessage || genresList || gamesList;
-
+    const content = spinner || errorMessage || genresList || genresGames;
+    console.log('render')
     return (
         <>
             <div className="genres__promo">
@@ -142,19 +88,18 @@ const GenresList = () => {
                         {`Choose `} <span>a genre</span> {' and explore the most popular games'}
                     </p>
                 </div>
-                <button
+                {!genresDataLoading ? <button
                     className="button genres__promo-btn"
                     type="button"
                     onClick={onRequestGenres}
                     disabled={genresDataLoading}>
-                    {openGames ? 'Back to genres' : 'Let`s start'}
-                </button>
+                    {showGames ? 'Back to genres' : 'Let`s start'}
+                </button> : null}
             </div>
             {content}
         </>
     )
 }
-
 
 const containerAnimation = {
     hidden: { opacity: 1, scale: 0 },
