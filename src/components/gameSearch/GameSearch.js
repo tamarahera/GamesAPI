@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { Formik, Form, Field, ErrorMessage as ErrorMessageForm } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
@@ -99,7 +99,10 @@ const GameSearch = () => {
         )
     }
 
-    const content = setContent(action, () => createList(foundGames), foundGames);
+    const content = useMemo(() => {
+        return setContent(action, () => createList(foundGames), foundGames);
+        // eslint-disable-next-line
+    }, [action]);
 
     return (
         <section className='search'>

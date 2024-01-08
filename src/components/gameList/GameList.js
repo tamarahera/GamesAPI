@@ -153,7 +153,6 @@ const GameList = ({ updateCurrentId }) => {
                             onActiveClass(e);
                         }
                     }}
-                /* variants={itemAnimation} */
                 >
                     <div className="games__item-box">
                         <img src={img} alt={name} className="games__item-img" />
@@ -164,10 +163,7 @@ const GameList = ({ updateCurrentId }) => {
         });
         return (
             <motion.ul
-                className="games__list"
-                /* variants={containerAnimation}
-                initial="hidden"
-                animate="visible" */>
+                className="games__list">
                 {items}
             </motion.ul>
         )
@@ -191,26 +187,5 @@ const GameList = ({ updateCurrentId }) => {
         </div>
     )
 }
-
-const containerAnimation = { // асинхронна анімація для контейнера і дочірнії елеметів
-    hidden: { opacity: 1, scale: 0 },
-    visible: {
-        opacity: 1,
-        scale: 1,
-        transition: {
-            delayChildren: 0.3,
-            staggerChildren: 0.2
-        }
-    }
-};
-
-const itemAnimation = {
-    hidden: { y: 20, x: 20, opacity: 0 },
-    visible: {
-        y: 0,
-        opacity: 1,
-        x: 0
-    }
-};
 
 export default GameList;
