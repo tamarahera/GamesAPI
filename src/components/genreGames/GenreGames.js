@@ -1,18 +1,39 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 
 import useRawgService from "../services/RawgService";
+import Spinner from '../spinner/Spinner';
+import ErrorMessage from '../errorMessage/ErrorMessage';
 
 import React, { useState, useEffect } from 'react';
 
 import './genreGames.scss';
+
+const setContent = (action, Component, newGameLoading) => {
+    switch (action) {
+        case 'waiting': {
+            return <Spinner />;
+        }
+        case 'loading': {
+            return newGameLoading ? <Component /> : <Spinner />;
+        }
+        case 'confirmed': {
+            return <Component />;
+        }
+        case 'error': {
+            return <ErrorMessage />;
+        }
+        default: {
+            throw new Error('Unexpected process state');
+        }
+    }
+}
 
 const GenreGames = ({ genreData }) => {
     const [gameData, setGameData] = useState([]);
     const [nextUrl, setNextUrl] = useState(null);
     const [newGameLoading, setNewGameLoading] = useState(false);
 
-    const { getGamesByGenre } = useRawgService();
+    const { action, setAction, getGamesByGenre } = useRawgService();
 
     useEffect(() => {
         setGameData([]);
@@ -29,6 +50,7 @@ const GenreGames = ({ genreData }) => {
                 setGameData(gameData => [...gameData, ...data.arr])
                 setNextUrl(data.nextPageUrl)
             })
+            .then(() => setAction('confirmed'))
             .finally(() => {
                 setNewGameLoading(false);
             })
@@ -38,28 +60,24 @@ const GenreGames = ({ genreData }) => {
         const items = arr.map(item => {
             const { name, img, id } = item;
             return (
-                <motion.li
+                <li
                     className="genres__game"
-                    key={id}
-                    variants={itemAnimation}>
+                    key={id}>
                     <Link to={`/genres/${id}`} className="genres__game-link">
                         <div className="genres__game-box">
                             <img src={img} alt={name} className="genres__game-img" />
                         </div>
                         <h2 className="genres__game-title">{name}</h2>
                     </Link>
-                </motion.li>
+                </li>
             )
         })
         return (
             <>
                 <h2 className="genres__title">{genreData.name}</h2>
-                <motion.ul className="genres__list"
-                    variants={containerAnimation}
-                    initial="hidden"
-                    animate="visible">
+                <ul className="genres__list">
                     {items}
-                </motion.ul>
+                </ul>
                 <button className="button genres__game-btn"
                     onClick={() => onRequestGames(false, genreData.slug, nextUrl)}
                     disabled={newGameLoading}>
@@ -69,7 +87,7 @@ const GenreGames = ({ genreData }) => {
         )
     }
 
-    const content = gameData.length > 0 ? createGamesList(gameData) : null;
+    const content = setContent(action, () => createGamesList(gameData), newGameLoading);
 
     return (
         <>
@@ -77,25 +95,5 @@ const GenreGames = ({ genreData }) => {
         </>
     )
 }
-
-const containerAnimation = {
-    hidden: { opacity: 1, scale: 0 },
-    visible: {
-        opacity: 1,
-        scale: 1,
-        transition: {
-            delayChildren: 0.3,
-            staggerChildren: 0.1,
-        }
-    }
-};
-
-const itemAnimation = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-        y: 0,
-        opacity: 1
-    }
-};
 
 export default GenreGames;
