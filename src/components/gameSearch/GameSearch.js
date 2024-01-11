@@ -16,10 +16,10 @@ const setContent = (action, Component, data) => {
             break;
         }
         case 'loading': {
-            return data === undefined ? noMatchesMessage : <Spinner />;
+            return <Spinner />;
         }
         case 'confirmed': {
-            return <Component />;
+            return data === undefined ? noMatchesMessage : <Component />;
         }
         case 'error': {
             return <ErrorMessage />;
@@ -41,6 +41,7 @@ const GameSearch = () => {
         let timer;
 
         if (searchValue.length > 1 && searchValue) {
+            setSearchLoading(true);
             timer = setTimeout(() => onRequest(searchValue), 2000); // debounce
         }
 
@@ -54,7 +55,9 @@ const GameSearch = () => {
         setFoundGames(null);
         setSearchLoading(true);
         getGamesBySearch(value)
-            .then(arr => arr.length > 0 ? setFoundGames(arr) : setFoundGames(undefined))
+            .then(arr => {
+                arr.length > 0 ? setFoundGames(arr) : setFoundGames(undefined);
+            })
             .then(() => { setAction('confirmed') })
             .finally(() => {
                 setSearchLoading(false);
@@ -140,9 +143,9 @@ const GameSearch = () => {
                                             type="text"
                                             onChange={(e) => {
                                                 onResetGames();
-                                                setAction('loading')
+                                                e.target.value.length > 1 ? setAction('loading') : setAction('waiting');
                                                 handleChange(e); //set value by each changing
-                                                setSearchValue(e.target.value)
+                                                setSearchValue(e.target.value);
                                             }}
                                         />
 
