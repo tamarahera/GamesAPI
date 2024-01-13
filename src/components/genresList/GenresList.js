@@ -10,6 +10,26 @@ import { useState } from "react";
 import './genresList.scss';
 import GenreGames from "../genreGames/GenreGames";
 
+const setContent = (action, Component, data) => {
+    switch (action) {
+        case 'waiting': {
+            break;
+        }
+        case 'loading': {
+            return <Spinner />;
+        }
+        case 'confirmed': {
+            return <Component data={data} />;
+        }
+        case 'error': {
+            return <ErrorMessage />;
+        }
+        default: {
+            throw new Error('Unexpected process state');
+        }
+    }
+}
+
 const GenresList = () => {
     const [genresData, setGenresData] = useState([]);
     const [showGames, setShowGames] = useState(false);
@@ -18,16 +38,17 @@ const GenresList = () => {
 
     const [genresDataLoading, setGenresDataLoading] = useState(false);
 
-    const { getGenres, loading, error } = useRawgService();
+    const { action, setAction, getGenres } = useRawgService();
 
     const onRequestGenres = () => {
-        setShowGames(false)
+        setShowGames(false);
         setGenresDataLoading(true);
         if (genresData.length > 0) {
             return;
         } else {
             getGenres()
                 .then(data => setGenresData(data))
+                .then(() => setAction('confirmed'))
                 .catch(() => {
                     setGenresDataLoading(false);
                 })
@@ -69,13 +90,10 @@ const GenresList = () => {
         )
     }
 
-    const genresList = genresData.length > 0 && genresDataLoading ? createGenresList(genresData) : null;
     const genresGames = showGames ? <GenreGames genreData={genreNames} /> : null;
 
-    const spinner = loading ? <Spinner /> : null;
-    const errorMessage = error ? <ErrorMessage /> : null;
-    const content = spinner || errorMessage || genresList || genresGames;
-    console.log('render')
+    const content = setContent(action, () => createGenresList(genresData), genresGames);
+
     return (
         <>
             <div className="genres__promo">
@@ -91,12 +109,11 @@ const GenresList = () => {
                 {!genresDataLoading ? <button
                     className="button genres__promo-btn"
                     type="button"
-                    onClick={onRequestGenres}
-                    disabled={genresDataLoading}>
+                    onClick={onRequestGenres}>
                     {showGames ? 'Back to genres' : 'Let`s start'}
                 </button> : null}
             </div>
-            {content}
+            {showGames ? <GenreGames genreData={genreNames} /> : content}
         </>
     )
 }
