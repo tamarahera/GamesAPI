@@ -36,12 +36,37 @@ const GenreGames = ({ genreData }) => {
     const { action, setAction, getGamesByGenre } = useRawgService();
 
     useEffect(() => {
-        setGameData([]);
         if (genreData.slug) {
             onRequestGames(true, genreData.slug);
         }
         // eslint-disable-next-line
     }, []);
+
+    useEffect(() => {
+        window.addEventListener('scroll', onScrollBottom);
+
+        return () => {
+            window.removeEventListener('scroll', onScrollBottom);
+        }
+        // eslint-disable-next-line
+    }, []);
+
+    useEffect(() => {
+        if (newGameLoading && nextUrl) {
+            onRequestGames(false, genreData.slug, nextUrl);
+        }
+        // eslint-disable-next-line
+    }, [newGameLoading]);
+
+
+    const onScrollBottom = () => {
+        //window.scrollY - height from top to current point
+        //document.documentElement.clientHeight - height of the user window
+        //document.documentElement.scrollHeight - height of the whole document
+        if ((window.scrollY + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1) && newGameLoading === false) {
+            setNewGameLoading(true);
+        }
+    }
 
     const onRequestGames = (initialLoading, slug, nextUrl) => {
         initialLoading ? setNewGameLoading(false) : setNewGameLoading(true);
