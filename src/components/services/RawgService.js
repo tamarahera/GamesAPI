@@ -64,6 +64,7 @@ const useRawgService = () => {
         let dataPlatforms = platforms.map(item => {
             return item.platform.name;
         });
+        const releaseDate = released.replace(/(\d{4})-(\d{2})-(\d{2})/, `$3-$2-$1`);
 
         return {
             name: name ? name : 'Name not found',
@@ -74,7 +75,7 @@ const useRawgService = () => {
             img: background_image ? background_image : imageNotFound,
             genres: genres.length > 0 ? genres.map(item => item.name).join(', ') : 'No info',
             rating: rating ? `${rating}/5` : 'No info',
-            released: released ? released : 'No info',
+            released: released ? releaseDate : 'No info',
             platforms: dataPlatforms ? dataPlatforms : 'No info',
             community: reddit_url ? reddit_url : null,
             homepage: website ? website : null,
