@@ -1,4 +1,5 @@
 import { Link, NavLink } from 'react-router-dom';
+import ColorModeSwitcher from '../colorModeSwitcher/ColorModeSwitcher';
 import './header.scss';
 
 const Header = () => {
@@ -8,7 +9,8 @@ const Header = () => {
                 <h1><span>Games</span> information portal</h1>
             </Link>
             <hr />
-            <nav className="header__nav">
+            {/*             <ColorModeSwitcher />
+ */}            <nav className="header__nav">
                 <NavLink end
                     to="/"
                     className={({ isActive }) => 'header__nav-link' + (isActive ? ' header__nav-link--active' : '')}>
