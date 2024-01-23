@@ -1,6 +1,7 @@
 .switcher {
     display: flex;
-
+    align-self: end;
+    margin-bottom: 1px;
     &__input {
         width: 0;
         height: 0;
@@ -29,7 +30,7 @@
         }
     }
     &__input:checked + &__label {
-        background: #2f2f2f;
+        background: #212d46;
     }
     &__input:checked + &__label:after {
         left: 52px;
@@ -37,21 +38,21 @@
         background: linear-gradient(170deg, #5d5d5d, #100f0f);
     }
     &__label:active::after {
-        width: 30px;
+        width: 25px;
     }
     &__img {
         position: absolute;
-        height: 13px;
+        height: 12px;
         top: 50%;
         transform: translateY(-50%);
         z-index: 100;
         &-moon {
-            right: 8px;
+            right: 9px;
             transition: 0.2s all;
             filter: brightness(0.9);
         }
         &-sun {
-            left: 6px;
+            left: 6.6px;
             transition: 0.2s all;
             filter: opacity(1) drop-shadow(1px 0px 1px #ff6c00);
         }
