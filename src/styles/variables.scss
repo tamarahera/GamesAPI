@@ -3,4 +3,22 @@
     --color-black: #232222; 
     --color-red: #b32222; 
     --color-blue: #3D97EB;
+
+    --background-app: linear-gradient(180deg, #133069 0%, #222A3A 100%);
+    --background-footer: linear-gradient(90deg, #232222 0%, rgba(35, 34, 34, 0.00) 100%);
+    --background-header: linear-gradient(90deg, #232222 0%, rgba(35, 34, 34, 0.00) 100%);
+
+    --text-white: #FCFCFC;
+
+    --logo-shadow: 0px 3px 3px #000;
+    --logo-blue: #3D97EB;
+    --logo-white: #FCFCFC;
+    --menu-active:hsla(0, 0%, 99%, 0.9);
+    --menu-color: #1168b9;
+
+    --card-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.4);
+    --card-shadow-active: 10px 10px 10px #2276c5;
+    --card-background: var(--color-black);
+    --background-blue: #222a3a;
+    --background-accent: var(--color-black);
 }
