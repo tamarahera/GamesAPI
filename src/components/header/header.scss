@@ -1,24 +1,24 @@
 .header {
     flex-grow: 0;
     flex-shrink: 0;
-    background: linear-gradient(90deg, #232222 0%, rgba(35, 34, 34, 0.00) 100%);
+    background: var(--background-header);
     padding: 30px 50px;
     justify-content: space-between;
     display: grid;
     grid-template-columns: 1fr auto auto;
     align-items: center;
     gap: 40px;
+    box-shadow: 1px 2px 5px rgb(0 0 0 / 30%);
     &__nav {
         font-weight: 700;
         font-size: 24px;
-        color: #1168b9;
+        color: var(--menu-color);
         &-link {
-            color: #1168b9;
             transition: .3s all;
             position: relative;
             &--active {
-                color: hsla(0, 0%, 99%, 0.9);
-                text-shadow: 0px 3px 3px #000;
+                color: var(--menu-active);
+                text-shadow: var(--logo-shadow);
             }
         }
     }
@@ -32,12 +32,30 @@
 }
 .logo {
     cursor: pointer;
+    position: relative;
+    z-index: 100;
     h1 {
         font-size: 28px;
         font-weight: 700;
-        text-shadow: 0px 4px 4px #000;
+        text-shadow: var(--logo-shadow);
     }
     span {
-        color: var(--color-blue);
+        &:first-child {
+            color: #3D97EB;
+        }
+        &:nth-child(2) {
+            color: var(--logo-white);
+        }
     }
+/*     ::after {
+        display: block;
+        position: absolute;
+        content: "";
+        top: 19px;
+        left: 74px;
+        background-color: var(--color-red);
+        height: 17px;
+        width: 200px;
+        z-index: -2;
+    } */
 }

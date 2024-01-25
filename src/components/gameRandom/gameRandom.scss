@@ -7,7 +7,7 @@
     }
     &__game {
         justify-self: end;
-        box-shadow: 5px 5px 20px 0px #00000077;
+        box-shadow: var(--card-shadow);
         min-height: 250px;
         width: 100%;
         padding: 30px;
@@ -39,10 +39,10 @@
         }
     }
     &__try {
-        box-shadow: 5px 5px 20px 0px #00000077;
+        box-shadow: var(--card-shadow);
         min-height: 250px;
         padding: 30px;
-        background-color: var(--color-black);
+        background-color: var(--background-accent);
         display: flex;
         flex-direction: column;
         position: relative;
@@ -66,6 +66,7 @@
         &-text {
             font-size: 24px;
             font-weight: 700;
+            color: var(--text-white);
             &:nth-child(2) {
                 margin-top: 20px;
             }

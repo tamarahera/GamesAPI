@@ -16,10 +16,9 @@
     --background-app: #d9e0e6;
     --background-header: #FCFCFC;
     --background-footer: #FCFCFC;
-    --text-white: #404040;
+    --text-white: var(--color-black);
 
     --logo-shadow: none;
-    --logo-blue: #3D97EB;
     --logo-white: #636363;
     --menu-active:#3D97EB;
     --menu-color: #bdbdbd;
@@ -27,16 +26,9 @@
     --card-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.4);
     --card-shadow-active: 10px 10px 10px #3d97eb94;
     --card-background: var(--color-white);
-    --background-blue: #222a3a91;
-    --background-accent: #4083c1;
-
-    --background: #05010a;
-    --text-primary: #f2f2f2;
-    --text-secondary: #a7a4a4;
-    --accent: #6a5acd;
-    --accent-hover: #5b4cbe; 
-    --border: #696969;
-    --shadow: 7px 15px 13px -4px #ffffff1b;
+    --background-blue: rgba(38, 34, 58, 0.237);
+    --background-accent: rgb(61 151 235 / 27%);
+    --button-color: #14579f;
 }
 
 ul {
@@ -81,46 +73,18 @@ main {
     padding: 10px 15px;
     width: 105px;
     text-transform: uppercase;
-    background-color: var(--color-red);
+    background-color: var(--button-color);
     display: block;
     text-align: center;
     border: none;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     &[disabled] {
-        background-color: #7e1a1a;
+        filter:brightness(0.6);
         color: #acacac;
         transition: .3s background-color, .3s color;
     }
     &--grey {
         background-color: #6F6F6F;
-        &[disabled] {
-            background-color: #3e3e3e;
-            color: #a2a2a2;
-            transition: .3s background-color, .3s color;
-        }
-    }
-}
-
-.up { 
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    margin-bottom: 20px;
-    margin-right: 20px;
-    width: 40px;
-    height: 40px;
-    border-radius: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 100;
-    &__img {
-        display: block;
-        width: inherit;
-        height: inherit;
-        border-radius: inherit;
-        box-shadow: 1px 1px 10px black;
     }
 }
 

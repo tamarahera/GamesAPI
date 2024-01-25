@@ -6,11 +6,11 @@ const Header = () => {
     return (
         <header className="header" name="header">
             <Link to="/" className="logo">
-                <h1><span>Games</span> information portal</h1>
+                <h1><span>Games</span> <span>information portal</span></h1>
             </Link>
             <hr />
-            {/*             <ColorModeSwitcher />
- */}            <nav className="header__nav">
+            <ColorModeSwitcher />
+            <nav className="header__nav">
                 <NavLink end
                     to="/"
                     className={({ isActive }) => 'header__nav-link' + (isActive ? ' header__nav-link--active' : '')}>

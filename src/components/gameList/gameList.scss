@@ -19,8 +19,8 @@
     }
     &__item {
         width: 200px;
-        box-shadow: 5px 5px 20px 0px #00000077;            
-        background-color: var(--color-black);
+        box-shadow: var(--card-shadow);
+        background-color: var(--card-background);
         transition: .3s all;
         cursor: pointer;
         &:hover {
@@ -39,9 +39,10 @@
             padding: 15px;
             font-size: 22px;
             font-weight: 700;
+            color: var(--text-white);
         }
         &--active {
-            box-shadow: 10px 10px 10px #1168B9;
+            box-shadow: var(--card-shadow-active);
             transform: translateY(-15px);
         }
     }

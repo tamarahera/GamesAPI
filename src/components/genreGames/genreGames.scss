@@ -1,8 +1,8 @@
 .genres {
     &__game {
         width: 200px;
-        box-shadow: 5px 5px 20px 0px #00000077;            
-        background-color: var(--color-black);
+        box-shadow: var(--card-shadow);
+        background-color: var(--card-background);
         transition: .3s all;
         cursor: pointer;
         &-box {
@@ -18,6 +18,7 @@
             padding: 15px;
             font-size: 22px;
             font-weight: 700;
+            color: var(--text-white);
         }
         &:hover {
             transform: translateY(-6px)!important;

@@ -1,7 +1,7 @@
 .games {
     &__info {
         width: 425px;
-        box-shadow: 5px 5px 20px 0px #00000077;
+        box-shadow: var(--card-shadow);
         background-color: var(--color-white);
         padding: 25px;
         height: auto;

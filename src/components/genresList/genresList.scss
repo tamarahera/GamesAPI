@@ -4,9 +4,9 @@
     &__promo {
         padding: 30px 30px 30px 160px;
         position: relative;
-        background-color: var(--color-black);
+        background-color: var(--background-accent);
         width: 100%;
-        box-shadow: 5px 5px 20px 0px #00000077;         
+        box-shadow: var(--card-shadow);
         display: flex;
         justify-content: space-between;
         align-items: flex-end;   
@@ -26,8 +26,13 @@
         &-text {
             font-size: 24px;
             font-weight: 700;
+            color: var(--text-white);
             span {
-                color: var(--color-blue);
+                color: #1168b9;
+                text-shadow: 1px -1px 0px #222a3a;
+            }
+            q, i {
+                color: var(--text-white);
             }
         }
         &-btn {
@@ -39,7 +44,7 @@
         font-weight: bold;
         text-align: center;
         margin-top: 30px;
-        background-color: #222a3a;
+        background-color: var(--background-blue);
         padding: 15px;
         margin-bottom: 30px;
     }
@@ -56,8 +61,8 @@
     }
     &__item {
         width: 200px;
-        box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.4666666667);
-        background-color: var(--color-black);
+        box-shadow: var(--card-shadow);
+        background-color: var(--card-background);
         transition: 0.3s all;
         cursor: pointer;
         display: flex;
@@ -78,6 +83,7 @@
             font-size: 16px;
             font-weight: 700;
             width: 100%;
+            color: var(--text-white);
         }
         &:hover {
             transform: translateY(-6px)!important;
