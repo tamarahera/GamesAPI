@@ -68,7 +68,7 @@ const GameList = ({ updateCurrentId }) => {
     }, []);
 
     useEffect(() => { // при скролі змін завантаження і якщо завантаж правда, робимо реквест
-        if (newGameLoading) {
+        if (newGameLoading && action !== 'error') {
             onRequest(false, nextUrl);
         }
         // eslint-disable-next-line
@@ -183,7 +183,7 @@ const GameList = ({ updateCurrentId }) => {
     return (
         <div className="games__content">
             {content}
-            {action === 'error' || content.type.name === 'Spinner' ? null : loadBtn}
+            {action === 'confirmed' ? loadBtn : null}
         </div>
     )
 }
