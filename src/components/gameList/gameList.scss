@@ -11,8 +11,8 @@
         }
     }
     &__list {
-        display: flex;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         justify-content: flex-start;
         gap: 25px;
         max-width: 650px;

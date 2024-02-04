@@ -48,8 +48,19 @@
             align-items: center;
         }
         &__list {
-            max-width: unset;
             justify-content: center;
+        }
+        &__content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        &__item {
+            width: auto;
+            &-box {
+                width: 100%;
+            }
         }
     }
     .genres {
@@ -104,6 +115,12 @@
     .genres {
         &__list {
             gap: 15px;
+        }
+        &__game {
+            width: 47%;
+            &-box {
+                width: 100%;
+            }
         }
     }
     .single {
@@ -192,6 +209,9 @@
         }
     }
     .games {
+        &__list {
+            max-width: unset;
+        }
         &__content {
             width: 100%;
             .error {
@@ -217,7 +237,7 @@
             }
         }
         &__item {
-            width: 140px;
+            width: 100%;
             &-box {
                 height: 80px;
                 width: 100%;
@@ -256,7 +276,6 @@
             }
         }
         &__game {
-            width: 140px;
             &-box {
                 height: 80px;
                 width: 100%;
