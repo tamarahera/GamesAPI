@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
+import Modal from '../../components/modal/Modal';
 
 import 'swiper/css';
 import 'swiper/css/free-mode';
@@ -12,8 +13,19 @@ import ErrorBoundary from '../errorBoundary/ErrorBoundary';
 
 const GameScreenschots = ({ data, name }) => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
+    const [modal, setModal] = useState(false);
+    const [mainSwiperImg, setMainSwiperImg] = useState(null);
+
+    const swiperRef = useRef(null);
 
     const { slag } = name;
+
+    const showModal = (modal) => {
+        setModal(modal => !modal);
+        if (modal) {
+            changeSrc();
+        }
+    }
 
     const swiperList = () => {
         const newList = data.map(item => {
@@ -27,12 +39,21 @@ const GameScreenschots = ({ data, name }) => {
         return newList;
     }
 
+    const changeSrc = () => {
+        if (swiperRef.current) {
+            const currentSlide = swiperRef.current.swiper.slides[swiperRef.current.swiper.activeIndex];
+            const currentSlideSrc = currentSlide.querySelector('img').getAttribute('src');
+            setMainSwiperImg(currentSlideSrc);
+        }
+    }
+
     const images = swiperList();
     const amountThumbs = window.matchMedia('(max-width: 576px)').matches ? 3 : 4;
 
     return (
         <ErrorBoundary>
             <Swiper
+                ref={swiperRef}
                 className="swiper-main"
                 loop={true}
                 style={{
@@ -44,6 +65,8 @@ const GameScreenschots = ({ data, name }) => {
                 thumbs={{ swiper: thumbsSwiper }}
                 modules={[FreeMode, Navigation, Thumbs]}
                 lazy="true"
+                onClick={() => showModal(modal)}
+                onSlideChange={changeSrc}
             >
                 {images}
             </Swiper>
@@ -59,6 +82,7 @@ const GameScreenschots = ({ data, name }) => {
             >
                 {images}
             </Swiper>
+            {modal ? <Modal modal={modal} showModal={showModal} src={mainSwiperImg} /> : null}
         </ErrorBoundary>
     )
 }

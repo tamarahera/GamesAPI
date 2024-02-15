@@ -49,7 +49,7 @@ const SingleGamePage = () => {
         <HelmetProvider>
             <Helmet>
                 <title>
-                    {gameData ? `${gameData.name} – info` : `Info about the game`}
+                    {gameData ? `${gameData.name} – Info` : `Info about the game`}
                 </title>
                 <meta name="description" content={gameData ? `Information about ${gameData.name} game` : `Info about the single game`} />
             </Helmet>
