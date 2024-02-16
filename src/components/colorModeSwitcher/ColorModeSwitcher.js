@@ -1,13 +1,20 @@
 import Moon from '../../resources/moon.svg';
 import Sun from '../../resources/sun.svg';
 
+import useLocalStorage from '../../hooks/useLocalStorage';
 import { useEffect, useState } from 'react';
 
 import './colorModeSwitcher.scss';
 
 const ColorModeSwitcher = () => {
-    const [theme, setTheme] = useState('dark');
     const [checkInput, setCheckInput] = useState(false);
+    const [theme, setTheme] = useLocalStorage('games_theme', 'dark');
+
+    useEffect(() => {
+        if (theme === 'light') {
+            setCheckInput(true);
+        }
+    }, []);
 
     useEffect(() => {
         document.body.setAttribute('data-theme', theme);
