@@ -21,21 +21,34 @@
         position: relative;
         z-index: 200;
         height: auto;
-        width: 90vw; 
+        max-width: 90vw; 
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
     }
     &__close {
-        width: auto;
-        height: 50px;
+        width: 30px;
+        height: 30px;
         background-color: unset;
         border: none;
         align-self: end;
-        &-img {
-            width: inherit;
-            height: inherit;
+        position: relative;
+        margin-bottom: 5px;
+        span {
+            display: block;
+            position: absolute;
+            top: 0;
+            right: 50%;
+            height: 30px;
+            width: 2px;
+            background-color: #fff;
+            &:first-child {
+                transform: rotate(45deg);
+            }
+            &:nth-child(2) {
+                transform: rotate(-45deg);
+            }
         }
     }
     &__box {
